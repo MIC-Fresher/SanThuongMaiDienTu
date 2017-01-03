@@ -1,0 +1,13 @@
+.profile{
+    border: 3px solid #B7B7B7;
+    padding: 10px;
+    margin-top: 10px;
+    width: 240px;
+    background-color: #ffffff;
+    height: 50px;
+}
+.profile p{margin: 0px 0px 10px 0px;}
+.head{margin-bottom: 10px;}
+.head a{float: right;}
+
+.proDetails{float: left;}
