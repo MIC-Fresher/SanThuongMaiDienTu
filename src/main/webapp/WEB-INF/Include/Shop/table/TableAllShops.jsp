@@ -7,29 +7,34 @@
 <table id="example2" class="table table-bordered table-hover">
     <thead>
         <tr>
-            <th>Mã danh mục</th>
-            <th>Tên danh mục</th>
-            <th>Sản phẩm</th>
+            <th>Mã cửa hàng</th>
+            <th>Tên cửa hàng</th>
+            <th>Email cửa hàng</th>
+            <th>Phone cửa hàng</th>
             <th>Trạng thái</th>  
             <th style="width: 155px">Tác Vụ</th>
         </tr>
     </thead>
     <tbody>
- 
-        <c:forEach var="categories" items="${listCategories.content}" varStatus="">
+        
+        <c:forEach var="listShops" items="${requestScope.listShops.content}" varStatus="">
             <tr>
-                <td style="width: 100px">
-                    ${categories.categoryId}
+                <td>
+                    ${listShops.shopId}
                 </td>
                 <td>
-                    ${categories.categoryName}
+                    ${listShops.shopName}
                 </td>
                 <td>
-                    ${categories.productList.size()}
+                    ${listShops.userId.email}
                 </td>
                 <td>
+                    ${listShops.userId.phone}
+                </td>
+                <td>
+                    
                     <c:choose>
-                        <c:when test="${categories.isActive==1}">
+                        <c:when test="${listShops.userId.enabled==1}">
                             <font style="color: blue"> active</font>
                         </c:when>
                         <c:otherwise>
@@ -46,10 +51,7 @@
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <c:url value="/Suplier/deactiveCategory?id=${categories.categoryId}&page=${requestScope.listCategories.current}" var="deactive"/>
-                            <li><a href="<c:out value="${deactive}"/>">Khóa danh mục</a></li>
-                            <c:url value="/Suplier/activeCategory?id=${categories.categoryId}&page=${requestScope.listCategories.current}" var="active"/>
-                            <li><a href="<c:out value="${active}"/>">Mở khóa danh mục</a></li>
+                            <li><a href="">Khóa cửa hàng</a></li>
                             <li><a href="">Xem chi tiết</a></li>
 
                             <li class="divider"></li>

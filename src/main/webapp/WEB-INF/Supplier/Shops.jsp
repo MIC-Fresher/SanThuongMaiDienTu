@@ -93,27 +93,29 @@
                                 <div class="box-body">
                                     <c:if test="${not empty listShops.content}">
                                         <jsp:include page="/WEB-INF/Include/Supplier/table/TableAllShops.jsp"></jsp:include>
-                                       
+
                                     </c:if>
                                     <c:if test="${listShops.totalPages==0}">
-                                        list is empty
+                                        <jsp:include page="/WEB-INF/Include/Supplier/table/PagingAllShops.jsp"></jsp:include>
                                     </c:if>
-                                    <jsp:include page="/WEB-INF/Include/Supplier/table/PagingAllShops.jsp"></jsp:include>
-                                    </div>
-                                    <!-- /.box-body -->
                                 </div>
-
+                                <!-- /.box-body -->
                             </div>
-                            <!-- /.col -->
-                        </div>
-                        <!-- /.row -->
-                    </section>
-                    <!------------------------------------------------------------------------------------------------->
-                    <!-- /.content -->
-                </div>
-                <!-- /.content-wrapper -->
 
-                <!-- Main Footer -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                    <c:if test="${not empty shopDetail}">
+                        <jsp:include page="/WEB-INF/Include/Supplier/table/TableDetailShop.jsp"></jsp:include>
+                    </c:if>
+                </section>
+                <!------------------------------------------------------------------------------------------------->
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
+
+            <!-- Main Footer -->
             <jsp:include page="/WEB-INF/Include/Supplier/header_footer/footer.jsp"/> 
 
             <!-- Control Sidebar -->

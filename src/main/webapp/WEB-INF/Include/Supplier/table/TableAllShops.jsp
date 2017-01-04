@@ -51,8 +51,12 @@
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="">Khóa cửa hàng</a></li>
-                            <li><a href="">Xem chi tiết</a></li>
+                            <c:url value="/Suplier/deactiveShop?id=${listShops.shopId}&page=${requestScope.listShops.current}" var="deactive"/>
+                            <li><a href="<c:out value="${deactive}"/>">Khóa cửa hàng</a></li>
+                            <c:url value="/Suplier/activeShop?id=${listShops.shopId}&page=${requestScope.listShops.current}" var="active"/>
+                            <li><a href="<c:out value="${active}"/>">Mở khóa cửa hàng</a></li>
+                            <c:url value="/Suplier/setupShowDetailShop?id=${listShops.shopId}" var="showdetailshop"/>
+                            <li><a href="<c:out value="${showdetailshop}"/>">Xem chi tiết</a></li>
 
                             <li class="divider"></li>
                             <li><a href="#">Khác</a></li>

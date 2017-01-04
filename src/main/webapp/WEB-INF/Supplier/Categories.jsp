@@ -79,6 +79,7 @@
                 <!-- Main content -->
                 <!------------------------------------------------------------------------------------------------------->
                 <section class="content">
+
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="box">
@@ -100,9 +101,7 @@
                                 </div>
                                 <!-- /.box-header -->
                                 <div class="box-body">
-                                    <c:if test="${type=='formadd'}">
-                                        <jsp:include page="/WEB-INF/Include/Supplier/form/addcategories.jsp"></jsp:include>
-                                    </c:if>
+
                                     <c:if test="${not empty listCategories.content}">
                                         <jsp:include page="/WEB-INF/Include/Supplier/table/TableAllCategories.jsp"></jsp:include>
                                     </c:if>
@@ -117,14 +116,17 @@
                             </div>
                             <!-- /.col -->
                         </div>
-                        <!-- /.row -->
-                    </section>
-                    <!------------------------------------------------------------------------------------------------->
-                    <!-- /.content -->
-                </div>
-                <!-- /.content-wrapper -->
+                    <c:if test="${type=='formadd'}">
+                        <jsp:include page="/WEB-INF/Include/Supplier/form/addcategories.jsp"></jsp:include>
+                    </c:if>
+                    <!-- /.row -->
+                </section>
+                <!------------------------------------------------------------------------------------------------->
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
 
-                <!-- Main Footer -->
+            <!-- Main Footer -->
             <jsp:include page="/WEB-INF/Include/Supplier/header_footer/footer.jsp"/> 
 
             <!-- Control Sidebar -->

@@ -9,4 +9,5 @@ import entity.*;
 public interface UserService {
     public boolean checkEmailExist(String email) throws Exception;
     public void add(User user) throws Exception;
+    public void updateUser(User user) throws Exception;
 }

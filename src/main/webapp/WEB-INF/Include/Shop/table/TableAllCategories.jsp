@@ -46,10 +46,10 @@
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <c:url value="/Suplier/deactiveCategory?id=${categories.categoryId}&page=${requestScope.listCategories.current}" var="deactive"/>
+                            <c:url value="/Suplier/deactiveCategory?id=${categories.categoryId}" var="deactive"/>
                             <li><a href="<c:out value="${deactive}"/>">Khóa danh mục</a></li>
-                            <c:url value="/Suplier/activeCategory?id=${categories.categoryId}&page=${requestScope.listCategories.current}" var="active"/>
-                            <li><a href="<c:out value="${active}"/>">Mở khóa danh mục</a></li>
+                            <c:url value="/Suplier/activeCategory?id=${categories.categoryId}&page=${requestScope.listCategories.current}" var="deactive"/>
+                            <li><a href="<c:out value="${deactive}"/>">Mở khóa danh mục</a></li>
                             <li><a href="">Xem chi tiết</a></li>
 
                             <li class="divider"></li>
