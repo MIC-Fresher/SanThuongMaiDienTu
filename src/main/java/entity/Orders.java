@@ -10,9 +10,9 @@ import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,6 +24,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  *
@@ -50,15 +52,16 @@ public class Orders implements Serializable {
     @Column(name = "TotalPrice")
     private BigInteger totalPrice;
     @JoinColumn(name = "ReceiverId", referencedColumnName = "ReceiverId")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Receiver receiverId;
     @JoinColumn(name = "StatusOrderId", referencedColumnName = "StatusOrderId")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Statusorder statusOrderId;
     @JoinColumn(name = "UserId", referencedColumnName = "UserId")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private User userId;
-    @OneToMany(mappedBy = "orderId", fetch = FetchType.EAGER)
+    @OneToMany(cascade =  CascadeType.MERGE   ,mappedBy = "orderId")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Orderdetail> orderdetailList;
 
     public Orders() {
@@ -156,5 +159,5 @@ public class Orders implements Serializable {
     public String toString() {
         return "entity.Orders[ orderId=" + orderId + " ]";
     }
-    
+
 }

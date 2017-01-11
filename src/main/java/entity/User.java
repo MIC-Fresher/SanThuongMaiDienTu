@@ -12,19 +12,26 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.NamedStoredProcedureQueries;
+import javax.persistence.NamedStoredProcedureQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  *
@@ -32,6 +39,25 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "user")
+@NamedStoredProcedureQueries({
+    @NamedStoredProcedureQuery(
+            name = "deleteRU",
+            procedureName = "deleteRU",
+            parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.OUT, name = "KQ", type = Integer.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "idrole", type = Integer.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "iduser", type = Integer.class)
+            }),
+    @NamedStoredProcedureQuery(
+            name = "addRU",
+            procedureName = "addRU",
+            parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.OUT, name = "KQ", type = Integer.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "idrole", type = Integer.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "iduser", type = Integer.class)
+            })
+})
+
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")})
 public class User implements Serializable {
@@ -54,10 +80,8 @@ public class User implements Serializable {
     private String genders;
     @Column(name = "Phone")
     private String phone;
-    @Lob
     @Column(name = "IdFacebook")
     private String idFacebook;
-    @Lob
     @Column(name = "NameFacebook")
     private String nameFacebook;
     @Column(name = "DateCreated")
@@ -65,20 +89,29 @@ public class User implements Serializable {
     private Date dateCreated;
     @Column(name = "enabled")
     private Integer enabled;
-    @OneToMany(mappedBy = "userId", fetch = FetchType.EAGER)
-    private List<Shop> shopList;
-    @OneToMany(mappedBy = "userId", fetch = FetchType.EAGER)
-    private List<Feedback> feedbackList;
-    @OneToMany(mappedBy = "userId", fetch = FetchType.EAGER)
+    @JoinTable(name = "role_user", joinColumns = {
+        @JoinColumn(name = "UserId", referencedColumnName = "UserId")}, inverseJoinColumns = {
+        @JoinColumn(name = "RoleId", referencedColumnName = "RoleId")})
+    @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Role> roleList;
+    @OneToOne(mappedBy = "userId",cascade =  CascadeType.MERGE  )
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Shop shop;
+    @OneToMany( cascade =  CascadeType.MERGE   ,mappedBy = "userId")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Productcomment> productcommentList;
-    @OneToMany(mappedBy = "userId", fetch = FetchType.EAGER)
+    @OneToMany( cascade =  CascadeType.MERGE   ,mappedBy = "userId")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Feedback> feedbackList;
+    @OneToMany( cascade =  CascadeType.MERGE   ,mappedBy = "userId")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Productvoting> productvotingList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
-    private List<RoleUser> roleUserList;
-    @OneToMany(mappedBy = "userId", fetch = FetchType.EAGER)
+    @OneToMany( cascade =  CascadeType.MERGE   ,mappedBy = "userId")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Orders> ordersList;
     @JoinColumn(name = "SupplierId", referencedColumnName = "SupplierId")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Supplier supplierId;
 
     public User() {
@@ -176,20 +209,20 @@ public class User implements Serializable {
         this.enabled = enabled;
     }
 
-    public List<Shop> getShopList() {
-        return shopList;
+    public List<Role> getRoleList() {
+        return roleList;
     }
 
-    public void setShopList(List<Shop> shopList) {
-        this.shopList = shopList;
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
     }
 
-    public List<Feedback> getFeedbackList() {
-        return feedbackList;
+    public Shop getShop() {
+        return shop;
     }
 
-    public void setFeedbackList(List<Feedback> feedbackList) {
-        this.feedbackList = feedbackList;
+    public void setShop(Shop shop) {
+        this.shop = shop;
     }
 
     public List<Productcomment> getProductcommentList() {
@@ -200,20 +233,20 @@ public class User implements Serializable {
         this.productcommentList = productcommentList;
     }
 
+    public List<Feedback> getFeedbackList() {
+        return feedbackList;
+    }
+
+    public void setFeedbackList(List<Feedback> feedbackList) {
+        this.feedbackList = feedbackList;
+    }
+
     public List<Productvoting> getProductvotingList() {
         return productvotingList;
     }
 
     public void setProductvotingList(List<Productvoting> productvotingList) {
         this.productvotingList = productvotingList;
-    }
-
-    public List<RoleUser> getRoleUserList() {
-        return roleUserList;
-    }
-
-    public void setRoleUserList(List<RoleUser> roleUserList) {
-        this.roleUserList = roleUserList;
     }
 
     public List<Orders> getOrdersList() {
@@ -256,5 +289,5 @@ public class User implements Serializable {
     public String toString() {
         return "entity.User[ userId=" + userId + " ]";
     }
-    
+
 }

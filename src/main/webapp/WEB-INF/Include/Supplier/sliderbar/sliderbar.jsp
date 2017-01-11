@@ -1,6 +1,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <!-- Left side column. contains the logo and sidebar -->
 <aside class="main-sidebar">
 
@@ -38,7 +39,7 @@
             <li class="treeview">
                 <a href="#"><i class="fa fa-link"></i> <span>Quản lý  danh mục hàng hóa</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <c:url value="/Suplier/setupShowAllCategories" var="categories"/>
+                    <c:url value="/Supplier/searchCategory" var="categories"/>
                     <li><a href="<c:out value="${categories}"/>">Danh mục hàng hóa</a></li>
                 </ul>
             </li>
@@ -47,16 +48,24 @@
 
                 <a href="#"><i class="fa fa-link"></i> <span>Quản lý  phản hồi</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a href="./setupListContact.html">Danh sách phản hồi</a></li>
+                    <s:url value="/Supplier/setupShowAllFeedbacks" var="feedbacks"/>
+                    <li><a href="${feedbacks}">Danh sách phản hồi</a></li>
                     <li><a href="#">Link in level 2</a></li>
                 </ul>
             </li>
             <li class="treeview">
                 <a href="#"><i class="fa fa-link"></i> <span>Quản lý cửa hàng</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <c:url value="/Suplier/setupShowAllShops" var="shops"/>
+                    <c:url value="/Supplier/searchShop" var="shops"/>
                     <li><a href="<c:out value="${shops}"/>">Danh sách cửa hàng</a></li>
                     <li><a href="#">Link in level 2</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#"><i class="fa fa-link"></i> <span>Quản lý  Sản phẩm</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <s:url value="/Supplier/setupShowAllProducts" var="showallproducts"/>
+                    <li><a href="${showallproducts}">Danh sách sản phẩm</a></li>
                 </ul>
             </li>
         </ul>

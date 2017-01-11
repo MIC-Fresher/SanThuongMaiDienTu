@@ -94,7 +94,7 @@
             </script>
         </c:if>
 
-            <jsp:include page="/WEB-INF/Include/User/header.jsp"/>
+            
         
         <!-- login-page -->
         <div class="login-page">
@@ -141,7 +141,7 @@
         <!-- //login-page --> 
 
 
-        <jsp:include page="/WEB-INF/Include/User/footer.jsp"/>
+       
         <script src="${pageContext.request.contextPath}/js/minicart.js"></script>
         <script>
                             w3ls.render();

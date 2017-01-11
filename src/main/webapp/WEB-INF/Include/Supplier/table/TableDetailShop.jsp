@@ -7,7 +7,6 @@
 
 
 
-<div class="row">
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
@@ -45,6 +44,22 @@
                             </td>
                         </tr>
                         <tr>
+                            <td >
+                                userName
+                            </td>
+                            <td >
+                                ${shopDetail.userId.userName}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td >
+                                passWord
+                            </td>
+                            <td >
+                                ${shopDetail.userId.passWord}
+                            </td>
+                        </tr>
+                        <tr>
                             <td>dateCreated</td>
                             <td>
                                 <fmt:formatDate value="${shopDetail.dateCreated}" type="both" 
@@ -59,4 +74,3 @@
 
     </div>
     <!-- /.col -->
-</div>

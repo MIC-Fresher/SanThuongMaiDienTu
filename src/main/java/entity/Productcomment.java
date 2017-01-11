@@ -8,9 +8,9 @@ package entity;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -46,10 +46,10 @@ public class Productcomment implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreated;
     @JoinColumn(name = "UserId", referencedColumnName = "UserId")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private User userId;
     @JoinColumn(name = "ProductId", referencedColumnName = "ProductId")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Product productId;
 
     public Productcomment() {

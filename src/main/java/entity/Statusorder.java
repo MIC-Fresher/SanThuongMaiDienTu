@@ -8,9 +8,9 @@ package entity;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +18,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  *
@@ -37,7 +39,8 @@ public class Statusorder implements Serializable {
     private Integer statusOrderId;
     @Column(name = "status")
     private Integer status;
-    @OneToMany(mappedBy = "statusOrderId", fetch = FetchType.EAGER)
+    @OneToMany( cascade =  CascadeType.MERGE   ,mappedBy = "statusOrderId")
+      @LazyCollection(LazyCollectionOption.FALSE)
     private List<Orders> ordersList;
 
     public Statusorder() {

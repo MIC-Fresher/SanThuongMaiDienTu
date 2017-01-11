@@ -12,8 +12,7 @@
         <title>Thương mại điện tử</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="keywords" content="Smart Bazaar Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
-              SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+
         <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
             function hideURLbar(){ window.scrollTo(0,1); } </script>
         <!-- Custom Theme files -->
@@ -50,9 +49,9 @@
         </script>
         <!-- //js --> 
         <!-- web-fonts -->
-<!--        <link href='//fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
-        <link href='//fonts.googleapis.com/css?family=Lovers+Quarrel' rel='stylesheet' type='text/css'>
-        <link href='//fonts.googleapis.com/css?family=Offside' rel='stylesheet' type='text/css'> -->
+        <!--        <link href='//fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
+                <link href='//fonts.googleapis.com/css?family=Lovers+Quarrel' rel='stylesheet' type='text/css'>
+                <link href='//fonts.googleapis.com/css?family=Offside' rel='stylesheet' type='text/css'> -->
         <!-- web-fonts -->  
         <!-- start-smooth-scrolling -->
         <script type="text/javascript" src="${pageContext.request.contextPath}/js/move-top.js"></script>
@@ -85,21 +84,21 @@
     </head><!--/head-->
 
     <body>
-        
+
 
         <c:if test="${not empty messeger}">
             <script>
                 alert("${messeger}");
             </script>
         </c:if>
-            <jsp:include page="/WEB-INF/Include/User/header.jsp"/>
+        
 
         <!-- sign up-page -->
         <div class="login-page">
             <div class="container"> 
                 <h3 class="w3ls-title w3ls-title1">Create your account</h3>  
                 <div class="login-body">
-                    <c:url value="/setupUserlogin" var="login" />
+                    <c:url value="/User/userpage" var="login" />
                     <c:url value="/Public/signUp" var="signup" />
                     <form:form  method="POST" commandName="UserRG"  id="contact1">
 
@@ -117,13 +116,13 @@
 
                     </form:form>
                 </div>  
-                    <h6>Already have an account? <a href="<c:out value="${login}"/>">Login Now »</a> </h6>  
+                <h6>Already have an account? <a href="<c:out value="${login}"/>">Login Now »</a> </h6>  
             </div>
         </div>
         <!-- //sign up-page --> 
         <!-- footer-top -->
 
-      
+
         <script src="${pageContext.request.contextPath}/js/minicart.js"></script>
         <script>
                             w3ls.render();

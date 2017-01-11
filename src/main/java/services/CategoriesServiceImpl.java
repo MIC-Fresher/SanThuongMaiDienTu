@@ -82,4 +82,24 @@ public class CategoriesServiceImpl implements CategoriesService {
         return null;
     }
 
+    @Override
+    public Page<Category> getCategoriesByInput(Pageable pageable, String input) throws Exception {
+        try {
+            return categoriesRepository.findBycategoryNameContaining(pageable, input);
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return null;
+    }
+
+    @Override
+    public int addCategoryToShop(int idcate, int idshop) throws Exception {
+        return categoriesRepository.addCS(idcate, idshop);
+    }
+
+    @Override
+    public int deleteCategoryFromShop(int idcate, int idshop) throws Exception {
+        return categoriesRepository.deleteCS(idcate, idshop);
+    }
+
 }

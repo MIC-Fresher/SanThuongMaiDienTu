@@ -5,13 +5,13 @@
 <header class="main-header">
 
     <!-- Logo -->
-    <c:url value="/Supplier/SuplierIndex" var="logo"/>
+    <c:url value="/Shop/ShopIndex" var="logo"/>
     <a href="<c:out value="${logo}"/>" class="logo">
 
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>A</b>LT</span>
+        <span class="logo-mini"><b>S</b>HOP</span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>Admin</b>LTE</span>
+        <span class="logo-lg"><b>SHOP</b>LTE</span>
     </a>
 
 
@@ -160,7 +160,7 @@
                             </div>
                             <div class="pull-right">
 
-                                <a href="${pageContext.request.contextPath}/Supplier/logout" class="btn btn-default btn-flat">Sign out</a>
+                                <a href="${pageContext.request.contextPath}/Shop/logout" class="btn btn-default btn-flat">Sign out</a>
                             </div>
                         </li>
                     </ul>

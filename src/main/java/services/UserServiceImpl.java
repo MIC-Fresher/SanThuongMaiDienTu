@@ -6,6 +6,7 @@
 package services;
 
 import entity.User;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,21 +20,37 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Override
-    public boolean checkEmailExist(String email) throws Exception {
-        if (userRepository.findByemail(email) != null) {
+    public boolean checkAccountExist(String username, String email) throws Exception {
+        if (userRepository.findByUserNameOrEmail(username, email).size() > 0) {
             return true;
         }
         return false;
     }
 
     @Override
-    public void add(User user) throws Exception {
-       userRepository.save(user);
+    public User add(User user) throws Exception {
+        return userRepository.save(user);
     }
 
     @Override
     public void updateUser(User user) throws Exception {
         userRepository.save(user);
+
+    }
+
+    @Override
+    public int deleteRoleOfUser(int idrole, int iduser) throws Exception {
+        return userRepository.deleteRU(idrole, iduser);
+    }
+
+    @Override
+    public int addRoleToUser(int idrole, int iduser) throws Exception {
+        return userRepository.addRU(idrole, iduser);
+    }
+
+    @Override
+    public List<User> getUser(String username, String email) throws Exception {
+        return userRepository.findByUserNameOrEmail(username, email);
     }
 
 }

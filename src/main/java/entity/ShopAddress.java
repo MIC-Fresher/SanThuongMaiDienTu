@@ -7,9 +7,9 @@ package entity;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,7 +40,7 @@ public class ShopAddress implements Serializable {
     @Column(name = "City")
     private String city;
     @JoinColumn(name = "ShopId", referencedColumnName = "ShopId")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Shop shopId;
 
     public ShopAddress() {

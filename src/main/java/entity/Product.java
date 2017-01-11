@@ -13,19 +13,22 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  *
@@ -43,6 +46,8 @@ public class Product implements Serializable {
     @Basic(optional = false)
     @Column(name = "ProductId")
     private Integer productId;
+    @Column(name = "TotalVote")
+    private Integer totalVote;
     @Column(name = "ProductName")
     private String productName;
     @Lob
@@ -51,7 +56,7 @@ public class Product implements Serializable {
     @Column(name = "IsDiscounted")
     private Integer isDiscounted;
     @Column(name = "UnitPrice")
-    private BigInteger unitPrice;
+    private Integer unitPrice;
     @Column(name = "Quantity")
     private Integer quantity;
     @Column(name = "IsActive")
@@ -59,20 +64,33 @@ public class Product implements Serializable {
     @Column(name = "DateCreated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreated;
-    @OneToMany(mappedBy = "productId", fetch = FetchType.EAGER)
-    private List<Productdetail> productdetailList;
+
+    
+
+    @JoinColumn(name = "ShopId", referencedColumnName = "ShopId")
+    @ManyToOne
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Shop shopId;
+
+    @OneToOne(cascade =  CascadeType.MERGE   ,mappedBy = "productId")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Productdetail productdetail;
+    
     @JoinColumn(name = "CategoryId", referencedColumnName = "CategoryId")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Category categoryId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productId", fetch = FetchType.EAGER)
+    
+    @OneToMany(cascade =  CascadeType.MERGE   ,mappedBy = "productId")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Productstatus> productstatusList;
-    @OneToMany(mappedBy = "productId", fetch = FetchType.EAGER)
+    @OneToMany(cascade =  CascadeType.MERGE   ,mappedBy = "productId")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Productcomment> productcommentList;
-    @OneToMany(mappedBy = "productId", fetch = FetchType.EAGER)
+    @OneToMany( cascade =  CascadeType.MERGE   ,mappedBy = "productId")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Productvoting> productvotingList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product", fetch = FetchType.EAGER)
-    private List<ShopProduct> shopProductList;
-    @OneToMany(mappedBy = "productId", fetch = FetchType.EAGER)
+    @OneToMany( cascade =  CascadeType.MERGE   ,mappedBy = "productId")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Orderdetail> orderdetailList;
 
     public Product() {
@@ -114,11 +132,11 @@ public class Product implements Serializable {
         this.isDiscounted = isDiscounted;
     }
 
-    public BigInteger getUnitPrice() {
+    public Integer getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(BigInteger unitPrice) {
+    public void setUnitPrice(Integer unitPrice) {
         this.unitPrice = unitPrice;
     }
 
@@ -146,12 +164,22 @@ public class Product implements Serializable {
         this.dateCreated = dateCreated;
     }
 
-    public List<Productdetail> getProductdetailList() {
-        return productdetailList;
+    public Shop getShopId() {
+        return shopId;
     }
 
-    public void setProductdetailList(List<Productdetail> productdetailList) {
-        this.productdetailList = productdetailList;
+    public void setShopId(Shop shopId) {
+        this.shopId = shopId;
+    }
+
+    
+
+    public Productdetail getProductdetail() {
+        return productdetail;
+    }
+
+    public void setProductdetail(Productdetail productdetail) {
+        this.productdetail = productdetail;
     }
 
     public Category getCategoryId() {
@@ -186,20 +214,20 @@ public class Product implements Serializable {
         this.productvotingList = productvotingList;
     }
 
-    public List<ShopProduct> getShopProductList() {
-        return shopProductList;
-    }
-
-    public void setShopProductList(List<ShopProduct> shopProductList) {
-        this.shopProductList = shopProductList;
-    }
-
     public List<Orderdetail> getOrderdetailList() {
         return orderdetailList;
     }
 
     public void setOrderdetailList(List<Orderdetail> orderdetailList) {
         this.orderdetailList = orderdetailList;
+    }
+
+    public Integer getTotalVote() {
+        return totalVote;
+    }
+
+    public void setTotalVote(Integer totalVote) {
+        this.totalVote = totalVote;
     }
 
     @Override
@@ -226,5 +254,5 @@ public class Product implements Serializable {
     public String toString() {
         return "entity.Product[ productId=" + productId + " ]";
     }
-    
+
 }

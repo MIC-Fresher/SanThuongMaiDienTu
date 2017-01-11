@@ -7,9 +7,9 @@ package entity;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,10 +40,10 @@ public class Orderdetail implements Serializable {
     @Column(name = "TotalUnitPrice")
     private Integer totalUnitPrice;
     @JoinColumn(name = "ProductId", referencedColumnName = "ProductId")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Product productId;
     @JoinColumn(name = "OrderId", referencedColumnName = "OrderId")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Orders orderId;
 
     public Orderdetail() {

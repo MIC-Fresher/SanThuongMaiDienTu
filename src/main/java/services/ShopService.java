@@ -24,4 +24,7 @@ public interface ShopService {
 
     public void updateShop(Shop shop) throws Exception;
 
+    public Page<Shop> getShopByInput(
+            Pageable pageable,String ShopName , String ShopPhone 
+            ,String  UserName ,String UserPhone ,String UserEmail)throws Exception; 
 }

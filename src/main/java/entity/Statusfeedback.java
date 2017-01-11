@@ -8,9 +8,9 @@ package entity;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +18,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  *
@@ -36,8 +38,9 @@ public class Statusfeedback implements Serializable {
     @Column(name = "StatusFeedbackId")
     private Integer statusFeedbackId;
     @Column(name = "status")
-    private Integer status;
-    @OneToMany(mappedBy = "statusFeedbackId", fetch = FetchType.EAGER)
+    private String status;
+    @OneToMany( cascade =  CascadeType.MERGE   ,mappedBy = "statusFeedbackId")
+      @LazyCollection(LazyCollectionOption.FALSE)
     private List<Feedback> feedbackList;
 
     public Statusfeedback() {
@@ -55,11 +58,11 @@ public class Statusfeedback implements Serializable {
         this.statusFeedbackId = statusFeedbackId;
     }
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

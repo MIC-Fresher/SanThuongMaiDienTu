@@ -7,7 +7,7 @@
     <div class="col-xs-12">
         <div class="box box-warning">
             <div class="box-header with-border">
-                <h3 class="box-title">Thêm thuốc vào kho</h3>
+                <h3 class="box-title">Thêm danh mục</h3>
             </div>
             <!-- /.box-header -->
 
@@ -18,7 +18,7 @@
                     <div class="form-group">
                         <label>Tên danh mục</label>
                         <form:input  path="categoryName" id="name" type="text" class="form-control" placeholder="Enter ..." />
-                    </div
+                    </div>
 
                     <div class="form-group">
                         <label>Trạng thái </label>
@@ -27,14 +27,18 @@
                             <form:option value="1">active</form:option>
                         </form:select>
                     </div>
-                    <c:if test="${not empty listCategories}">
-                        <input type="hidden" value="${requestScope.listCategories.current}" name="page"/>
+                    <input type="hidden" value="${searchinput}" name="searchinput"/>
+                    <c:if test="${not empty listSearchCategories}">
+                        <input type="hidden" value="${requestScope.listSearchCategories.current}" name="page"/>
+
                     </c:if>
-                    <c:url value="/Suplier/addCategory" var="addcategories"/>
-                <button class="btn btn-primary" type="submit" onclick="form.action = '<c:out value="${addcategories}"/>';" >Thêm</button>
-            </form:form>
+                    <c:url value="/Supplier/addCategory" var="addcategories"/>
+                    <div class="box-footer clearfix">
+                        <button class="btn btn-primary" type="submit" onclick="form.action = '<c:out value="${addcategories}"/>';" >Thêm</button>
+                    </div>
+                </form:form>
+            </div>
+            <!-- /.box-body -->
         </div>
-        <!-- /.box-body -->
     </div>
-</div>
 </div>

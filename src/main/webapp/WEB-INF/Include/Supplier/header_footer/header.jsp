@@ -5,7 +5,7 @@
 <header class="main-header">
 
     <!-- Logo -->
-    <c:url value="/Supplier/SuplierIndex" var="logo"/>
+    <c:url value="/Supplier/SupplierIndex" var="logo"/>
     <a href="<c:out value="${logo}"/>" class="logo">
 
         <!-- mini logo for sidebar mini 50x50 pixels -->

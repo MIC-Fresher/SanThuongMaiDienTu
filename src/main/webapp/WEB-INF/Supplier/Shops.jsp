@@ -56,59 +56,54 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>
-                        Danh các cửa hàng</h1>
-                    <form action="findbyTenthuocAdm.html" method="post" class="sidebar-form">
-                        <div class="input-group">
-                            <input type="text" name="tenthuoc" class="form-control" placeholder="Search...">
-                            <input type="hidden" value="adm/quanlythuoc" name="url"/>
-                            <span class="input-group-btn">
-                                <button type="submit" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                        </div>
-                    </form>
-
 
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
                         <li class="active">Here</li>
                     </ol>
                 </section>
+                <section class="content-header">
 
-                <!-- Main content -->
-                <!------------------------------------------------------------------------------------------------------->
-                <section class="content">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="box">
-                                <div class="box-header">
-                                    <h3 class="box-title">
-                                        <a href="./setupAddThuoc.html"  class="btn btn-primary btn-lg" >
-                                            Thêm  cửa hàng
-                                        </a>
-                                    </h3>
-                                </div>
-                                <!-- /.box-header -->
-                                <div class="box-body">
-                                    <c:if test="${not empty listShops.content}">
-                                        <jsp:include page="/WEB-INF/Include/Supplier/table/TableAllShops.jsp"></jsp:include>
+                    <jsp:include page="/WEB-INF/Include/Supplier/form/searchformforshops.jsp"></jsp:include>
+                    </section>
 
+                    <!-- Main content -->
+                    <!------------------------------------------------------------------------------------------------------->
+                    <section class="content">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="box">
+                                <jsp:include page="/WEB-INF/Include/Supplier/sliderbar/boxheader.jsp"></jsp:include>
+
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                    
+
+                                    <c:if test="${not empty listSearchShops.content}">
+                                        <jsp:include page="/WEB-INF/Include/Supplier/table/TableSearchShops.jsp"></jsp:include>
+                                        <jsp:include page="/WEB-INF/Include/Supplier/table/PagingSearchShops.jsp"></jsp:include>
                                     </c:if>
-                                    <c:if test="${listShops.totalPages==0}">
-                                        <jsp:include page="/WEB-INF/Include/Supplier/table/PagingAllShops.jsp"></jsp:include>
-                                    </c:if>
+
                                 </div>
                                 <!-- /.box-body -->
                             </div>
 
                         </div>
+                        <c:if test="${not empty shopDetail}">
+
+                            <jsp:include page="/WEB-INF/Include/Supplier/table/TableDetailShop.jsp"></jsp:include>
+                            <jsp:include page="/WEB-INF/Include/Supplier/table/TableCategoriesOfShop.jsp"></jsp:include>
+                            <jsp:include page="/WEB-INF/Include/Supplier/form/setroleshop.jsp"></jsp:include>
+
+                        </c:if>
+
                         <!-- /.col -->
                     </div>
                     <!-- /.row -->
-                    <c:if test="${not empty shopDetail}">
-                        <jsp:include page="/WEB-INF/Include/Supplier/table/TableDetailShop.jsp"></jsp:include>
-                    </c:if>
+
+
+
+
                 </section>
                 <!------------------------------------------------------------------------------------------------->
                 <!-- /.content -->

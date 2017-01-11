@@ -5,6 +5,7 @@
  */
 package controller;
 
+import entity.User;
 import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class URLMapping implements Serializable {
     @RequestMapping(value = "/setupIndex", method = RequestMethod.GET)
     public String setupIndex(ModelMap mm, HttpServletRequest request) throws Exception {
-        return "Public/index";
+        return "redirect:/Public/searchProducts";
     }
     
     @RequestMapping(value = "/setupShopLogin", method = RequestMethod.GET)
@@ -34,5 +35,11 @@ public class URLMapping implements Serializable {
     @RequestMapping(value = "/error", method = RequestMethod.GET)
     public String error(ModelMap mm, HttpServletRequest request) throws Exception {
         return "Error/403";
+    }
+    
+    @RequestMapping(value = "/setupUserlogin", method = RequestMethod.GET)
+    public String setupUserLogin(ModelMap mm, HttpServletRequest request) throws Exception {
+        mm.addAttribute("UserLG", new User());
+        return "userlogin";
     }
 }

@@ -11,7 +11,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,7 +19,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  *
@@ -38,17 +41,21 @@ public class Productdetail implements Serializable {
     @Basic(optional = false)
     @Column(name = "ProductdetailId")
     private Integer productdetailId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productdetail", fetch = FetchType.EAGER)
-    private List<Producimage> producimageList;
     @JoinColumn(name = "SizeId", referencedColumnName = "SizeId")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Sizes sizeId;
+    
     @JoinColumn(name = "ProductId", referencedColumnName = "ProductId")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne
     private Product productId;
+    
+    
     @JoinColumn(name = "ColorId", referencedColumnName = "ColorId")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Color colorId;
+    @OneToMany(  cascade =  CascadeType.MERGE   ,mappedBy = "producDetailtId")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Producimage> producimageList;
 
     public Productdetail() {
     }
@@ -63,14 +70,6 @@ public class Productdetail implements Serializable {
 
     public void setProductdetailId(Integer productdetailId) {
         this.productdetailId = productdetailId;
-    }
-
-    public List<Producimage> getProducimageList() {
-        return producimageList;
-    }
-
-    public void setProducimageList(List<Producimage> producimageList) {
-        this.producimageList = producimageList;
     }
 
     public Sizes getSizeId() {
@@ -97,6 +96,14 @@ public class Productdetail implements Serializable {
         this.colorId = colorId;
     }
 
+    public List<Producimage> getProducimageList() {
+        return producimageList;
+    }
+
+    public void setProducimageList(List<Producimage> producimageList) {
+        this.producimageList = producimageList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -121,5 +128,5 @@ public class Productdetail implements Serializable {
     public String toString() {
         return "entity.Productdetail[ productdetailId=" + productdetailId + " ]";
     }
-    
+
 }

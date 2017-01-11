@@ -12,19 +12,26 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.NamedStoredProcedureQueries;
+import javax.persistence.NamedStoredProcedureQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  *
@@ -32,6 +39,24 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "shop")
+@NamedStoredProcedureQueries({
+    @NamedStoredProcedureQuery(
+            name = "deletePS",
+            procedureName = "deletePS",
+            parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.OUT, name = "KQ", type = Integer.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "idproduct", type = Integer.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "idshop", type = Integer.class)
+            }),
+    @NamedStoredProcedureQuery(
+            name = "addPS",
+            procedureName = "addPS",
+            parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.OUT, name = "KQ", type = Integer.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "idproduct", type = Integer.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "idshop", type = Integer.class)
+            })
+})
 @NamedQueries({
     @NamedQuery(name = "Shop.findAll", query = "SELECT s FROM Shop s")})
 public class Shop implements Serializable {
@@ -52,17 +77,24 @@ public class Shop implements Serializable {
     @Column(name = "DateCreated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreated;
+
+    @ManyToMany(mappedBy = "shopList", cascade =  CascadeType.MERGE  )
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Category> categoryList;
+
+    @OneToMany( cascade =  CascadeType.MERGE   ,mappedBy = "shopId")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Product> productList;
+
     @JoinColumn(name = "UserId", referencedColumnName = "UserId")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne
     private User userId;
-    @OneToMany(mappedBy = "shopId", fetch = FetchType.EAGER)
+    @OneToMany( cascade =  CascadeType.MERGE   ,mappedBy = "shopId")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<ShopAddress> shopAddressList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shop", fetch = FetchType.EAGER)
-    private List<ShopCategory> shopCategoryList;
-    @OneToMany(mappedBy = "shopId", fetch = FetchType.EAGER)
+    @OneToMany( cascade =  CascadeType.MERGE   ,mappedBy = "shopId")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Shopdaily> shopdailyList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shop", fetch = FetchType.EAGER)
-    private List<ShopProduct> shopProductList;
 
     public Shop() {
     }
@@ -111,6 +143,22 @@ public class Shop implements Serializable {
         this.dateCreated = dateCreated;
     }
 
+    public List<Category> getCategoryList() {
+        return categoryList;
+    }
+
+    public void setCategoryList(List<Category> categoryList) {
+        this.categoryList = categoryList;
+    }
+
+    public List<Product> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
+    }
+
     public User getUserId() {
         return userId;
     }
@@ -127,28 +175,12 @@ public class Shop implements Serializable {
         this.shopAddressList = shopAddressList;
     }
 
-    public List<ShopCategory> getShopCategoryList() {
-        return shopCategoryList;
-    }
-
-    public void setShopCategoryList(List<ShopCategory> shopCategoryList) {
-        this.shopCategoryList = shopCategoryList;
-    }
-
     public List<Shopdaily> getShopdailyList() {
         return shopdailyList;
     }
 
     public void setShopdailyList(List<Shopdaily> shopdailyList) {
         this.shopdailyList = shopdailyList;
-    }
-
-    public List<ShopProduct> getShopProductList() {
-        return shopProductList;
-    }
-
-    public void setShopProductList(List<ShopProduct> shopProductList) {
-        this.shopProductList = shopProductList;
     }
 
     @Override
@@ -175,5 +207,5 @@ public class Shop implements Serializable {
     public String toString() {
         return "entity.Shop[ shopId=" + shopId + " ]";
     }
-    
+
 }

@@ -58,66 +58,62 @@
                 <section class="content-header">
                     <h1>
                         Danh mục hàng hóa</h1>
-                    <form action="findbyTenthuocAdm.html" method="post" class="sidebar-form">
-                        <div class="input-group">
-                            <input type="text" name="tenthuoc" class="form-control" placeholder="Search...">
-                            <input type="hidden" value="adm/quanlythuoc" name="url"/>
-                            <span class="input-group-btn">
-                                <button type="submit" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                        </div>
-                    </form>
 
+                    <jsp:include page="/WEB-INF/Include/Supplier/form/searchformforcategories.jsp"></jsp:include>
 
-                    <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-                        <li class="active">Here</li>
-                    </ol>
-                </section>
+                        <ol class="breadcrumb">
+                            <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+                            <li class="active">Here</li>
+                        </ol>
+                    </section>
 
-                <!-- Main content -->
-                <!------------------------------------------------------------------------------------------------------->
-                <section class="content">
+                    <!-- Main content -->
+                    <!------------------------------------------------------------------------------------------------------->
+                    <section class="content">
 
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="box">
-                                <div class="box-header">
-                                    <h3 class="box-title">
-                                        <c:choose >
-                                            <c:when test="${not empty listCategories}">
-                                                <c:url value="/Suplier/addCategory?page=${requestScope.listCategories.current}" var="addcategories"/>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <c:url value="/Suplier/addCategory" var="addcategories"/>
-                                            </c:otherwise>
-                                        </c:choose>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="box">
+                                    <div class="box-header">
+                                        <h3 class="box-title">
+                                        <c:if test="${not empty listSearchCategories}">
+                                            <c:choose >
+                                                <c:when test="${not empty listSearchCategories}">
+                                                    <c:url value="/Supplier/addCategory?page=${requestScope.listSearchCategories.current}&searchinput=${searchinput}" var="addcategories"/>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <c:url value="/Supplier/addCategory?searchinput=${searchinput}" var="addcategories"/>
+                                                </c:otherwise>
+                                            </c:choose>
 
-                                        <a href="<c:out value="${addcategories}"/>"  class="btn btn-primary btn-lg" >
-                                            Thêm danh mục mới
-                                        </a>
+                                            <a href="<c:out value="${addcategories}"/>"  class="btn btn-primary btn-lg" >
+                                                Thêm danh mục mới
+                                            </a>
+                                        </c:if>
                                     </h3>
                                 </div>
                                 <!-- /.box-header -->
                                 <div class="box-body">
-
-                                    <c:if test="${not empty listCategories.content}">
-                                        <jsp:include page="/WEB-INF/Include/Supplier/table/TableAllCategories.jsp"></jsp:include>
-                                    </c:if>
-                                    <c:if test="${listCategories.totalPages==0}">
+                                    <c:if test="${listSearchCategories.totalPages==0}">
                                         list is empty
                                     </c:if>
-                                    <jsp:include page="/WEB-INF/Include/Supplier/table/PagingAllCategories.jsp"></jsp:include>
-                                    </div>
-                                    <!-- /.box-body -->
+                                    <c:if test="${not empty listSearchCategories.content}">
+                                        <jsp:include page="/WEB-INF/Include/Supplier/table/TableSearchCategories.jsp"></jsp:include>
+                                        <jsp:include page="/WEB-INF/Include/Supplier/table/PagingSearchCategories.jsp"></jsp:include>
+                                    </c:if>
                                 </div>
 
+                                <!-- /.box-body -->
                             </div>
-                            <!-- /.col -->
+
                         </div>
+                        <!-- /.col -->
+                    </div>
                     <c:if test="${type=='formadd'}">
                         <jsp:include page="/WEB-INF/Include/Supplier/form/addcategories.jsp"></jsp:include>
+                    </c:if>
+                    <c:if test="${type=='formupdate'}">
+                        <jsp:include page="/WEB-INF/Include/Supplier/form/updatecategories.jsp"></jsp:include>
                     </c:if>
                     <!-- /.row -->
                 </section>

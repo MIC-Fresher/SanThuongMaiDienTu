@@ -8,9 +8,9 @@ package entity;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -48,7 +48,7 @@ public class Shopdaily implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreated;
     @JoinColumn(name = "ShopId", referencedColumnName = "ShopId")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Shop shopId;
 
     public Shopdaily() {

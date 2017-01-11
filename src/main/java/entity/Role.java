@@ -11,14 +11,15 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  *
@@ -38,8 +39,9 @@ public class Role implements Serializable {
     private Integer roleId;
     @Column(name = "RoleName")
     private String roleName;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role", fetch = FetchType.EAGER)
-    private List<RoleUser> roleUserList;
+    @ManyToMany(mappedBy = "roleList",cascade =  CascadeType.MERGE)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<User> userList;
 
     public Role() {
     }
@@ -64,12 +66,12 @@ public class Role implements Serializable {
         this.roleName = roleName;
     }
 
-    public List<RoleUser> getRoleUserList() {
-        return roleUserList;
+    public List<User> getUserList() {
+        return userList;
     }
 
-    public void setRoleUserList(List<RoleUser> roleUserList) {
-        this.roleUserList = roleUserList;
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
     }
 
     @Override

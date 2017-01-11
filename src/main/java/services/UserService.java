@@ -6,8 +6,12 @@
 package services;
 
 import entity.*;
+import java.util.List;
 public interface UserService {
-    public boolean checkEmailExist(String email) throws Exception;
-    public void add(User user) throws Exception;
+    public boolean checkAccountExist(String username , String email) throws Exception;
+    public User add(User user) throws Exception;
+    public List<User> getUser(String username, String email) throws Exception;
     public void updateUser(User user) throws Exception;
+    int deleteRoleOfUser(int idrole , int iduser)throws Exception;
+    int addRoleToUser(int idrole , int iduser)throws Exception;
 }

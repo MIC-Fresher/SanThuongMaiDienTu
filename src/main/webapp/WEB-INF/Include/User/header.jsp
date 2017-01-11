@@ -229,7 +229,7 @@
 </div>
 <!-- //header -->
 <!-- cart-js -->
-<script src="../js/minicart.js"></script>
+<script src="${pageContext.request.contextPath}/js/minicart.js"></script>
 <script>
     w3ls.render();
 
@@ -248,9 +248,9 @@
 </script>  
 <!-- //cart-js -->	
 <!-- countdown.js -->	
-<script src="../js/jquery.knob.js"></script>
-<script src="../js/jquery.throttle.js"></script>
-<script src="../js/jquery.classycountdown.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery.knob.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery.throttle.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery.classycountdown.js"></script>
 <script>
     $(document).ready(function () {
         $('#countdown1').ClassyCountdown({

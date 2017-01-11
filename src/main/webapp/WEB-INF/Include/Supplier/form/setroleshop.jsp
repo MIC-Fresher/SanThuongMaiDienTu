@@ -3,38 +3,80 @@
 <%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<div class="row">
-    <div class="col-xs-12">
-        <div class="box box-warning">
-            <div class="box-header with-border">
-                <h3 class="box-title">Phân quyền cho cửa hàng</h3>
-            </div>
-            <!-- /.box-header -->
 
-            <div class="box-body">
-                <form:form method="POST" commandName="categories"  role="form"  >
+<div class="col-xs-12">
+    <div class="box box-warning">
+        <div class="box-header with-border">
+            <h3 class="box-title">Role của cửa hàng</h3>
+        </div>
+        <!-- /.box-header -->
 
-                    <!-- text input -->
-                    <div class="form-group">
-                        <label>Tên danh mục</label>
-                        <form:input  path="categoryName" id="name" type="text" class="form-control" placeholder="Enter ..." />
-                    </div
+        <div class="box-body">
+            <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Tên Role</th>
+                        <th style="width: 155px">Tác Vụ</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                    <div class="form-group">
-                        <label>Trạng thái </label>
-                        <form:select  path="isActive"> 
-                            <form:option value="0">deactive</form:option>
-                            <form:option value="1">active</form:option>
-                        </form:select>
-                    </div>
-                    <c:if test="${not empty listCategories}">
-                        <input type="hidden" value="${requestScope.listCategories.current}" name="page"/>
-                    </c:if>
-                    <c:url value="/Suplier/addCategory" var="addcategories"/>
-                <button class="btn btn-primary" type="submit" onclick="form.action = '<c:out value="${addcategories}"/>';" >Thêm</button>
+                    <c:forEach var="listrole" items="${listRoleofShop}" varStatus="">
+                        <tr>
+                            <td style="width: 100px">
+                                ${listrole.roleId}
+                            </td>
+                            <td>
+                                ${listrole.roleName}
+                            </td>
+
+
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-info">Action</button>
+                                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <s:url value="/Supplier/deleteRoleShop?idrole=${listrole.roleId}&idshop=${shopDetail.shopId}" var="deleterole"/>
+                                        <li><a href="${deleterole}">Xóa Role</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Khác</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+
+            </table>
+
+        </div>
+        <div class="box-header with-border">
+            <h3 class="box-title">Cấp quyền cho cửa hàng</h3>
+        </div>
+        <div class="box-body">
+            <form:form method="POST" commandName="role" role="form"  >
+                <div class="form-group">
+                    <label>Cập nhật role </label>
+                    <form:select path="roleId">
+                        <option value="0" label="-----select-----"/>
+                        <c:forEach items="${listRole}" var="role">
+                            <form:option label="${role.roleName}" 
+                                         value="${role.roleId}"/>
+                        </c:forEach>
+                    </form:select>
+                </div>
+                <input type="hidden" value="${shopDetail.shopId}" name="idshop"/>
+                <div class="box-footer clearfix">
+                    <s:url value="/Supplier/addRoleForShop" var="addrole"/>
+                    <button class="btn btn-primary" type="submit" onclick="form.action = '${addrole}';" >Cập nhật Role</button>
+                </div>
+
             </form:form>
         </div>
         <!-- /.box-body -->
     </div>
-</div>
 </div>

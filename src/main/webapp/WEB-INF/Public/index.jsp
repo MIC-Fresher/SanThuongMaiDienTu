@@ -1,31 +1,102 @@
-<%-- 
-    Document   : index.jsp
-    Created on : Dec 3, 2016, 6:34:42 PM
-    Author     : Admin
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<html lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>
-            <a href="User/userpage">user</a>
-        </h1>
-        <h1>
-            <a href="Supplier/SuplierIndex">suplier</a>
-        </h1>
-        <h1>
-            <a href="Public/publicpage">public</a>
-        </h1>
-        <h1>
-            <a href="Shop/ShopIndex">shop</a>
-        </h1>
-         <h1>
-            <a href="Public/setupRegister">setupRegister</a>
-        </h1>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Home | E-Shopper</title>
+        <!--        <link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />-->
+        <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/css/font-awesome.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/css/prettyPhoto.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/css/price-range.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/css/animate.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/css/main.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/css/responsive.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
+        <!--[if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+        <script src="js/respond.min.js"></script>
+        <![endif]-->       
+        <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/ico/favicon.ico">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="${pageContext.request.contextPath}/images/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="${pageContext.request.contextPath}/images/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="${pageContext.request.contextPath}/images/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="${pageContext.request.contextPath}/images/ico/apple-touch-icon-57-precomposed.png">
+        <script src="${pageContext.request.contextPath}/js/jquery.js"></script>
+        <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/jquery.scrollUp.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/price-range.js"></script>
+        <script src="${pageContext.request.contextPath}/js/jquery.prettyPhoto.js"></script>
+        <script src="${pageContext.request.contextPath}/js/main.js"></script>
+    </head><!--/head-->
+
+    <body><div class="wrapper">
+            <c:if test="${not empty messeger}">
+                <script>
+                    alert("${messeger}");
+                </script>
+            </c:if>
+            <!--header-->
+            <jsp:include page="/WEB-INF/Include/Public/header_footer/header.jsp"/>
+
+            <jsp:include page="/WEB-INF/Include/Public/sliderbar/slider.jsp"/> 
+            <!--slider-->
+            <div class="content-wrapper">
+                <!--content-->
+                <section>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="left-sidebar">
+                                    <jsp:include page="/WEB-INF/Include/Public/sliderbar/categoriessliderbar.jsp"/>
+                                    <div class="brands_products"><!--brands_products-->
+                                        <h2>Brands</h2>
+                                        <div class="brands-name">
+                                            <ul class="nav nav-pills nav-stacked">
+                                                <li><a href="#"> <span class="pull-right">(50)</span>Acne</a></li>
+                                                <li><a href="#"> <span class="pull-right">(56)</span>Grüne Erde</a></li>
+                                                <li><a href="#"> <span class="pull-right">(27)</span>Albiro</a></li>
+                                                <li><a href="#"> <span class="pull-right">(32)</span>Ronhill</a></li>
+                                                <li><a href="#"> <span class="pull-right">(5)</span>Oddmolly</a></li>
+                                                <li><a href="#"> <span class="pull-right">(9)</span>Boudestijn</a></li>
+                                                <li><a href="#"> <span class="pull-right">(4)</span>Rösch creative culture</a></li>
+                                            </ul>
+                                        </div>
+                                    </div><!--/brands_products-->
+
+                                    <div class="price-range"><!--price-range-->
+                                        <h2>Price Range</h2>
+                                        <div class="well text-center">
+                                            <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[250,450]" id="sl2" ><br />
+                                            <b class="pull-left">$ 0</b> <b class="pull-right">$ 600</b>
+                                        </div>
+                                    </div><!--/price-range-->
+
+                                    <div class="shipping text-center"><!--shipping-->
+                                        <img src="${pageContext.request.contextPath}/images/home/shipping.jpg" alt="" />
+                                    </div><!--/shipping-->
+                                </div>
+                            </div>
+
+                            <c:if test="${not empty listSearchProducts.content}">
+                                <jsp:include page="/WEB-INF/Include/Public/table/featuresitem.jsp"/>
+                            </c:if>
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!--footer-->
+            <jsp:include page="/WEB-INF/Include/Public/header_footer/footer.jsp"/>
+
+
+
+        </div>
     </body>
 </html>

@@ -83,4 +83,14 @@ public class ShopServiceImpl implements ShopService {
         return null;
     }
 
+    @Override
+    public Page<Shop> getShopByInput(Pageable pageable, String ShopName, String ShopPhone, String UserName, String UserPhone, String UserEmail) throws Exception {
+        
+        try {
+            return shopRepository.findByShopNameContainingOrShopPhoneContainingOrUserId_UserNameContainingOrUserId_PhoneContainingOrUserId_EmailContaining(pageable, ShopName, ShopPhone, UserName, UserPhone, UserEmail);
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
 }
