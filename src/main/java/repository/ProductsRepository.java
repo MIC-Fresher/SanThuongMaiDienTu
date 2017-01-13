@@ -20,13 +20,11 @@ public interface ProductsRepository extends CrudRepository<Product, Integer> {
 
     public Page<Product> findAll(Pageable pageable) throws Exception;
 
-    public Page<Product> findByShopId_ShopId(Pageable pageable, int shopId) throws Exception;
-
     public Page<Product>
-            findByShopId_ShopIdOrIsActiveAndShopId_UserId_EnabledAndCategoryId_IsActiveAndProductNameContainingAndTotalVoteInAndUnitPriceBetweenAndCategoryId_CategoryNameContaining(Pageable pageable, Integer shopId, Integer shopIsactive, Integer catagoryIsactive, Integer productIsactive, String productName, List<Integer> totalvote, Integer fromPrice, Integer toPrice,String cateName) throws Exception;
+            findByShopId_ShopNameContainingAndIsActiveAndShopId_UserId_EnabledAndCategoryId_IsActiveAndProductNameContainingAndTotalVoteInAndUnitPriceBetweenAndCategoryId_CategoryNameContaining(Pageable pageable, String shopName, Integer shopIsactive, Integer catagoryIsactive, Integer productIsactive, String productName, List<Integer> totalvote, Integer fromPrice, Integer toPrice, String cateName) throws Exception;
 
     public Page<Product> findByShopId_ShopIdAndProductNameContaining(Pageable pageable, Integer shopId, String productName) throws Exception;
 
-    
+    public Page<Product> findByProductNameContainingAndIsActiveAndShopId_UserId_EnabledAndCategoryId_IsActive(Pageable pageable, String productName, Integer productActive, Integer shopActive, Integer catagoryActive) throws Exception;
 
 }

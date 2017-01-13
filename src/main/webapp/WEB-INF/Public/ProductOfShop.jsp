@@ -57,10 +57,7 @@
                             <div class="col-sm-3">
                                 <div class="left-sidebar">
                                     <jsp:include page="/WEB-INF/Include/Public/sliderbar/categoriessliderbar.jsp"/>
-                                    <c:if test="${not empty listShops}">
-                                        <jsp:include page="/WEB-INF/Include/Public/sliderbar/listshop.jsp"/>
-
-                                    </c:if>
+                                    
                                     <jsp:include page="/WEB-INF/Include/Public/sliderbar/price.jsp"/>
                                     <jsp:include page="/WEB-INF/Include/Public/sliderbar/voting.jsp"/>
                                     <div class="shipping text-center"><!--shipping-->

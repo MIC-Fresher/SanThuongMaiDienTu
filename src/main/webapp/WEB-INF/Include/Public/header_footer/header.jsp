@@ -36,8 +36,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-7">
+                    <s:url value="/setupIndex" var="index"/>
                     <div class="logo pull-left">
-                        <a href="./setupindex.html"><img src="${pageContext.request.contextPath}/images/shop/logo1.png" alt="" /></a>
+                        <a href="${index}"><img src="${pageContext.request.contextPath}/images/shop/logo1.png" alt="" /></a>
                     </div>
 
                 </div>
@@ -48,26 +49,28 @@
                             <li>
                                 <a href="./setupCart.html"><i class="fa fa-shopping-cart"></i> Cart (${listcart.size()==0?0:listcart.size()})
                                 </a>
-                            </li>
-                            <%
-                                if (session.getAttribute("Customer") == null) {
-                            %>
-                            <li>
-                                <a href="./SetupLogin.html"><i class="fa fa-lock"></i> Login</a>
-                            </li>
-                            <%
-                            } else {
-                            %>
-                            <li>
-                                <a href="./setUpInfo.html"><i class="fa fa-user"></i> ${Customer.ten}</a>
-                            </li>
-                            <li>
-                                <a href="./logOut.html?url=index"><i class="fa fa-lock"></i> Logout</a>
+
                             </li>
 
-                            <%
-                                }
-                            %>
+
+                            <c:choose>
+                                <c:when test="${sessionScope.user==null}">
+                                    <li>
+                                        <s:url value="/User/index" var="loginuser"/>
+                                        <a href="${loginuser}"><i class="fa fa-lock"></i> Login</a>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li>
+                                        <a href="./setUpInfo.html"><i class="fa fa-user"></i> ${user.userName}</a>
+                                    </li>
+
+                                    <li>
+                                        <s:url value="/User/logout" var="logoutuser"/>
+                                        <a href="${logoutuser}"><i class="fa fa-lock"></i> Logout</a>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
                         </ul>
                     </div>
                 </div>
@@ -89,7 +92,8 @@
                     </div>
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
-                            <li><a href="./setupindex.html" class="active">Home</a></li>
+
+                            <li><a href="${index}" class="active">Home</a></li>
 
                             <li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
@@ -112,7 +116,7 @@
                 </div>
                 <div class="col-sm-3">
                     <div class="search_box pull-right">
-                        <s:url value="/Public/searchProducts" var="searchform"/>
+                        <s:url value="/Public/searchAllProducts" var="searchform"/>
                         <form action="${searchform}" method="get" class="sidebar-form">
                             <div class="input-group">
                                 <input name="searchinput" type="text"  class="form-control" placeholder="Search...">

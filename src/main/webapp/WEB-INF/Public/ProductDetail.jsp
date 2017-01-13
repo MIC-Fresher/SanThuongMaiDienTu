@@ -57,10 +57,7 @@
                             <div class="col-sm-3">
                                 <div class="left-sidebar">
                                     <jsp:include page="/WEB-INF/Include/Public/sliderbar/categoriessliderbar.jsp"/>
-                                    <c:if test="${not empty listShops}">
-                                        <jsp:include page="/WEB-INF/Include/Public/sliderbar/listshop.jsp"/>
-
-                                    </c:if>
+                                    
                                     <jsp:include page="/WEB-INF/Include/Public/sliderbar/price.jsp"/>
                                     <jsp:include page="/WEB-INF/Include/Public/sliderbar/voting.jsp"/>
                                     <div class="shipping text-center"><!--shipping-->
@@ -68,10 +65,8 @@
                                     </div><!--/shipping-->
                                 </div>
                             </div>
-                            
-                            <c:if test="${not empty listSearchProducts.content}">
-                                <jsp:include page="/WEB-INF/Include/Public/table/featuresitem.jsp"/>
-                            </c:if>
+
+                            <jsp:include page="/WEB-INF/Include/Public/table/productdetail.jsp"/>
 
                         </div>
                     </div>
@@ -79,9 +74,6 @@
             </div>
             <!--footer-->
             <jsp:include page="/WEB-INF/Include/Public/header_footer/footer.jsp"/>
-
-
-
         </div>
     </body>
 </html>

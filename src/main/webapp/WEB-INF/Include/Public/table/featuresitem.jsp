@@ -6,8 +6,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="col-sm-9 padding-right">
     <jsp:include page="/WEB-INF/Include/Public/table/pagingfeaturesitem.jsp"/>
+    <jsp:include page="/WEB-INF/Include/Public/sliderbar/deletechoose.jsp"/>
     <div class="features_items"><!--features_items-->
-        <h2 class="title text-center">Danh mục thuốc</h2>
+        <h2 class="title text-center">Danh mục SP</h2>
 
         <c:forEach var="listProducts" items="${listSearchProducts.content}" varStatus="status">
 
@@ -19,16 +20,15 @@
 
                                 <c:choose >
                                     <c:when test="${listProducts.productdetail.producimageList[0].url!=null}">
-                                        <img src="${pageContext.request.contextPath}/images/product-details/<c:out value="${listProducts.productdetail.producimageList.get(0).url}"/>" alt="User Image">
+                                        <s:url var="productdetail" value="/Public/setupShowDetailProduct?id=${listProducts.productId}"/>
+                                        <a href="${productdetail}"> <img style="height: 373px" src="${pageContext.request.contextPath}/images/product-details/<c:out value="${listProducts.productdetail.producimageList.get(0).url}"/>" alt="User Image">
+                                        </a>
                                     </c:when>
                                     <c:otherwise>
-                                        <img  src="${pageContext.request.contextPath}/images/product-details/imgnotfound.png" alt="User Image">
+                                        <img style="height: 373px"  src="${pageContext.request.contextPath}/images/product-details/imgnotfound.png" alt="User Image">
                                     </c:otherwise>
                                 </c:choose>
-
-
                             </a>
-
                             <h2>
                                 <fmt:formatNumber type="number" value="${listProducts.unitPrice}"/>
                                 ${shopController.p.productId}
@@ -41,14 +41,11 @@
                                         return false;"  class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 
                             </form:form>
+                            
+                            <p>shop ${listProducts.shopId.shopName}</p>
+                            <p>vote ${listProducts.totalVote}</p>
                         </div>
-                        <div class="product-overlay">
-                            <div class="overlay-content">
-                                <h2>$56</h2>
-                                <p>Easy Polo Black Edition</p>
-                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                            </div>
-                        </div>
+
 
                     </div>
                     <div class="choose">

@@ -29,4 +29,9 @@ public interface ShopRepository extends CrudRepository<Shop, Integer> {
     public Page<Shop> findByShopNameContainingOrShopPhoneContainingOrUserId_UserNameContainingOrUserId_PhoneContainingOrUserId_EmailContaining(
             Pageable pageable, String ShopName, String ShopPhone, String UserName, String UserPhone, String UserEmail);
 
+    public List<Shop>
+            findDistinctByUserId_EnabledAndCategoryList_IsActiveAndProductList_IsActiveAndProductList_ProductNameContaining(
+                    Integer shopActive, Integer categoryActive, Integer productActive, String productName) throws Exception;
+
+    List<Shop> findByUserId_Enabled(Integer shopActive) throws Exception;
 }

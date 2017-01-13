@@ -98,7 +98,7 @@
             <div class="container"> 
                 <h3 class="w3ls-title w3ls-title1">Create your account</h3>  
                 <div class="login-body">
-                    <c:url value="/User/userpage" var="login" />
+                    <c:url value="/User/index" var="login" />
                     <c:url value="/Public/signUp" var="signup" />
                     <form:form  method="POST" commandName="UserRG"  id="contact1">
 

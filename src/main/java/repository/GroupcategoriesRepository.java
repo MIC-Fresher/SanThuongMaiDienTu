@@ -16,6 +16,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface GroupcategoriesRepository extends CrudRepository<Groupcategories, Integer>{
-    
+public interface GroupcategoriesRepository extends CrudRepository<Groupcategories, Integer> {
+
+    List<Groupcategories> findDistinctByCategoryList_ShopList_ShopName(String  shopName) throws Exception;
 }

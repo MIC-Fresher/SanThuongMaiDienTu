@@ -29,6 +29,7 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,6 +48,7 @@ public class UserController implements Serializable {
     Producimage pi;
     Product p;
     Category c;
+    entity.User u;
     Shop shopSession;
     Groupcategories gc;
     @Autowired
@@ -77,15 +79,17 @@ public class UserController implements Serializable {
 
     }
 
-    @RequestMapping(value = "/User/userpage", method = RequestMethod.GET)
+    @RequestMapping(value = "/User/index", method = RequestMethod.GET)
     public String LoginAdm(HttpServletRequest request, HttpSession session) throws Exception {
 
         try {
-
+            org.springframework.security.core.userdetails.User userSpringAuthencation = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            entity.User user = userService.getUser(userSpringAuthencation.getUsername(), "").get(0);
+            session.setAttribute("user", user);
         } catch (Exception e) {
             e.getMessage();
         }
-        return "/User/userpage";
+        return "redirect:/Public/searchProducts";
     }
 //    ====================================***HandMaping***=======================================================>>
 //    ====================================***ACCOUNT***=======================================================>>
@@ -105,7 +109,7 @@ public class UserController implements Serializable {
             HttpServletRequest request, ModelMap mm) throws Exception {
 
         if (signUp(UserRG, mm)) {
-            return "Public/aftersignup";
+            return "/Public/index";
         } else {
             return "Public/signup";
         }
@@ -120,36 +124,149 @@ public class UserController implements Serializable {
             @RequestParam(value = "categoryname", defaultValue = "", required = false) String categoryname,
             @RequestParam(value = "page", defaultValue = "1", required = false) Integer page,
             @RequestParam(value = "itemperpage", defaultValue = "12", required = false) Integer itemperpage,
-            @RequestParam(value = "idshop", defaultValue = "", required = false) Integer idshop,
+            @RequestParam(value = "shopname", defaultValue = "", required = false) String shopname,
             @RequestParam(value = "fromprice", defaultValue = "", required = false) Integer fromprice,
             @RequestParam(value = "toprice", defaultValue = "", required = false) Integer toprice,
             @RequestParam(value = "totalvote", defaultValue = "", required = false) Integer totalvote
     ) {
         try {
-            Shop s = (Shop) session.getAttribute("shop");
-            searchProducts(searchinput, mm, page, idshop, fromprice, toprice, totalvote, itemperpage,categoryname);
+
+            searchProducts(searchinput, mm, page, shopname, fromprice, toprice, totalvote, itemperpage, categoryname);
         } catch (Exception e) {
         }
         return "/Public/index";
     }
+
+    @RequestMapping(value = {"/Public/searchAllProducts"}, method = RequestMethod.GET)
+    public String searchAllProducts(
+            HttpServletRequest request, HttpSession session, ModelMap mm,
+            @RequestParam(value = "searchinput", defaultValue = "", required = false) String searchinput,
+            @RequestParam(value = "page", defaultValue = "1", required = false) Integer page,
+            @RequestParam(value = "itemperpage", defaultValue = "12", required = false) Integer itemperpage
+    ) {
+        try {
+
+            searchAllProducts(searchinput, mm, page, itemperpage);
+            setupCategoriesBar(mm);
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return "/Public/index";
+    }
+
+    @RequestMapping(value = {"/Public/showProductOfShop"}, method = RequestMethod.GET)
+    public String showProductOfShop(
+            HttpServletRequest request, HttpSession session, ModelMap mm,
+            @RequestParam(value = "searchinput", defaultValue = "", required = false) String searchinput,
+            @RequestParam(value = "categoryname", defaultValue = "", required = false) String categoryname,
+            @RequestParam(value = "page", defaultValue = "1", required = false) Integer page,
+            @RequestParam(value = "itemperpage", defaultValue = "12", required = false) Integer itemperpage,
+            @RequestParam(value = "shopname", defaultValue = "", required = false) String shopname,
+            @RequestParam(value = "fromprice", defaultValue = "", required = false) Integer fromprice,
+            @RequestParam(value = "toprice", defaultValue = "", required = false) Integer toprice,
+            @RequestParam(value = "totalvote", defaultValue = "", required = false) Integer totalvote
+    ) {
+        try {
+
+            searchProducts("", mm, page, shopname, fromprice, toprice, totalvote, itemperpage, categoryname);
+
+            showProductOfShop(shopname, mm);
+
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return "/Public/ProductOfShop";
+    }
+
+    @RequestMapping(value = {"/Public/setupShowDetailProduct"}, method = RequestMethod.GET)
+    public String setupShowDetailProduct(
+            @RequestParam(value = "id", required = true) Integer id,
+            HttpServletRequest request, HttpSession session, ModelMap mm) {
+
+        try {
+            setupShowDetailProduct(id, mm);
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return "/Public/ProductDetail";
+    }
 //    =======================================***METHOD***=====================================================>>
 
-//    =======================================***PRODUCT***=====================================================>>    
-    public void searchProducts(String search, ModelMap mm, int page, Integer idshop, Integer fromprice, Integer toprice, Integer totalvote, Integer itemperpage,String cateName) {
+//    =======================================***PRODUCT***=====================================================>>
+    public void searchAllProducts(String searchinput, ModelMap mm, Integer page, Integer itemperpage) {
+        ParameterUrlPulic parameterUrl = new ParameterUrlPulic(mm);
+        PageRequest pageRequest;
+        try {
 
+            pageRequest = new PageRequest(page - 1, itemperpage, Sort.Direction.DESC, "DateCreated");
+            Page<Product> pager = productsRepository.findByProductNameContainingAndIsActiveAndShopId_UserId_EnabledAndCategoryId_IsActive(pageRequest, searchinput, 1, 1, 1);
+            Pages pages = new Pages(pager);
+
+            parameterUrl.setSearchinput(searchinput);
+            parameterUrl.setItemperpage(itemperpage);
+            mm.addAttribute("parameterUrl", parameterUrl.toString());
+            mm.addAttribute("typesearch", "all");
+            mm.addAttribute("listSearchProducts", pages);
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
+
+    public void showProductOfShop(String shopName, ModelMap mm) {
+
+        try {
+            mm.addAttribute("listGroupcategories", groupcategoriesRepository.findDistinctByCategoryList_ShopList_ShopName(shopName));
+            mm.addAttribute("typecategorybar", "shop");
+        } catch (Exception e) {
+        }
+    }
+
+    public void setupShowDetailProduct(int id, ModelMap mm) {
+        Product p = null;
+        List<Shop> ls = new ArrayList<>();
+        try {
+            p = productsRepository.findOne(id);
+
+            ls = shopRepository.findDistinctByUserId_EnabledAndCategoryList_IsActiveAndProductList_IsActiveAndProductList_ProductNameContaining(1, 1, 1, p.getProductName());
+
+            mm.addAttribute("listShopSellProduct", ls);
+            mm.addAttribute("product", p);
+            setupCategoriesBar(mm);
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
+
+    public void searchProducts(String search,
+            ModelMap mm, int page, String shopname,
+            Integer fromprice, Integer toprice,
+            Integer totalvote, Integer itemperpage, String cateName) {
+
+        String[] temp;
+        ParameterUrlPulic parameterUrl = new ParameterUrlPulic(mm);
         List<Integer> listtt = new ArrayList<>();
-        if (idshop == null) {
-            idshop = 100000000;
-        } else {
-            mm.addAttribute("idshop", idshop);
+        if (!cateName.equals("")) {
+            temp = cateName.split(",", 2);
+            cateName = temp[0];
+        }
+
+        if (!shopname.equals("")) {
+            temp = shopname.split(",", 2);
+            shopname = temp[0];
+        }
+
+        if (!search.equals("")) {
+            temp = search.split(",", 2);
+            search = temp[0];
         }
 
         if (fromprice == null && toprice == null) {
             fromprice = 0;
             toprice = 10000000;
         } else {
-            mm.addAttribute("fromprice", fromprice);
-            mm.addAttribute("toprice", toprice);
+
+            parameterUrl.setFromprice(fromprice);
+            parameterUrl.setToprice(toprice);
         }
 
         if (totalvote == null) {
@@ -159,27 +276,48 @@ public class UserController implements Serializable {
             }
         } else {
             listtt.add(totalvote);
-            mm.addAttribute("totalvote", totalvote);
+
+            parameterUrl.setTotalvote(totalvote);
         }
         try {
             PageRequest pageRequest;
+
             pageRequest = new PageRequest(page - 1, itemperpage, Sort.Direction.DESC, "DateCreated");
-            Page<Product> pager = productsService.getProducts(pageRequest, idshop, 1, 1, 1, search, listtt, fromprice, toprice,cateName);
+            Page<Product> pager = productsService.getProducts(pageRequest, shopname, 1, 1, 1, search, listtt, fromprice, toprice, cateName);
             Pages pages = new Pages(pager);
             mm.addAttribute("listSearchProducts", pages);
-            mm.addAttribute("searchinput", search);
-            mm.addAttribute("itemperpage", itemperpage);
-            mm.addAttribute("listGroupcategories", groupcategoriesRepository.findAll());
 
+            parameterUrl.setSearchinput(search);
+
+            parameterUrl.setShopname(shopname);
+
+            parameterUrl.setItemperpage(itemperpage);
+
+            parameterUrl.setCategoryname(cateName);
+
+            setupCategoriesBar(mm);
+            mm.addAttribute("parameterUrl", parameterUrl.toString());
         } catch (Exception e) {
             e.getMessage();
         }
     }
 
+    public void setupCategoriesBar(ModelMap mm) {
+
+        try {
+            mm.addAttribute("listShops", shopRepository.findByUserId_Enabled(1));
+            mm.addAttribute("listGroupcategories", groupcategoriesRepository.findAll());
+        } catch (Exception e) {
+        }
+
+    }
+
+//    ====================================***ACCOUNT***=======================================================>>
     public boolean signUp(User user, ModelMap mm) {
         try {
             if (!userService.checkAccountExist(user.getUserName(), user.getEmail())) {
                 user.setEnabled(1);
+                user.setDateCreated(new Date());
                 user = userService.add(user);
                 userService.addRoleToUser(2, user.getUserId());
 
@@ -213,6 +351,14 @@ public class UserController implements Serializable {
 
     public Groupcategories getGc() {
         return gc;
+    }
+
+    public User getU() {
+        return u;
+    }
+
+    public void setU(User u) {
+        this.u = u;
     }
 
 }

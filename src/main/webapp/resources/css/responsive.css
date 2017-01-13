@@ -146,7 +146,7 @@
 }
 
 .shop-menu.pull-right{
-	float: right !important;
+	float: none !important;
 }
 
 .shop-menu .nav.navbar-nav{

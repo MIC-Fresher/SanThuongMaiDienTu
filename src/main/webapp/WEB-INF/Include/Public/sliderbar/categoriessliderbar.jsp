@@ -14,18 +14,31 @@
                 <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="#accordian" href="#${Groupcategories.groupCategoriesId}">
                         <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                        ${userController.c.categoryId}
-                            ${Groupcategories.groupCategoriesName}
+
+                        ${Groupcategories.groupCategoriesName}
                     </a>
                 </h4>
             </div>
             <div id="${Groupcategories.groupCategoriesId}" class="panel-collapse collapse">
                 <div class="panel-body">
                     <ul>
-                        <c:forEach items="${Groupcategories.categoryList}" var="category">
-                            <s:url value="/Public/searchProducts?categoryname=${category.categoryName}" var="searchbycategory"/>
-                            <li><a href="${searchbycategory}">${category.categoryName}</a></li>
-                            </c:forEach>
+                        <c:forEach items="${Groupcategories.categoryList}" var="category"  varStatus="status">
+
+                            <c:choose>
+                                <c:when test="${typecategorybar == 'shop'}">
+                                    <s:url value="/Public/showProductOfShop?categoryname=${category.categoryName}&${parameterUrl}" var="searchbycategory"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <s:url value="/Public/searchProducts?categoryname=${category.categoryName}&${parameterUrl}" var="searchbycategory"/>
+                                </c:otherwise>
+
+                            </c:choose>
+
+
+                            <li>
+                                <a href="${searchbycategory}">${category.categoryName}</a>
+                            </li>
+                        </c:forEach>
                     </ul>
                 </div>
             </div>

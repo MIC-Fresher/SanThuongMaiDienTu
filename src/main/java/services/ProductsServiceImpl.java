@@ -147,10 +147,10 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     @Override
-    public Page<Product> getProducts(Pageable pageable, Integer shopId, Integer shopIsactive, Integer catagoryIsactive, Integer productIsactive, String productName, List<Integer> totalvote, Integer fromPrice, Integer toPrice,String cateName) throws Exception {
+    public Page<Product> getProducts(Pageable pageable, String shopName, Integer shopIsactive, Integer catagoryIsactive, Integer productIsactive, String productName, List<Integer> totalvote, Integer fromPrice, Integer toPrice,String cateName) throws Exception {
 
         try {
-            return productsRepository.findByShopId_ShopIdOrIsActiveAndShopId_UserId_EnabledAndCategoryId_IsActiveAndProductNameContainingAndTotalVoteInAndUnitPriceBetweenAndCategoryId_CategoryNameContaining(pageable, shopId, shopIsactive, catagoryIsactive, productIsactive, productName, totalvote, fromPrice, toPrice,cateName);
+            return productsRepository.findByShopId_ShopNameContainingAndIsActiveAndShopId_UserId_EnabledAndCategoryId_IsActiveAndProductNameContainingAndTotalVoteInAndUnitPriceBetweenAndCategoryId_CategoryNameContaining(pageable, shopName, shopIsactive, catagoryIsactive, productIsactive, productName, totalvote, fromPrice, toPrice,cateName);
         } catch (Exception e) {
             e.getMessage();
         }

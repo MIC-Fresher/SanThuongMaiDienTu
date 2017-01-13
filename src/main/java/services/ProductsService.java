@@ -23,7 +23,7 @@ public interface ProductsService {
     public int deleteProductOfShop(int idproduct, int idshop) throws Exception;
 
     public Page<Product> getProducts(
-            Pageable pageable, Integer shopId,
+            Pageable pageable, String shopName,
             Integer shopIsactive, Integer catagoryIsactive,
             Integer productIsactive, String productName, List<Integer> totalvote,
             Integer fromPrice, Integer toPrice,String cateName) throws Exception;

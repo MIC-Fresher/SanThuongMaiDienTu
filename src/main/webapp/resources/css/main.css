@@ -1,10 +1,10 @@
-
+﻿
 /*************************
 *******Typography******
 **************************/
-
+/*@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,400italic,500,700,100);
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,800,300,600,700);
-@import url(http://fonts.googleapis.com/css?family=Abel);
+@import url(http://fonts.googleapis.com/css?family=Abel);*/
 
 body {
   font-family: 'Roboto', sans-serif;
@@ -262,8 +262,8 @@ a#scrollUp i{
   height: 35px;
   outline: medium none;
   padding-left: 10px;
-  width: 300px;
-  /*background-image: url(../images/home/searchicon.png);*/
+  width: 155px;
+
   background-repeat: no-repeat;
   background-position: 130px;
 }
@@ -884,7 +884,6 @@ h2.title {
 
 .productinfo img{
   width: 100%;
-  height: 237px;
 }
 
 .productinfo{
@@ -900,13 +899,13 @@ h2.title {
   transition: height 500ms ease 0s;
   width: 100%;
   display: block;
-  opacity:0 ;
+ 
 }
 
-/*.single-products:hover .product-overlay {
+.single-products:hover .product-overlay {
   display:block;
   height:100%;
-}*/
+}
 
 
 .product-overlay .overlay-content {
@@ -1490,17 +1489,6 @@ h2.title {
   padding: 6px 25px;
 }
 
-.buttonlg{
-  background: #FE980F;
-  border: medium none;
-  border-radius: 0;
-  color: #FFFFFF;
-  display: block;
-  font-family: 'Roboto', sans-serif;
-  padding: 6px 25px;
-  margin-top: 23px;
-}
-
 .login-form label{
 
 }
@@ -1568,7 +1556,7 @@ h2.title {
 }
 
 .breadcrumbs .breadcrumb > li + li:before {
-  content: "�";
+  content: " ";
 }
 
 #cart_items .cart_info {
