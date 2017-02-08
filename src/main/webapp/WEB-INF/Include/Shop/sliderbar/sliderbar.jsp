@@ -44,19 +44,19 @@
                 </ul>
             </li>
             <li class="treeview">
-
-
-                <a href="#"><i class="fa fa-link"></i> <span>Quản lý  phản hồi</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class="fa fa-link"></i> <span>Quản lý đơn hàng</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a href="">Danh sách phản hồi</a></li>
+                    <s:url value="/Shop/Orders" var="orderlanding"/>
+                    <li><a href="${orderlanding}">Danh sách đơn hàng</a></li>
                     <li><a href="#">Link in level 2</a></li>
                 </ul>
             </li>
+           
             <li class="treeview">
-                <a href="#"><i class="fa fa-link"></i> <span>Quản lý cửa hàng</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class="fa fa-link"></i> <span>Thống kê</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <c:url value="" var="shops"/>
-                    <li><a href="<c:out value="${shops}"/>">Danh sách cửa hàng</a></li>
+                    <c:url value="/Shop/DashBoard" var="report"/>
+                    <li><a href="${report}">Thống kê</a></li>
                     <li><a href="#">Link in level 2</a></li>
                 </ul>
             </li>

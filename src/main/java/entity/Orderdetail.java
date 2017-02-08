@@ -38,12 +38,16 @@ public class Orderdetail implements Serializable {
     @Column(name = "Quantity")
     private Integer quantity;
     @Column(name = "TotalUnitPrice")
-    private Integer totalUnitPrice;
+    private Double totalUnitPrice;
+    
     @JoinColumn(name = "ProductId", referencedColumnName = "ProductId")
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("orderdetailList")
     @ManyToOne
     private Product productId;
+    
     @JoinColumn(name = "OrderId", referencedColumnName = "OrderId")
     @ManyToOne
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("orderdetailList")
     private Orders orderId;
 
     public Orderdetail() {
@@ -69,11 +73,11 @@ public class Orderdetail implements Serializable {
         this.quantity = quantity;
     }
 
-    public Integer getTotalUnitPrice() {
+    public Double getTotalUnitPrice() {
         return totalUnitPrice;
     }
 
-    public void setTotalUnitPrice(Integer totalUnitPrice) {
+    public void setTotalUnitPrice(Double totalUnitPrice) {
         this.totalUnitPrice = totalUnitPrice;
     }
 

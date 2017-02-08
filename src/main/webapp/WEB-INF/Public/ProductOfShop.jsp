@@ -45,9 +45,9 @@
                 </script>
             </c:if>
             <!--header-->
-            <jsp:include page="/WEB-INF/Include/Public/header_footer/header.jsp"/>
+            <jsp:include page="/WEB-INF/Include/Public/sections/header_footer/header.jsp"/>
 
-            <jsp:include page="/WEB-INF/Include/Public/sliderbar/slider.jsp"/> 
+            <jsp:include page="/WEB-INF/Include/Public/sections/component/slider/slider.jsp"/> 
             <!--slider-->
             <div class="content-wrapper">
                 <!--content-->
@@ -56,29 +56,59 @@
                         <div class="row">
                             <div class="col-sm-3">
                                 <div class="left-sidebar">
-                                    <jsp:include page="/WEB-INF/Include/Public/sliderbar/categoriessliderbar.jsp"/>
-                                    
-                                    <jsp:include page="/WEB-INF/Include/Public/sliderbar/price.jsp"/>
-                                    <jsp:include page="/WEB-INF/Include/Public/sliderbar/voting.jsp"/>
+                                    <jsp:include page="/WEB-INF/Include/Public/common/shop/sliderbar/categoriesbar.jsp"/>                             
+                                    <jsp:include page="/WEB-INF/Include/Public/common/shop/sliderbar/pricebar.jsp"/>
+                                    <jsp:include page="/WEB-INF/Include/Public/common/shop/sliderbar/votingbar.jsp"/>
                                     <div class="shipping text-center"><!--shipping-->
                                         <img src="${pageContext.request.contextPath}/images/home/shipping.jpg" alt="" />
                                     </div><!--/shipping-->
                                 </div>
                             </div>
-                            
-                            <c:if test="${not empty listSearchProducts.content}">
-                                <jsp:include page="/WEB-INF/Include/Public/table/featuresitem.jsp"/>
-                            </c:if>
-
+                            <div class="col-sm-9 padding-right">
+                                <jsp:include page="/WEB-INF/Include/Public/common/shop/deletechoose.jsp"/>
+                                <div id="featuresitem" >
+                                    <c:if test="${not empty listSearchProducts.content}">
+                                        <jsp:include page="/WEB-INF/Include/Public/sections/component/table/featuresitem.jsp"/>
+                                    </c:if>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
             </div>
             <!--footer-->
-            <jsp:include page="/WEB-INF/Include/Public/header_footer/footer.jsp"/>
+            <jsp:include page="/WEB-INF/Include/Public/sections/header_footer/footer.jsp"/>
 
 
 
         </div>
+
+
+
+        <script lang="javascript">
+            function searchViaAjax(input) {
+
+                $.ajax({
+                    type: "GET",
+                    url: input,
+                    timeout: 100000,
+                    success: function (data) {
+                        console.log("SUCCESS: ", data);
+                        display(data);
+
+                    },
+                    error: function (e) {
+                        console.log("ERROR: ", e);
+                        display(e);
+                    }
+                });
+            }
+            function display(data) {
+
+                $('#featuresitem').html(data);
+            }
+
+
+        </script>
     </body>
 </html>

@@ -77,6 +77,7 @@
                 <p class="login-box-msg">Sign in to start your session</p>
 
                 <form:form method="POST"  id="contact" >
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <div class="form-group has-feedback">
                         <input name="user" required="true"   id="name" type="text" class="form-control" placeholder="Tên" />
                         

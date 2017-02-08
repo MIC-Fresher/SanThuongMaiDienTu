@@ -44,6 +44,7 @@ public class Groupcategories implements Serializable {
     
     @OneToMany(cascade =  CascadeType.MERGE ,mappedBy = "groupCategoriesId")
     @LazyCollection(LazyCollectionOption.FALSE)
+     @com.fasterxml.jackson.annotation.JsonIgnoreProperties("groupCategoriesId")
     private List<Category> categoryList;
 
     public Groupcategories() {

@@ -39,8 +39,10 @@ public class Producimage implements Serializable {
     private String url;
     @Column(name = "IsActive")
     private Integer isActive;
+    
     @JoinColumn(name = "ProducDetailtId", referencedColumnName = "ProductdetailId")
     @ManyToOne
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("producimageList")
     private Productdetail producDetailtId;
 
     public Producimage() {

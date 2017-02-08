@@ -57,6 +57,8 @@ public class Product implements Serializable {
     private Integer isDiscounted;
     @Column(name = "UnitPrice")
     private Integer unitPrice;
+    @Column(name = "Stock")
+    private Integer stock;
     @Column(name = "Quantity")
     private Integer quantity;
     @Column(name = "IsActive")
@@ -65,31 +67,41 @@ public class Product implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreated;
 
-    
-
     @JoinColumn(name = "ShopId", referencedColumnName = "ShopId")
     @ManyToOne
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("productList")
     @LazyCollection(LazyCollectionOption.FALSE)
     private Shop shopId;
 
-    @OneToOne(cascade =  CascadeType.MERGE   ,mappedBy = "productId")
+    @OneToOne(cascade = CascadeType.MERGE, mappedBy = "productId")
     @LazyCollection(LazyCollectionOption.FALSE)
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("productId")
     private Productdetail productdetail;
-    
+
     @JoinColumn(name = "CategoryId", referencedColumnName = "CategoryId")
     @ManyToOne
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("productList")
     private Category categoryId;
-    
-    @OneToMany(cascade =  CascadeType.MERGE   ,mappedBy = "productId")
+
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "productId")
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("productId")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Productstatus> productstatusList;
-    @OneToMany(cascade =  CascadeType.MERGE   ,mappedBy = "productId")
+    
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "productId")
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("productId")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Productcomment> productcommentList;
-    @OneToMany( cascade =  CascadeType.MERGE   ,mappedBy = "productId")
+    
+    
+    
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "productId")
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("productId")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Productvoting> productvotingList;
-    @OneToMany( cascade =  CascadeType.MERGE   ,mappedBy = "productId")
+    
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "productId")
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("productId")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Orderdetail> orderdetailList;
 
@@ -172,8 +184,6 @@ public class Product implements Serializable {
         this.shopId = shopId;
     }
 
-    
-
     public Productdetail getProductdetail() {
         return productdetail;
     }
@@ -228,6 +238,14 @@ public class Product implements Serializable {
 
     public void setTotalVote(Integer totalVote) {
         this.totalVote = totalVote;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 
     @Override

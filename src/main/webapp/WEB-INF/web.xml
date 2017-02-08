@@ -26,7 +26,7 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
     
-    <!--khai báo bộ lọc =============================================================-->
+    <!--khai báo bộ lọc sercurity=============================================================-->
    
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>
@@ -40,19 +40,37 @@
         <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
     </listener>
    
-    <!--khai báo bộ lọc===========================================================-->
+ 
     
     <!--khai báo serletdispacher===============================================================-->
     <servlet>
         <servlet-name>spring</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>
+                /WEB-INF/SpringConfig/spring-servlet.xml
+            </param-value>
+        </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>spring</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-    <!--khai báo serletdispacher=================================================================-->
+    <!-- =[ SPRING FRAMEWORK ] khai báo file config để load========================================================================================== -->
+    <context-param>
+        
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            /WEB-INF/SpringConfig/springSecurity.xml
+            /WEB-INF/SpringConfig/applicationContext.xml
+        </param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <!-- =[ SPRING FRAMEWORK ]========================================================================================== -->
     <welcome-file-list>
         <welcome-file>redirect.jsp</welcome-file>
     </welcome-file-list>

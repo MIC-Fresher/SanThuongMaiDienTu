@@ -41,20 +41,26 @@ public class Productdetail implements Serializable {
     @Basic(optional = false)
     @Column(name = "ProductdetailId")
     private Integer productdetailId;
+    
     @JoinColumn(name = "SizeId", referencedColumnName = "SizeId")
     @ManyToOne
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("productdetailList")
     private Sizes sizeId;
     
     @JoinColumn(name = "ProductId", referencedColumnName = "ProductId")
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("productdetail")
     @OneToOne
     private Product productId;
     
     
     @JoinColumn(name = "ColorId", referencedColumnName = "ColorId")
     @ManyToOne
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("productdetailList")
     private Color colorId;
+    
     @OneToMany(  cascade =  CascadeType.MERGE   ,mappedBy = "producDetailtId")
     @LazyCollection(LazyCollectionOption.FALSE)
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("producDetailtId")
     private List<Producimage> producimageList;
 
     public Productdetail() {

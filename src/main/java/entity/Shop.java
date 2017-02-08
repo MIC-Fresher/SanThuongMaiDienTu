@@ -80,19 +80,26 @@ public class Shop implements Serializable {
 
     @ManyToMany(mappedBy = "shopList", cascade =  CascadeType.MERGE  )
     @LazyCollection(LazyCollectionOption.FALSE)
+     @com.fasterxml.jackson.annotation.JsonIgnoreProperties("shopList")
     private List<Category> categoryList;
 
     @OneToMany( cascade =  CascadeType.MERGE   ,mappedBy = "shopId")
     @LazyCollection(LazyCollectionOption.FALSE)
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("shopId")
     private List<Product> productList;
 
     @JoinColumn(name = "UserId", referencedColumnName = "UserId")
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("shop")
     @OneToOne
     private User userId;
+    
     @OneToMany( cascade =  CascadeType.MERGE   ,mappedBy = "shopId")
     @LazyCollection(LazyCollectionOption.FALSE)
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("shopId")
     private List<ShopAddress> shopAddressList;
+    
     @OneToMany( cascade =  CascadeType.MERGE   ,mappedBy = "shopId")
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("shopId")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Shopdaily> shopdailyList;
 

@@ -43,7 +43,9 @@ public class Receiver implements Serializable {
     private String receiverAddress;
     @Column(name = "ReceiverPhone")
     private String receiverPhone;
+    
     @OneToMany( cascade =  CascadeType.MERGE   ,mappedBy = "receiverId")
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("receiverId")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Orders> ordersList;
 

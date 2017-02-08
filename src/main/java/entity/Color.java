@@ -39,8 +39,10 @@ public class Color implements Serializable {
     private Integer colorId;
     @Column(name = "ColorName")
     private String colorName;
-    @OneToMany(cascade =  CascadeType.MERGE   ,mappedBy = "colorId")
-      @LazyCollection(LazyCollectionOption.FALSE)
+
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "colorId")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("colorId")
     private List<Productdetail> productdetailList;
 
     public Color() {
@@ -98,5 +100,5 @@ public class Color implements Serializable {
     public String toString() {
         return "entity.Color[ colorId=" + colorId + " ]";
     }
-    
+
 }

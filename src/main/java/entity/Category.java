@@ -67,21 +67,24 @@ public class Category implements Serializable {
     private String categoryName;
     @Column(name = "isActive")
     private Integer isActive;
+
     @JoinTable(name = "shop_category", joinColumns = {
         @JoinColumn(name = "CategoryId", referencedColumnName = "CategoryId")}, inverseJoinColumns = {
         @JoinColumn(name = "ShopId", referencedColumnName = "ShopId")})
     @ManyToMany
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("categoryList")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Shop> shopList;
-    @OneToMany(cascade =  CascadeType.MERGE ,mappedBy   = "categoryId" )
+
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "categoryId")
     @LazyCollection(LazyCollectionOption.FALSE)
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("categoryId")
     private List<Product> productList;
 
     @JoinColumn(name = "GroupCategoriesId", referencedColumnName = "GroupCategoriesId")
     @ManyToOne
     private Groupcategories groupCategoriesId;
-    
-    
+
     public Category() {
     }
 

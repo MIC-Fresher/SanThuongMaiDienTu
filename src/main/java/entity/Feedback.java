@@ -47,11 +47,15 @@ public class Feedback implements Serializable {
     @Column(name = "CreateDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
+
     @JoinColumn(name = "StatusFeedbackId", referencedColumnName = "StatusFeedbackId")
     @ManyToOne
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("feedbackList")
     private Statusfeedback statusFeedbackId;
+
     @JoinColumn(name = "UserId", referencedColumnName = "UserId")
     @ManyToOne
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("feedbackList")
     private User userId;
 
     public Feedback() {
@@ -133,5 +137,5 @@ public class Feedback implements Serializable {
     public String toString() {
         return "entity.Feedback[ feedbackId=" + feedbackId + " ]";
     }
-    
+
 }

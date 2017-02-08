@@ -43,11 +43,15 @@ public class Productvoting implements Serializable {
     @Column(name = "DateCreated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreated;
+    
     @JoinColumn(name = "ProductId", referencedColumnName = "ProductId")
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("productcommentList")
     @ManyToOne
     private Product productId;
+    
     @JoinColumn(name = "UserId", referencedColumnName = "UserId")
     @ManyToOne
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("productcommentList")
     private User userId;
 
     public Productvoting() {

@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import repository.*;
-import utils.IMGUtils;
+import utils.IMG.IMGUtils;
 
 @Transactional
 @Service
@@ -63,6 +63,8 @@ public class ProductsServiceImpl implements ProductsService {
             product.setDateCreated(new Date());
 
             product.setShopId(shop);
+            
+            product.setStock(product.getQuantity());
             
             product.setTotalVote(0);
             

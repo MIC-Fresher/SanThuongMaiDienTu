@@ -55,8 +55,10 @@ public class Supplier implements Serializable {
     private String role;
     @Column(name = "enabled")
     private Integer enabled;
-    @OneToMany( cascade =  CascadeType.MERGE   ,mappedBy = "supplierId")
-      @LazyCollection(LazyCollectionOption.FALSE)
+
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "supplierId")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("supplierId")
     private List<User> userList;
 
     public Supplier() {
@@ -170,5 +172,5 @@ public class Supplier implements Serializable {
     public String toString() {
         return "entity.Supplier[ supplierId=" + supplierId + " ]";
     }
-    
+
 }

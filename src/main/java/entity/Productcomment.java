@@ -45,13 +45,23 @@ public class Productcomment implements Serializable {
     @Column(name = "DateCreated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreated;
+    
     @JoinColumn(name = "UserId", referencedColumnName = "UserId")
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("productcommentList")
     @ManyToOne
     private User userId;
+    
     @JoinColumn(name = "ProductId", referencedColumnName = "ProductId")
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("productcommentList")
     @ManyToOne
     private Product productId;
 
+    @JoinColumn(name = "StatusCommentId", referencedColumnName = "statuscommentid")
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("productcommentList")
+    @ManyToOne
+    private Statuscomment statusCommentId;
+    
+    
     public Productcomment() {
     }
 
@@ -99,6 +109,16 @@ public class Productcomment implements Serializable {
         this.productId = productId;
     }
 
+    public Statuscomment getStatusCommentId() {
+        return statusCommentId;
+    }
+
+    public void setStatusCommentId(Statuscomment statusCommentId) {
+        this.statusCommentId = statusCommentId;
+    }
+
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;

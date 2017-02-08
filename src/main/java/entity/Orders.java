@@ -50,16 +50,20 @@ public class Orders implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate;
     @Column(name = "TotalPrice")
-    private BigInteger totalPrice;
+    private Double totalPrice;
+    
     @JoinColumn(name = "ReceiverId", referencedColumnName = "ReceiverId")
     @ManyToOne
     private Receiver receiverId;
+    
     @JoinColumn(name = "StatusOrderId", referencedColumnName = "StatusOrderId")
     @ManyToOne
     private Statusorder statusOrderId;
+    
     @JoinColumn(name = "UserId", referencedColumnName = "UserId")
     @ManyToOne
     private User userId;
+    
     @OneToMany(cascade =  CascadeType.MERGE   ,mappedBy = "orderId")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Orderdetail> orderdetailList;
@@ -95,11 +99,11 @@ public class Orders implements Serializable {
         this.orderDate = orderDate;
     }
 
-    public BigInteger getTotalPrice() {
+    public Double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(BigInteger totalPrice) {
+    public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 

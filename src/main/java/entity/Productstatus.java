@@ -40,12 +40,13 @@ public class Productstatus implements Serializable {
     private Integer productStatusId;
     @Column(name = "NumberSold")
     private Integer numberSold;
-    @Column(name = "NumberStock")
-    private Integer numberStock;
+   
     @Column(name = "DateCreated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreated;
+    
     @JoinColumn(name = "ProductId", referencedColumnName = "ProductId")
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("productstatusList")
     @ManyToOne
     private Product productId;
 
@@ -72,13 +73,6 @@ public class Productstatus implements Serializable {
         this.numberSold = numberSold;
     }
 
-    public Integer getNumberStock() {
-        return numberStock;
-    }
-
-    public void setNumberStock(Integer numberStock) {
-        this.numberStock = numberStock;
-    }
 
     public Date getDateCreated() {
         return dateCreated;

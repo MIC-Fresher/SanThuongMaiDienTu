@@ -28,16 +28,18 @@
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="${pageContext.request.contextPath}/images/ico/apple-touch-icon-114-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="${pageContext.request.contextPath}/images/ico/apple-touch-icon-72-precomposed.png">
         <link rel="apple-touch-icon-precomposed" href="${pageContext.request.contextPath}/images/ico/apple-touch-icon-57-precomposed.png">
-
-    </head><!--/head-->
-
-    <body>
-        <script src="${pageContext.request.contextPath}/js/jquery.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.js"></script>
+        <script src="${pageContext.request.contextPath}/js/jQuery-2.2.0.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/jquery.scrollUp.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/price-range.js"></script>
         <script src="${pageContext.request.contextPath}/js/jquery.prettyPhoto.js"></script>
         <script src="${pageContext.request.contextPath}/js/main.js"></script>
+
+    </head><!--/head-->
+
+    <body>
+
         <div class="wrapper">
             <c:if test="${not empty messeger}">
                 <script>
@@ -45,43 +47,74 @@
                 </script>
             </c:if>
             <!--header-->
-            <jsp:include page="/WEB-INF/Include/Public/header_footer/header.jsp"/>
+            <jsp:include page="/WEB-INF/Include/Public/sections/header_footer/header.jsp"/>
 
-            <jsp:include page="/WEB-INF/Include/Public/sliderbar/slider.jsp"/> 
+            <jsp:include page="/WEB-INF/Include/Public/sections/component/slider/slider.jsp"/> 
             <!--slider-->
-            <div class="content-wrapper">
+            <div id="test" class="content-wrapper">
                 <!--content-->
                 <section>
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-3">
                                 <div class="left-sidebar">
-                                    <jsp:include page="/WEB-INF/Include/Public/sliderbar/categoriessliderbar.jsp"/>
+                                    <jsp:include page="/WEB-INF/Include/Public/sections/component/sliderbar/categoriesbar.jsp"/>
                                     <c:if test="${not empty listShops}">
-                                        <jsp:include page="/WEB-INF/Include/Public/sliderbar/listshop.jsp"/>
+                                        <jsp:include page="/WEB-INF/Include/Public/sections/component/sliderbar/listshopbar.jsp"/>
 
                                     </c:if>
-                                    <jsp:include page="/WEB-INF/Include/Public/sliderbar/price.jsp"/>
-                                    <jsp:include page="/WEB-INF/Include/Public/sliderbar/voting.jsp"/>
+                                    <jsp:include page="/WEB-INF/Include/Public/sections/component/sliderbar/pricebar.jsp"/>
+                                    <jsp:include page="/WEB-INF/Include/Public/sections/component/sliderbar/votingbar.jsp"/>
                                     <div class="shipping text-center"><!--shipping-->
                                         <img src="${pageContext.request.contextPath}/images/home/shipping.jpg" alt="" />
                                     </div><!--/shipping-->
                                 </div>
                             </div>
-                            
-                            <c:if test="${not empty listSearchProducts.content}">
-                                <jsp:include page="/WEB-INF/Include/Public/table/featuresitem.jsp"/>
-                            </c:if>
+                            <div id="featuresitem"  class="col-sm-9 padding-right">
+                                <c:if test="${not empty listSearchProducts.content}">
 
+                                    <jsp:include page="/WEB-INF/Include/Public/sections/component/table/featuresitem.jsp"/>
+
+                                </c:if>
+                            </div>
                         </div>
                     </div>
                 </section>
             </div>
             <!--footer-->
-            <jsp:include page="/WEB-INF/Include/Public/header_footer/footer.jsp"/>
+            <jsp:include page="/WEB-INF/Include/Public/sections/header_footer/footer.jsp"/>
 
 
 
         </div>
+
+
+
+        <script lang="javascript">
+            function searchViaAjax(input) {
+
+                $.ajax({
+                    type: "GET",
+                    url: input,
+                    timeout: 100000,
+                    success: function (data) {
+                        console.log("SUCCESS: ", data);
+                        display(data);
+
+                    },
+                    error: function (e) {
+                        console.log("ERROR: ", e);
+                        display(e);
+                    }
+                });
+            }
+            function display(data) {
+
+                $('#featuresitem').html(data);
+            }
+
+
+        </script>
+
     </body>
 </html>

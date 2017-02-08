@@ -25,6 +25,8 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/ionicons.min.css">
         <!-- Theme style -->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/AdminLTE.min.css">
+        <!--model box-->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/modalbox.css">
         <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
               page. However, you can choose any other skin. Make sure you
               apply the skin class to the body tag so the changes take effect.
@@ -64,9 +66,30 @@
                 </section>
                 <section class="content-header">
 
-                    <jsp:include page="/WEB-INF/Include/Shop/form/searchformforproducts.jsp"></jsp:include>
+                    <jsp:include page="/WEB-INF/Include/Shop/products/searchformforproducts.jsp"></jsp:include>
                     </section>
+                    <!--modalbox-->
+                    <div id="Product_Modal" class="modal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Default Modal</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p id="body_modal">
 
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary pull-left close2" data-dismiss="modal">Close</button>
+                                    <a id="delete_href" type="button" class="btn btn-primary">Đồng ý</a>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                    </div>
                     <!-- Main content -->
                     <!------------------------------------------------------------------------------------------------------->
                     <section class="content">
@@ -79,8 +102,8 @@
                                     <div class="box-body">
 
                                     <c:if test="${not empty listSearchProducts.content}">
-                                        <jsp:include page="/WEB-INF/Include/Shop/table/TableSearchProducts.jsp"></jsp:include>
-                                        <jsp:include page="/WEB-INF/Include/Shop/table/PagingSearchProducts.jsp"></jsp:include>
+                                        <jsp:include page="/WEB-INF/Include/Shop/products/table/TableSearchProducts.jsp"></jsp:include>
+                                        <jsp:include page="/WEB-INF/Include/Shop/products/table/PagingSearchProducts.jsp"></jsp:include>
                                     </c:if>
 
 
@@ -90,13 +113,7 @@
                             </div>
 
                         </div>
-                        <c:if test="${not empty product and type=='add'}">
-                            <jsp:include page="/WEB-INF/Include/Shop/form/addformforproduct.jsp"></jsp:include>
-                        </c:if>
-                        <c:if test="${not empty product and type=='update'}">
-                            <jsp:include page="/WEB-INF/Include/Shop/form/updateformforproduct.jsp"></jsp:include>
-                        </c:if>
-
+                        
                         <!-- /.col -->
                     </div>
                     <!-- /.row -->
@@ -121,7 +138,39 @@
             <div class="control-sidebar-bg"></div>
         </div>
         <!-- ./wrapper -->
+        <script>
+            function deleteProduct(input) {
 
+                // Get the modal
+                var modal = document.getElementById('Product_Modal');
+                modal.style.display = "block";
+                document.getElementById("body_modal").innerHTML = "Bạn  muốn xóa SP này ?";
+                document.getElementById("delete_href").href = input;
+                
+                // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+                var btnclose = document.getElementsByClassName("close2")[0];
+
+                //-----------
+                btnclose.onclick = function () {
+                    modal.style.display = "none";
+                }
+                // When the user clicks on <span> (x), close the modal
+                span.onclick = function () {
+                    modal.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function (event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+
+            }
+
+
+        </script>
 
     </body>
 </html>

@@ -8,8 +8,11 @@ package repository;
 import entity.*;
 import org.springframework.data.domain.Pageable;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
+import javax.persistence.TemporalType;
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.repository.Temporal;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -29,4 +32,8 @@ public interface CategoriesRepository extends CrudRepository<Category, Integer> 
 
     @Procedure(name = "addCS")
     int addCS(@Param("idcate") Integer idcate, @Param("idshop") Integer idshop) throws Exception;
+
+    public int countByShopList_ShopNameContainingAndIsActive(String shopName, Integer isActive) throws Exception;
+
+    
 }

@@ -39,8 +39,9 @@ public class Statusfeedback implements Serializable {
     private Integer statusFeedbackId;
     @Column(name = "status")
     private String status;
-    @OneToMany( cascade =  CascadeType.MERGE   ,mappedBy = "statusFeedbackId")
-      @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "statusFeedbackId")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("statusFeedbackId")
     private List<Feedback> feedbackList;
 
     public Statusfeedback() {
@@ -98,5 +99,5 @@ public class Statusfeedback implements Serializable {
     public String toString() {
         return "entity.Statusfeedback[ statusFeedbackId=" + statusFeedbackId + " ]";
     }
-    
+
 }

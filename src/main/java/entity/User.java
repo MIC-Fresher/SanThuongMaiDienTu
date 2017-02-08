@@ -89,29 +89,43 @@ public class User implements Serializable {
     private Date dateCreated;
     @Column(name = "enabled")
     private Integer enabled;
+
     @JoinTable(name = "role_user", joinColumns = {
         @JoinColumn(name = "UserId", referencedColumnName = "UserId")}, inverseJoinColumns = {
         @JoinColumn(name = "RoleId", referencedColumnName = "RoleId")})
     @ManyToMany
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("userList")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Role> roleList;
-    @OneToOne(mappedBy = "userId",cascade =  CascadeType.MERGE  )
+
+    @OneToOne(mappedBy = "userId", cascade = CascadeType.MERGE)
     @LazyCollection(LazyCollectionOption.FALSE)
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("userId")
     private Shop shop;
-    @OneToMany( cascade =  CascadeType.MERGE   ,mappedBy = "userId")
+
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "userId")
     @LazyCollection(LazyCollectionOption.FALSE)
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("userId")
     private List<Productcomment> productcommentList;
-    @OneToMany( cascade =  CascadeType.MERGE   ,mappedBy = "userId")
+
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "userId")
     @LazyCollection(LazyCollectionOption.FALSE)
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("userId")
     private List<Feedback> feedbackList;
-    @OneToMany( cascade =  CascadeType.MERGE   ,mappedBy = "userId")
+
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "userId")
     @LazyCollection(LazyCollectionOption.FALSE)
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("userId")
     private List<Productvoting> productvotingList;
-    @OneToMany( cascade =  CascadeType.MERGE   ,mappedBy = "userId")
+
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "userId")
     @LazyCollection(LazyCollectionOption.FALSE)
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("userId")
     private List<Orders> ordersList;
+
     @JoinColumn(name = "SupplierId", referencedColumnName = "SupplierId")
     @ManyToOne
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("userList")
     private Supplier supplierId;
 
     public User() {

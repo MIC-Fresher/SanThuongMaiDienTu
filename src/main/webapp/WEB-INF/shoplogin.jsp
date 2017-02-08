@@ -7,6 +7,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
@@ -75,15 +76,16 @@
             <!-- /.login-logo -->
             <div class="login-box-body">
                 <p class="login-box-msg">Sign in to start your session</p>
-
-                <form:form method="POST"  id="contact" >
+                <s:url value="/Shop/j_spring_security_check" var="loginshop"/>
+                <form:form action="${loginshop}" method="POST"  id="contact" >
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <div class="form-group has-feedback">
                         <input name="user" required="true"   id="name" type="text" class="form-control" placeholder="Tên" />
-                        
+
                     </div>
                     <div class="form-group has-feedback">
                         <input name="pass" required="true" id="pass" type="password" class="form-control" placeholder="Password" />
-                        
+
                     </div>
                     <div class="row">
                         <div class="col-xs-8">
@@ -95,20 +97,20 @@
                         </div>
                         <!-- /.col -->
                         <div class="col-xs-4">
-                            
-                            <button id="add" class="btn btn-primary btn-block btn-flat" onclick="form.action='Shop/j_spring_security_check';" > Đăng nhập </button>
+
+                            <button class="btn btn-primary btn-block btn-flat" type="submit"> Đăng nhập </button>
                         </div>
                         <!-- /.col -->
                     </div>
                 </form:form>
-                 <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
-                <p style=" color: red">
-                    ban dang nhap sai roi 
-                    <c:out value="${SPRING_SECURITY_LAST_EXCEPTION}"/>
-                </p>
-                
-            </c:if>
-               
+                <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
+                    <p style=" color: red">
+                        ban dang nhap sai roi 
+                        <c:out value="${SPRING_SECURITY_LAST_EXCEPTION}"/>
+                    </p>
+
+                </c:if>
+
                 <!-- /.social-auth-links -->
 
                 <a href="#">I forgot my password</a><br>

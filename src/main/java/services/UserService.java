@@ -7,6 +7,8 @@ package services;
 
 import entity.*;
 import java.util.List;
+import org.springframework.stereotype.Service;
+
 public interface UserService {
     public boolean checkAccountExist(String username , String email) throws Exception;
     public User add(User user) throws Exception;

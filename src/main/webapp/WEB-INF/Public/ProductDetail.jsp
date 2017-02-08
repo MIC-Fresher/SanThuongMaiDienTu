@@ -45,9 +45,8 @@
                 </script>
             </c:if>
             <!--header-->
-            <jsp:include page="/WEB-INF/Include/Public/header_footer/header.jsp"/>
+            <jsp:include page="/WEB-INF/Include/Public/sections/header_footer/header.jsp"/>
 
-            <jsp:include page="/WEB-INF/Include/Public/sliderbar/slider.jsp"/> 
             <!--slider-->
             <div class="content-wrapper">
                 <!--content-->
@@ -56,24 +55,71 @@
                         <div class="row">
                             <div class="col-sm-3">
                                 <div class="left-sidebar">
-                                    <jsp:include page="/WEB-INF/Include/Public/sliderbar/categoriessliderbar.jsp"/>
-                                    
-                                    <jsp:include page="/WEB-INF/Include/Public/sliderbar/price.jsp"/>
-                                    <jsp:include page="/WEB-INF/Include/Public/sliderbar/voting.jsp"/>
+                                    <jsp:include page="/WEB-INF/Include/Public/sections/component/sliderbar/categoriesbar.jsp"/>
+                                    <c:if test="${not empty listShops}">
+                                        <jsp:include page="/WEB-INF/Include/Public/sections/component/sliderbar/listshopbar.jsp"/>
+
+                                    </c:if>
+                                    <jsp:include page="/WEB-INF/Include/Public/sections/component/sliderbar/pricebar.jsp"/>
+                                    <jsp:include page="/WEB-INF/Include/Public/sections/component/sliderbar/votingbar.jsp"/>
                                     <div class="shipping text-center"><!--shipping-->
                                         <img src="${pageContext.request.contextPath}/images/home/shipping.jpg" alt="" />
                                     </div><!--/shipping-->
                                 </div>
                             </div>
+                            <div class="col-sm-9 padding-right">
+                                <jsp:include page="/WEB-INF/Include/Public/common/product/productdetail.jsp"/>
+                                <div id="response_comment" class="category-tab shop-details-tab"><!--category-tab-->
+                                    <div class="col-sm-12">
+                                        <ul class="nav nav-tabs">
+                                            <li>
+                                                <a href="#details" data-toggle="tab">Thông tin SP</a>
+                                            </li>
+                                            <li>
+                                                <a href="#companyprofile" data-toggle="tab">Sản phẩm cùng loại</a>
+                                            </li>
+                                            <li class="active">
+                                                <a href="#reviews" data-toggle="tab">Bình luận về sản phẩm (5)</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="tab-content">							
+                                        <div class="tab-pane fade active in" id="reviews" >
+                                            <div class="col-sm-12">
+                                               
+                                                <jsp:include page="/WEB-INF/Include/User/vote/vote_form.jsp"/>
+                                                <jsp:include page="/WEB-INF/Include/User/comment/comment_form.jsp"/>
+                                                <jsp:include page="/WEB-INF/Include/User/comment/comment_items.jsp"/>
 
-                            <jsp:include page="/WEB-INF/Include/Public/table/productdetail.jsp"/>
+                                            </div>
 
+
+                                            <!--                    <div class="fb-comments" data-href="http://chatvl.tv/v/355659" data-numposts="5"></div>-->
+                                        </div>
+                                        <div class="tab-pane fade" id="details">
+                                            <div class="col-sm-12">
+                                                <p>
+                                                    ${product.description}
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-pane fade companyprofile"  id="companyprofile">
+                                            <div class="col-sm-12">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                              
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
             </div>
             <!--footer-->
-            <jsp:include page="/WEB-INF/Include/Public/header_footer/footer.jsp"/>
+            <jsp:include page="/WEB-INF/Include/Public/sections/header_footer/footer.jsp"/>
         </div>
     </body>
 </html>

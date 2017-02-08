@@ -5,23 +5,21 @@
  */
 package model;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import org.springframework.ui.ModelMap;
 
-/**
- *
- * @author Admin
- */
 public class ParameterUrlPulic {
 
     String categoryname = "";
     Integer itemperpage;
-    String shopname="";
+    String shopname = "";
     Integer fromprice;
     Integer toprice;
     Integer totalvote;
     String searchinput = "";
     ModelMap mm;
-    String url = "";
+    //String url = "";
 
     public ParameterUrlPulic(ModelMap mm) {
         this.mm = mm;
@@ -36,7 +34,7 @@ public class ParameterUrlPulic {
 
     public void setCategoryname(String categoryname) {
         this.categoryname = categoryname;
-        mm.addAttribute("categoryname", categoryname);
+
     }
 
     public Integer getItemperpage() {
@@ -45,7 +43,7 @@ public class ParameterUrlPulic {
 
     public void setItemperpage(Integer itemperpage) {
         this.itemperpage = itemperpage;
-        mm.addAttribute("itemperpage", itemperpage);
+
     }
 
     public String getShopname() {
@@ -54,7 +52,7 @@ public class ParameterUrlPulic {
 
     public void setShopname(String shopname) {
         this.shopname = shopname;
-        mm.addAttribute("shopname", shopname);
+
     }
 
     public Integer getFromprice() {
@@ -63,7 +61,7 @@ public class ParameterUrlPulic {
 
     public void setFromprice(Integer fromprice) {
         this.fromprice = fromprice;
-        mm.addAttribute("fromprice", fromprice);
+
     }
 
     public Integer getToprice() {
@@ -72,7 +70,7 @@ public class ParameterUrlPulic {
 
     public void setToprice(Integer toprice) {
         this.toprice = toprice;
-        mm.addAttribute("toprice", toprice);
+
     }
 
     public Integer getTotalvote() {
@@ -81,7 +79,7 @@ public class ParameterUrlPulic {
 
     public void setTotalvote(Integer totalvote) {
         this.totalvote = totalvote;
-        mm.addAttribute("totalvote", totalvote);
+
     }
 
     public String getSearchinput() {
@@ -90,13 +88,177 @@ public class ParameterUrlPulic {
 
     public void setSearchinput(String searchinput) {
         this.searchinput = searchinput;
-        mm.addAttribute("searchinput", searchinput);
+
+    }
+
+    public String toStringPrice() {
+
+        String url = "searchinput=" + searchinput;
+
+        if (this.itemperpage != null) {
+
+            url = url + "&itemperpage=" + this.itemperpage;
+        }
+        if (this.totalvote != null) {
+            url = url + "&totalvote=" + totalvote;
+
+        }
+        if (!this.categoryname.equals("")) {
+            url = url + "&categoryname=" + categoryname;
+
+        }
+        if (!this.shopname.equals("")) {
+            url = url + "&shopname=" + shopname;
+
+        }
+
+        try {
+            return url;
+
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return null;
+    }
+
+    public String toStringSearchInput() {
+
+        String url = "" ;
+
+        if (this.itemperpage != null) {
+
+            url = url + "&itemperpage=" + this.itemperpage;
+        }
+        if (this.totalvote != null) {
+            url = url + "&totalvote=" + totalvote;
+
+        }
+        if (!this.categoryname.equals("")) {
+            url = url + "&categoryname=" + categoryname;
+
+        }
+        if (!this.shopname.equals("")) {
+            url = url + "&shopname=" + shopname;
+
+        }
+
+        try {
+            return url;
+
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return null;
+    }
+    
+    
+    public String toStringVote() {
+
+        String url = "searchinput=" + searchinput;
+
+        if (this.itemperpage != null) {
+
+            url = url + "&itemperpage=" + this.itemperpage;
+        }
+        if (this.fromprice != null) {
+            url = url + "&fromprice=" + fromprice;
+
+        }
+        if (this.toprice != null) {
+            url = url + "&toprice=" + toprice;
+
+        }
+
+        if (!this.categoryname.equals("")) {
+            url = url + "&categoryname=" + categoryname;
+
+        }
+        if (!this.shopname.equals("")) {
+            url = url + "&shopname=" + shopname;
+
+        }
+
+        try {
+            return url;
+
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return null;
+    }
+
+    public String toStringShop() {
+
+        String url = "searchinput=" + searchinput;
+
+        if (this.itemperpage != null) {
+
+            url = url + "&itemperpage=" + this.itemperpage;
+        }
+        if (this.fromprice != null) {
+            url = url + "&fromprice=" + fromprice;
+
+        }
+        if (this.toprice != null) {
+            url = url + "&toprice=" + toprice;
+
+        }
+        if (this.totalvote != null) {
+            url = url + "&totalvote=" + totalvote;
+
+        }
+        if (!this.categoryname.equals("")) {
+            url = url + "&categoryname=" + categoryname;
+
+        }
+
+        try {
+            return url;
+
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return null;
+    }
+
+    public String toStringCategory() {
+
+        String url = "searchinput=" + searchinput;
+
+        if (this.itemperpage != null) {
+
+            url = url + "&itemperpage=" + this.itemperpage;
+        }
+        if (this.fromprice != null) {
+            url = url + "&fromprice=" + fromprice;
+
+        }
+        if (this.toprice != null) {
+            url = url + "&toprice=" + toprice;
+
+        }
+        if (this.totalvote != null) {
+            url = url + "&totalvote=" + totalvote;
+
+        }
+        if (!this.shopname.equals("")) {
+            url = url + "&shopname=" + shopname;
+
+        }
+
+        try {
+            return url;
+
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return null;
     }
 
     @Override
     public String toString() {
 
-        url = url + "searchinput=" + searchinput;
+        String url = "searchinput=" + searchinput;
 
         if (this.itemperpage != null) {
 

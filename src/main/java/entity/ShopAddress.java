@@ -39,7 +39,9 @@ public class ShopAddress implements Serializable {
     private String address;
     @Column(name = "City")
     private String city;
+    
     @JoinColumn(name = "ShopId", referencedColumnName = "ShopId")
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("shopAddressList")
     @ManyToOne
     private Shop shopId;
 
@@ -106,5 +108,5 @@ public class ShopAddress implements Serializable {
     public String toString() {
         return "entity.ShopAddress[ shopAddressId=" + shopAddressId + " ]";
     }
-    
+
 }

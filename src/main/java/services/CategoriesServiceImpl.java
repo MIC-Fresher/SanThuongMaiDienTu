@@ -23,6 +23,7 @@ public class CategoriesServiceImpl implements CategoriesService {
     @Autowired
     CategoriesRepository categoriesRepository;
 
+    @Transactional
     @Override
     public void addCategories(Category category) throws Exception {
         try {
@@ -31,6 +32,7 @@ public class CategoriesServiceImpl implements CategoriesService {
         }
     }
 
+    @Transactional
     @Override
     public void removerCategories(Integer id) throws Exception {
         try {
@@ -63,6 +65,7 @@ public class CategoriesServiceImpl implements CategoriesService {
         return category;
     }
 
+    @Transactional
     @Override
     public void updateCategories(Category Category) throws Exception {
         try {
@@ -92,11 +95,13 @@ public class CategoriesServiceImpl implements CategoriesService {
         return null;
     }
 
+    @Transactional
     @Override
     public int addCategoryToShop(int idcate, int idshop) throws Exception {
         return categoriesRepository.addCS(idcate, idshop);
     }
 
+    @Transactional
     @Override
     public int deleteCategoryFromShop(int idcate, int idshop) throws Exception {
         return categoriesRepository.deleteCS(idcate, idshop);

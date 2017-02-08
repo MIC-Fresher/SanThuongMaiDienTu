@@ -49,6 +49,7 @@ public class Shopdaily implements Serializable {
     private Date dateCreated;
     @JoinColumn(name = "ShopId", referencedColumnName = "ShopId")
     @ManyToOne
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("shopdailyList")
     private Shop shopId;
 
     public Shopdaily() {

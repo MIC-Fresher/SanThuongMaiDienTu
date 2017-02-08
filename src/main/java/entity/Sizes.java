@@ -39,8 +39,9 @@ public class Sizes implements Serializable {
     private Integer sizeId;
     @Column(name = "Size")
     private String size;
-    @OneToMany( cascade =  CascadeType.MERGE   ,mappedBy = "sizeId")
-      @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "sizeId")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("sizeId")
     private List<Productdetail> productdetailList;
 
     public Sizes() {
@@ -98,5 +99,5 @@ public class Sizes implements Serializable {
     public String toString() {
         return "entity.Sizes[ sizeId=" + sizeId + " ]";
     }
-    
+
 }

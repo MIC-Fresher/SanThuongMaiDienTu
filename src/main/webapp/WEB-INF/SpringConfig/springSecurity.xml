@@ -1,0 +1,149 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- was: <?xml version="1.0" encoding="UTF-8"?> -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:security="http://www.springframework.org/schema/security"
+       
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+       
+       http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security.xsd
+        ">
+    
+   
+                
+
+
+
+    
+    <!--=============================== authencation all -->
+    <security:authentication-manager  alias="all">
+        <security:authentication-provider  >
+          
+            <security:jdbc-user-service data-source-ref="dataSource"
+                                        users-by-username-query=
+        "SELECT UserName,PassWord, CASE enabled WHEN 1 THEN 'true' ELSE 'false' END 'ENABLED' 
+         FROM user 
+         WHERE UserName=?;"
+                
+                                        authorities-by-username-query=
+                "SELECT u.UserName, r.RoleName 
+                FROM user u, role r ,role_user ru
+                WHERE u.UserId = ru.UserId AND r.RoleId= ru.RoleId
+                AND u.UserName=?; "
+            />
+          
+        </security:authentication-provider>
+        <security:authentication-provider  >
+            <security:jdbc-user-service data-source-ref="dataSource"
+                                        users-by-username-query=
+        "SELECT UserName,PassWord, CASE enabled WHEN 1 THEN 'true' ELSE 'false' END 'ENABLED' 
+         FROM supplier 
+         WHERE UserName=?;"
+                
+                                        authorities-by-username-query=
+                "SELECT u.UserName, u.Role 
+                FROM supplier u
+                WHERE u.UserName=?; "
+            />
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+    <security:http pattern="/favicon.ico" security="none"/> 
+             
+    <security:http use-expressions="true" auto-config="true" pattern="/Public/**"  >
+        <security:intercept-url pattern="/Public/**" access="permitAll()"/>
+    </security:http>
+    <!--                tất cả mọi người đều được truy cập vào url này-->
+    <!--http shop====================================================-->
+    
+    <security:http pattern="/Shop/**" auto-config="true"  use-expressions="true"  authentication-manager-ref="all">
+        <security:access-denied-handler error-page="/error"/> 
+        <!--                trỏ đến trang khi gặp error-->
+        <security:csrf disabled="true"/>
+        
+        <security:intercept-url pattern="/Shop/**" access="hasRole('ROLE_SHOP')"/>
+        
+        <security:form-login
+            login-page="/setupShopLogin"   
+            default-target-url="/Shop/ShopIndex"
+          
+            login-processing-url="/Shop/j_spring_security_check"
+            
+            username-parameter="user"
+            password-parameter="pass"
+               
+        />
+        <!--           -->
+        <security:logout
+            logout-url="/Shop/logout"
+            invalidate-session="true"
+            logout-success-url="/setupShopLogin"
+            
+        />
+          <!--authentication-success-handler-ref="userAuthenticationSuccessHandler"--> 
+        <!-- cấu hình để xử lý sau khi login thành công-->
+       
+    
+    </security:http>
+<!--    <bean id="userAuthenticationSuccessHandler" class="controller.Shop.Sercurity.UserAuthenticationSuccessHandler">
+    </bean>-->
+    
+    <!--http user ===========================================================-->
+    <security:http pattern="/User/**" auto-config="true"  use-expressions="true"  authentication-manager-ref="all">
+        <security:access-denied-handler error-page="/error"/> 
+        <!--                trỏ đến trang khi gặp error-->
+        <security:csrf disabled="true"/>
+        <security:intercept-url pattern="/User/**" access="hasAnyRole('ROLE_USER,ROLE_SHOP')"/>
+        <!--                        khi có các role kia thì sẽ được truy cập vào-->
+       
+        <security:form-login
+            login-page="/setupUserlogin"   
+            default-target-url="/setupIndex"
+            login-processing-url="/User/j_spring_security_check"
+            username-parameter="user"
+            password-parameter="pass"
+        />
+        
+        <security:logout
+            logout-url="/User/logout"
+            invalidate-session="true"
+            logout-success-url="/setupIndex"
+            
+        />
+        <!--                        khi logout sẽ trả về trang nào-->
+    
+    </security:http>
+    <!--
+    http admin ==========================================================-->    
+    
+    <security:http pattern="/Supplier/*" auto-config="true" use-expressions="true"  authentication-manager-ref="all">
+        <security:access-denied-handler error-page="/error"/> 
+        <security:csrf disabled="true"/>
+        
+        <security:intercept-url pattern="/Supplier/**" access="hasRole('ROLE_SUPPLIER')"/>
+        <security:form-login
+            login-page="/setupAdminLogin"   
+            login-processing-url="/Supplier/j_spring_security_check"  
+            username-parameter="user"
+            password-parameter="pass"
+            default-target-url="/Supplier/SupplierIndex"
+            
+        />
+        
+        <security:logout
+            
+            logout-url="/Supplier/logout"
+            invalidate-session="true"
+            logout-success-url="/setupAdminLogin"
+        />
+    </security:http>
+    
+    <!--=============================-->
+</beans>

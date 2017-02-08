@@ -39,7 +39,9 @@ public class Role implements Serializable {
     private Integer roleId;
     @Column(name = "RoleName")
     private String roleName;
-    @ManyToMany(mappedBy = "roleList",cascade =  CascadeType.MERGE)
+
+    @ManyToMany(mappedBy = "roleList", cascade = CascadeType.MERGE)
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("roleList")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<User> userList;
 
@@ -98,5 +100,5 @@ public class Role implements Serializable {
     public String toString() {
         return "entity.Role[ roleId=" + roleId + " ]";
     }
-    
+
 }

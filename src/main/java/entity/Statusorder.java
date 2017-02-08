@@ -38,9 +38,11 @@ public class Statusorder implements Serializable {
     @Column(name = "StatusOrderId")
     private Integer statusOrderId;
     @Column(name = "status")
-    private Integer status;
-    @OneToMany( cascade =  CascadeType.MERGE   ,mappedBy = "statusOrderId")
-      @LazyCollection(LazyCollectionOption.FALSE)
+    private String status;
+    
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "statusOrderId")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties("statusOrderId")
     private List<Orders> ordersList;
 
     public Statusorder() {
@@ -58,11 +60,11 @@ public class Statusorder implements Serializable {
         this.statusOrderId = statusOrderId;
     }
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -98,5 +100,5 @@ public class Statusorder implements Serializable {
     public String toString() {
         return "entity.Statusorder[ statusOrderId=" + statusOrderId + " ]";
     }
-    
+
 }

@@ -29,6 +29,15 @@
         <!-- js -->
         <script src="${pageContext.request.contextPath}/js/jquery-2.2.3.min.js"></script> 
         <script src="${pageContext.request.contextPath}/js/jquery-scrolltofixed-min.js" type="text/javascript"></script><!-- fixed nav js -->
+        <script src="${pageContext.request.contextPath}/js/jquery.menu-aim.js"></script>
+        <script src="${pageContext.request.contextPath}/js/main.js"></script> <!-- Resource jQuery -->
+        <!-- //menu js aim --> 
+        <!-- Bootstrap core JavaScript
+    ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+
+
         <script>
             $(document).ready(function () {
 
@@ -51,9 +60,9 @@
         </script>
         <!-- //js --> 
         <!-- web-fonts -->
-<!--        <link href='//fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
-        <link href='//fonts.googleapis.com/css?family=Lovers+Quarrel' rel='stylesheet' type='text/css'>
-        <link href='//fonts.googleapis.com/css?family=Offside' rel='stylesheet' type='text/css'> -->
+        <!--        <link href='//fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
+                <link href='//fonts.googleapis.com/css?family=Lovers+Quarrel' rel='stylesheet' type='text/css'>
+                <link href='//fonts.googleapis.com/css?family=Offside' rel='stylesheet' type='text/css'> -->
         <!-- web-fonts -->  
         <!-- start-smooth-scrolling -->
         <script type="text/javascript" src="${pageContext.request.contextPath}/js/move-top.js"></script>
@@ -86,7 +95,7 @@
     </head><!--/head-->
 
     <body>
-       
+
 
         <c:if test="${not empty messeger}">
             <script>
@@ -94,8 +103,8 @@
             </script>
         </c:if>
 
-            
-        
+
+
         <!-- login-page -->
         <div class="login-page">
             <div class="container"> 
@@ -141,7 +150,7 @@
         <!-- //login-page --> 
 
 
-       
+
         <script src="${pageContext.request.contextPath}/js/minicart.js"></script>
         <script>
                             w3ls.render();
@@ -161,13 +170,7 @@
         </script>  
         <!-- //cart-js --> 	 
         <!-- menu js aim -->
-        <script src="${pageContext.request.contextPath}/js/jquery.menu-aim.js"></script>
-        <script src="${pageContext.request.contextPath}/js/main.js"></script> <!-- Resource jQuery -->
-        <!-- //menu js aim --> 
-        <!-- Bootstrap core JavaScript
-    ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+
 
 
 
