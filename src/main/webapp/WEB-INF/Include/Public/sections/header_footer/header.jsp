@@ -52,7 +52,7 @@
                                 <s:url value="/Public/shoppingCart" var="cartshop"/>
                                 <a href="${cartshop}">
                                     <i class="fa fa-shopping-cart"></i> 
-                                    Cart 
+                                    Giỏ hàng 
 
                                     (<label id="cart_status">
                                         <c:if test="${sessionScope.myCart!=null}">
@@ -63,10 +63,10 @@
 
                             </li>
 
-                            <sec:authentication property="principal" var="userlogin" />
+                            <sec:authentication property="principal" var="userlogin" scope="request"/>
 
                             <sec:authorize access="hasAnyRole('ROLE_USER,ROLE_SHOP')">
-                                <c:set value="login" var="checklogin"/>
+                                <c:set value="login" var="checklogin" scope="request"/>
                             </sec:authorize>
                             
                             
@@ -74,7 +74,7 @@
                                 <c:when test="${checklogin!='login'}">
                                     <li>
                                         <s:url value="/User/index" var="loginuser"/>
-                                        <a href="${loginuser}"><i class="fa fa-lock"></i> Login</a>
+                                        <a href="${loginuser}"><i class="fa fa-lock"></i> Đăng nhập</a>
                                     </li>
                                 </c:when>
                                 <c:otherwise>
@@ -84,7 +84,7 @@
                                     </li>
                                     <li>
                                         <s:url value="/User/logout" var="logoutuser"/>
-                                        <a href="${logoutuser}"><i class="fa fa-lock"></i> Logout</a>
+                                        <a href="${logoutuser}"><i class="fa fa-lock"></i> Đăng xuất</a>
                                     </li>
                                 </c:otherwise>
                             </c:choose>
@@ -111,24 +111,26 @@
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
 
-                            <li><a href="${index}" class="active">Home</a></li>
+                            <li><a href="${index}" class="active">Trang chủ</a></li>
 
-                            <li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
+                            <li class="dropdown"><a href="#">Cửa hàng<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
                                     <li><a href="#">Products</a></li>
                                     <li><a href="#">Product Details</a></li> 
-                                    <li><a href="./setupCheckout.html">Checkout</a></li> 
-                                    <li><a href="./cart.html">Cart</a></li> 
-                                    <li><a href="./SetupLogin.html">Login</a></li> 
+                                    <li><a href="${cartshop}">Giỏ hàng</a></li> 
+
                                 </ul>
                             </li> 
                             <li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
-                                    <li><a href="blog.html">Blog List</a></li>
-                                    <li><a href="blog-single.html">Blog Single</a></li>
+                                    <li><a href="#">Blog List</a></li>
+                                    <li><a href="#">Blog Single</a></li>
                                 </ul>
                             </li> 
-                            <li><a href="./setUpContact.html">Liên hệ & Phản hồi</a></li>
+                            <li>
+                                <s:url value="/User/FeedBack" var="feedback"/>
+                                <a href="${feedback}">Liên hệ & Phản hồi</a>
+                            </li>
                         </ul>
                     </div>
                 </div>

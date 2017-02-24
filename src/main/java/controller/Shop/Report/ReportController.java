@@ -24,7 +24,6 @@ import java.util.*;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
-import model.*;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,11 +41,11 @@ import org.springframework.web.multipart.MultipartFile;
 import utils.IMG.IMGUtils;
 
 @Controller
-@Scope("session")
+
 public class ReportController implements Serializable {
 
     @Autowired
-    utils.Authencation.UtilsAuthencation utilsAuthencation;
+    utils.UtilsAuthencation utilsAuthencation;
     @Autowired
     OrdersRepository ordersRepository;
 

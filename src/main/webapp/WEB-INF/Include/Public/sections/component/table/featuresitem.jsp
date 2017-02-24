@@ -7,7 +7,7 @@
 
 <jsp:include page="/WEB-INF/Include/Public/sections/component/table/pagingfeaturesitem.jsp"/>
 <div  class="features_items"><!--features_items-->
-    <h2 class="title text-center">Danh mục SP</h2>
+    <h2 class="title text-center">Danh mục sản phẩm</h2>
 
     <c:forEach var="listProducts" items="${listSearchProducts.content}" varStatus="status">
 
@@ -30,18 +30,25 @@
                         </a>
                         <h2>
                             <fmt:formatNumber type="number" value="${listProducts.unitPrice}"/>
-                            
+
                         </h2>
-                        <p>${listProducts.productName}</p>
+                        <p>Sản phẩm: ${listProducts.productName}</p>
 
                         <s:url value="/Public/addProduct?id=${listProducts.productId}" var="addtocart"/>
                         <a class="btn btn-default add-to-cart" onclick="addCart('${addtocart}')" href="javascript:{}">
-                            <i class="fa fa-shopping-cart"></i>Add to cart
+                            <i class="fa fa-shopping-cart"></i>Giỏ hàng
                         </a>
 
-
-                        <p>shop ${listProducts.shopId.shopName}</p>
-                        <p>vote ${listProducts.totalVote}</p>
+                        <s:url value="/Public/${listProducts.shopId.shopName}/" var="productofshop"/>
+                        <p>Cửa hàng: 
+                        <a href="${productofshop}"> ${listProducts.shopId.shopName}</a>
+                        </p>
+                        <p>
+                            vote ${listProducts.totalVote}
+                            <c:forEach begin="1" end="${listProducts.totalVote}">
+                                <span style="color:yellow" class="glyphicon glyphicon-star"></span>
+                            </c:forEach>
+                        </p>
                     </div>
 
 

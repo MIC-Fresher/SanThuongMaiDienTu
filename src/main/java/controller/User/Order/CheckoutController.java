@@ -5,6 +5,8 @@
  */
 package controller.User.Order;
 
+import model.VoteForm;
+import model.CartInfo;
 import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,7 +27,6 @@ import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
-import model.*;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,18 +43,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import utils.CartShopping.*;
+import utils.*;
 
 @Controller
-@Scope("session")
+
 public class CheckoutController implements Serializable {
 
     @Autowired
     OrderService orderService;
-    
-    @Autowired
-    utils.Authencation.UtilsAuthencation utilsAuthencation;
 
+    @Autowired
+    utils.UtilsAuthencation utilsAuthencation;
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -66,7 +66,7 @@ public class CheckoutController implements Serializable {
     @RequestMapping(value = {"/User/checkoutOrder"}, method = RequestMethod.GET)
     public String shoppingCartCustomerForm(HttpServletRequest request, ModelMap model, HttpSession session) {
 
-        CartInfo myCart = Utils.getCartInSession(request);
+        CartInfo myCart = UtilsCarts.getCartInSession(request);
 
         // Cart is empty.
         if (myCart.isEmpty()) {
@@ -90,7 +90,8 @@ public class CheckoutController implements Serializable {
             ModelMap model, HttpSession session, //
             @ModelAttribute("customerForm") Receiver customerForm, //
             final RedirectAttributes redirectAttributes) {
-        CartInfo cartInfo = Utils.getCartInSession(request);
+        //cartinfo get from session
+        CartInfo cartInfo = UtilsCarts.getCartInSession(request);
 
         if (cartInfo.isEmpty()) {
             // Redirect to shoppingCart page.
@@ -104,29 +105,48 @@ public class CheckoutController implements Serializable {
             boolean order = orderService.addOrder(customerForm, utilsAuthencation.getUserInPrincipal(), cartInfo);
             if (order) {
 
-                redirectAttributes.addFlashAttribute("messeger", "Đặt hàng thành công");
+                // Remove Cart In Session.
+                UtilsCarts.removeCartInSession(request);
+
+                // Store Last ordered cart to Session.
+                UtilsCarts.storeLastOrderedCartInSession(request, cartInfo);
+                return "redirect:/User/shoppingCartFinalize";
+
             } else {
                 redirectAttributes.addFlashAttribute("messeger", "Đặt hàng thất bại");
+                return "redirect:/User/Checkout";
             }
         } catch (Exception e) {
             e.getMessage();
         }
-        // Remove Cart In Session.
-        Utils.removeCartInSession(request);
 
-        // Store Last ordered cart to Session.
-        Utils.storeLastOrderedCartInSession(request, cartInfo);
-
-        return "redirect:/User/shoppingCartFinalize";
+        return "redirect:/User/Checkout";
     }
 
     @RequestMapping(value = {"/User/shoppingCartFinalize"}, method = RequestMethod.GET)
-    public String shoppingCartFinalize(HttpServletRequest request, ModelMap model) {
+    public String shoppingCartFinalize(
+            HttpServletRequest request, ModelMap model,
+            RedirectAttributes redirectAttributes) {
+        try {
 
-        CartInfo lastOrderedCart = Utils.getLastOrderedCartInSession(request);
+            //get list last order cart
+            CartInfo lastOrderedCart = UtilsCarts.getLastOrderedCartInSession(request);
 
-        if (lastOrderedCart == null) {
-            return "redirect:/Public/shoppingCart";
+            if (lastOrderedCart == null) {
+                return "redirect:/Public/shoppingCart";
+            } else {
+                model.addAttribute("messeger", "Bạn đã đặt hàng thành công");
+                List<Product> products = new ArrayList<>();
+
+                for (int i = 0; i < lastOrderedCart.getCartLines().size(); i++) {
+                    products.add(lastOrderedCart.getCartLines().get(i).getProduct());
+                }
+                model.addAttribute("products", products);
+                model.addAttribute("cartLines", lastOrderedCart.getCartLines());
+                model.addAttribute("voteForm", new VoteForm());
+            }
+        } catch (Exception e) {
+            e.getMessage();
         }
 
         return "/User/Result_Checkout";

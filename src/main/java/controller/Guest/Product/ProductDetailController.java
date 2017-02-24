@@ -5,6 +5,8 @@
  */
 package controller.Guest.Product;
 
+import model.Pages;
+import model.CommentForm;
 import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,7 +27,6 @@ import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
-import model.*;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -40,24 +41,25 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.multipart.MultipartFile;
 import utils.IMG.IMGUtils;
+import repository.ProductcommentRepository;
 
 @Controller
-@Scope("session")
+
 public class ProductDetailController implements Serializable {
 
     @Autowired
     GroupcategoriesRepository groupcategoriesRepository;
-    
-    @Autowired
-    ShopRepository shopRepository;
 
     @Autowired
+    ShopRepository shopRepository;
+    @Autowired
+    ProductcommentRepository productcommentRepository;
+    @Autowired
     ProductsRepository productsRepository;
-    
 
     @PostConstruct
     public void init() {
-      
+
     }
 
     @InitBinder
@@ -74,10 +76,11 @@ public class ProductDetailController implements Serializable {
     @RequestMapping(value = {"/Public/setupShowDetailProduct"}, method = RequestMethod.GET)
     public String setupShowDetailProduct(
             @RequestParam(value = "id", required = true) Integer id,
+            @RequestParam(value = "itemperpage", defaultValue = "5", required = false) Integer itemperpage,
             HttpServletRequest request, HttpSession session, ModelMap mm) {
 
         try {
-            setupShowDetailProduct(id, mm);
+            setupShowDetailProduct(id, mm,itemperpage);
             setupCategoriesBar(mm);
         } catch (Exception e) {
             e.getMessage();
@@ -87,16 +90,27 @@ public class ProductDetailController implements Serializable {
 //    =======================================***METHOD***=====================================================>>
 
 //    =======================================***PRODUCT***=====================================================>>
-    public void setupShowDetailProduct(int id, ModelMap mm) {
+    public void setupShowDetailProduct(int id, ModelMap mm,int itemperpage) {
         Product p = null;
         List<Shop> ls = new ArrayList<>();
         try {
+            int page = 1;
+            int statuscommentid = 2;//2 = mở
             p = productsRepository.findOne(id);
 
             ls = shopRepository.findDistinctByUserId_EnabledAndCategoryList_IsActiveAndProductList_IsActiveAndProductList_ProductNameContaining(1, 1, 1, p.getProductName());
 
             mm.addAttribute("listShopSellProduct", ls);
             mm.addAttribute("product", p);
+            mm.addAttribute("commentForm", new CommentForm());
+
+            PageRequest pageRequest;
+
+            pageRequest = new PageRequest(page - 1, itemperpage, Sort.Direction.DESC, "DateCreated");
+            Page<Productcomment> pager
+                    = productcommentRepository.findByProductId_productIdAndStatusCommentId_Statuscommentid(pageRequest, id, statuscommentid);
+            Pages pages = new Pages(pager);
+            mm.addAttribute("productcomments", pages);
 
         } catch (Exception e) {
             e.getMessage();

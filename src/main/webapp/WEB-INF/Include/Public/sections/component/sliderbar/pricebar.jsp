@@ -7,23 +7,36 @@
 
 
 <div class="price-range"><!--price-range-->
-    <h2>Price Range</h2>
+    <h2>Mức giá</h2>
     <div class="well text-center">
         <s:url  value="/Public/searchProducts" var="searchprice"/>
         <form  role="form" method="get">
-            <input id="searchinput" type="hidden" name="searchinput" value="${parameterUrl.searchinput}"/>
-            <input id="categoryname" type="hidden" name="categoryname" value="${parameterUrl.categoryname}"/>
-            <input id="itemperpage" type="hidden" name="itemperpage" value="${parameterUrl.itemperpage}"/>
-            <input  id="shopname" type="hidden" name="shopname" value="${parameterUrl.shopname}"/>
-            <input id="totalvote" type="hidden" name="totalvote" value="${parameterUrl.totalvote}"/>
+            <c:if test="${not empty parameterUrl.searchinput}">
+                <input id="searchinput" type="hidden" name="searchinput" value="${parameterUrl.searchinput}"/>
+            </c:if>
+            <c:if test="${not empty parameterUrl.categoryname}">
+                <input id="categoryname" type="hidden" name="categoryname" value="${parameterUrl.categoryname}"/>
+            </c:if>
+            <c:if test="${not empty parameterUrl.itemperpage}">
+                <input id="itemperpage" type="hidden" name="itemperpage" value="${parameterUrl.itemperpage}"/>
+            </c:if>
+            <c:if test="${not empty parameterUrl.shopname}">
+                <input  id="shopname" type="hidden" name="shopname" value="${parameterUrl.shopname}"/>
+            </c:if>
+            <c:if test="${not empty parameterUrl.totalvote}">
+
+                <input id="totalvote" type="hidden" name="totalvote" value="${parameterUrl.totalvote}"/>
+            </c:if>
+
+
             <div class="box-body">
                 <div class="form-group">
                     <label >Giá từ</label>
-                    <input class="form-control" type="number" name="fromprice" />
+                    <input required="required" class="form-control" type="number" name="fromprice" />
                 </div>
                 <div class="form-group">
                     <label >Đến</label>
-                    <input class="form-control" type="number" name="toprice" />
+                    <input required="required" class="form-control" type="number" name="toprice" />
                 </div>
                 <button id="price"  class="btn btn-primary" type="submit" onclick="form.action = '${searchprice}';" >Tìm</button>
             </div>

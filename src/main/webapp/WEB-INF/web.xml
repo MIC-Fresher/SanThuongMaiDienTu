@@ -58,7 +58,7 @@
         <servlet-name>spring</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-    <!-- =[ SPRING FRAMEWORK ] khai báo file config để load========================================================================================== -->
+    <!-- =[ SPRING FRAMEWORK ] khai báo file config spring context để load========================================================================================== -->
     <context-param>
         
         <param-name>contextConfigLocation</param-name>
@@ -79,4 +79,18 @@
             30
         </session-timeout>
     </session-config>
+    <!-- =[ error page ]========================================================================================== -->
+    
+<!--    <error-page>
+        <error-code>404</error-code>
+        <location>/error</location>
+    </error-page>
+    <error-page>
+        <error-code>400</error-code>
+        <location>/error</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error</location>
+    </error-page>-->
 </web-app>

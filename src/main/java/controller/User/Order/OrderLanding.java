@@ -5,6 +5,7 @@
  */
 package controller.User.Order;
 
+import model.Pages;
 import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,7 +26,6 @@ import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
-import model.*;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,19 +42,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import utils.CartShopping.*;
+import utils.*;
 
 @Controller
-@Scope("session")
+
 public class OrderLanding implements Serializable {
 
     @Autowired
     OrderdetailRepository orderdetailRepository;
-   
-    
+
     @Autowired
-    utils.Authencation.UtilsAuthencation utilsAuthencation;
-   
+    utils.UtilsAuthencation utilsAuthencation;
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -67,11 +65,13 @@ public class OrderLanding implements Serializable {
     @RequestMapping(value = {"/User/Order"}, method = RequestMethod.GET)
     public String setupOrder(
             HttpServletRequest request, ModelMap mm, HttpSession session,
+            RedirectAttributes redirectAttributes,
             @RequestParam(value = "page", defaultValue = "1", required = false) Integer page,
             @RequestParam(value = "itemperpage", defaultValue = "12", required = false) Integer itemperpage) {
 
         try {
             User user = utilsAuthencation.getUserInPrincipal();
+         
             setupOrder(user.getUserId(), page, itemperpage, mm);
         } catch (Exception e) {
             e.getMessage();

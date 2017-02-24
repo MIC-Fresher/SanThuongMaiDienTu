@@ -25,6 +25,8 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/ionicons.min.css">
         <!-- Theme style -->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/AdminLTE.min.css">
+        <!--model box-->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/modalbox.css">
         <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
               page. However, you can choose any other skin. Make sure you
               apply the skin class to the body tag so the changes take effect.
@@ -42,9 +44,32 @@
     -->
     <body class="hold-transition skin-blue sidebar-mini">
         <c:if test="${not empty messeger}">
+                <jsp:include page="/WEB-INF/Include/Public/common/alertmodal/alertmodal.jsp"/>
             <script>
-                alert("${messeger}");
+
+                var modal = document.getElementById('Alert_Modal');
+                modal.style.display = "block";
+                var span_alert = document.getElementsByClassName("span_close_alert")[0];
+                var btn_close_alert = document.getElementsByClassName("btn_close_alert")[0];
+                //-----------
+                btn_close_alert.onclick = function () {
+                    modal.style.display = "none";
+                }
+                // When the user clicks on <span> (x), close the modal
+                span_alert.onclick = function () {
+                    modal.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function (event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+
+                //alert("");
             </script>
+
         </c:if>
         <div class="wrapper">
 
@@ -64,7 +89,7 @@
                 </section>
                 <section class="content-header">
 
-                    <jsp:include page="/WEB-INF/Include/Supplier/form/searchformforshops.jsp"></jsp:include>
+                    <jsp:include page="/WEB-INF/Include/Supplier/shops/form/searchformforshops.jsp"></jsp:include>
                     </section>
 
                     <!-- Main content -->
@@ -77,25 +102,18 @@
 
                                     <!-- /.box-header -->
                                     <div class="box-body">
-                                    
+                                        <div class="table-responsive">
 
-                                    <c:if test="${not empty listSearchShops.content}">
-                                        <jsp:include page="/WEB-INF/Include/Supplier/table/TableSearchShops.jsp"></jsp:include>
-                                        <jsp:include page="/WEB-INF/Include/Supplier/table/PagingSearchShops.jsp"></jsp:include>
-                                    </c:if>
-
+                                        <c:if test="${not empty listSearchShops.content}">
+                                            <jsp:include page="/WEB-INF/Include/Supplier/shops/table/TableSearchShops.jsp"></jsp:include>
+                                            <jsp:include page="/WEB-INF/Include/Supplier/shops/table/PagingSearchShops.jsp"></jsp:include>
+                                        </c:if>
+                                    </div>
                                 </div>
                                 <!-- /.box-body -->
                             </div>
 
                         </div>
-                        <c:if test="${not empty shopDetail}">
-
-                            <jsp:include page="/WEB-INF/Include/Supplier/table/TableDetailShop.jsp"></jsp:include>
-                            <jsp:include page="/WEB-INF/Include/Supplier/table/TableCategoriesOfShop.jsp"></jsp:include>
-                            <jsp:include page="/WEB-INF/Include/Supplier/form/setroleshop.jsp"></jsp:include>
-
-                        </c:if>
 
                         <!-- /.col -->
                     </div>

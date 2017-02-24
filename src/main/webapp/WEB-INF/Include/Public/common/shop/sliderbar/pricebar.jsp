@@ -7,7 +7,7 @@
 
 
 <div class="price-range"><!--price-range-->
-    <h2>Price Range</h2>
+    <h2>Mức giá</h2>
     <div class="well text-center">
         <s:url  value="/Public/setupSearchProducts" var="searchprice"/>
         <form  role="form" method="get">
@@ -19,11 +19,11 @@
             <div class="box-body">
                 <div class="form-group">
                     <label >Giá từ</label>
-                    <input class="form-control" type="number" name="fromprice" />
+                    <input required="required" class="form-control" type="number" name="fromprice" />
                 </div>
                 <div class="form-group">
                     <label >Đến</label>
-                    <input class="form-control" type="number" name="toprice" />
+                    <input required="required" class="form-control" type="number" name="toprice" />
                 </div>
                 <button id="price"  class="btn btn-primary" type="submit" onclick="form.action = '${searchprice}';" >Tìm</button>
             </div>

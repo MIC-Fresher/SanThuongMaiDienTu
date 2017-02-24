@@ -16,7 +16,6 @@
 
  ">
     <context:component-scan base-package="controller"></context:component-scan>
-   
     
     <context:annotation-config/>
     <mvc:annotation-driven />

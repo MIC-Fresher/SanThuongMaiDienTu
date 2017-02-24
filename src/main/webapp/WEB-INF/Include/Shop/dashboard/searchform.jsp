@@ -36,7 +36,7 @@
         <!-- /.input group -->
     </div>
 
-    <input type="submit" value="submit" name="submit" />
+            <input class="btn btn-success" type="submit" value="submit" name="submit" />
 </form:form>
 
 

@@ -7,8 +7,11 @@ package services;
 
 import java.util.List;
 import entity.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.CartInfo;
 import model.CartLineInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +22,16 @@ import org.springframework.transaction.annotation.Transactional;
 import repository.CategoriesRepository;
 import repository.OrdersRepository;
 import repository.*;
+import utils.*;
 
 @Transactional
 @Service
-public class OrderServiceImpl implements OrderService {
+public class OrderServiceImpl implements OrderService, Serializable {
 
     @Autowired
     OrdersRepository ordersRepository;
+    @Autowired
+    CloneObject cloneObject;
     @Autowired
     ProductsRepository productsRepository;
     @Autowired
@@ -39,10 +45,11 @@ public class OrderServiceImpl implements OrderService {
     public boolean addOrder(Receiver receiver, User user, CartInfo cartInfo) {
 
         Statusorder statusOrder = statusorderRepository.findOne(4);
+        CartInfo cartInfoTemp;
 
         try {
-
-            for (int i = 0; i < cartInfo.getCartLines().size(); i++) {
+            cartInfoTemp = (CartInfo) cloneObject.clone(cartInfo);
+            for (int i = 0; i < cartInfoTemp.getCartLines().size(); i++) {
                 Orders order = new Orders();
                 Receiver newReceiver = new Receiver();
                 newReceiver.setReceiverAddress(receiver.getReceiverAddress());
@@ -56,25 +63,25 @@ public class OrderServiceImpl implements OrderService {
                 order.setUserId(user);
 
                 order = ordersRepository.save(order);
-                double totalprice = cartInfo.getCartLines().get(i).getTotalPrice();
+                double totalprice = cartInfoTemp.getCartLines().get(i).getTotalPrice();
                 Orderdetail orderdetail = new Orderdetail();
                 orderdetail.setOrderId(order);
-                orderdetail.setProductId(cartInfo.getCartLines().get(i).getProduct());
-                orderdetail.setQuantity(cartInfo.getCartLines().get(i).getQuantity());
-                orderdetail.setTotalUnitPrice(cartInfo.getCartLines().get(i).getTotalPrice());
+                orderdetail.setProductId(cartInfoTemp.getCartLines().get(i).getProduct());
+                orderdetail.setQuantity(cartInfoTemp.getCartLines().get(i).getQuantity());
+                orderdetail.setTotalUnitPrice(cartInfoTemp.getCartLines().get(i).getTotalPrice());
 
                 orderdetailRepository.save(orderdetail);
-                for (int h = i + 1; h < cartInfo.getCartLines().size(); h++) {
-                    if (cartInfo.getCartLines().get(i).getProduct().getShopId().getShopName().equals(cartInfo.getCartLines().get(h).getProduct().getShopId().getShopName())) {
+                for (int h = i + 1; h < cartInfoTemp.getCartLines().size(); h++) {
+                    if (cartInfoTemp.getCartLines().get(i).getProduct().getShopId().getShopName().equals(cartInfoTemp.getCartLines().get(h).getProduct().getShopId().getShopName())) {
                         Orderdetail orderdetail1 = new Orderdetail();
                         orderdetail1.setOrderId(order);
-                        orderdetail1.setProductId(cartInfo.getCartLines().get(h).getProduct());
-                        orderdetail1.setQuantity(cartInfo.getCartLines().get(h).getQuantity());
-                        orderdetail1.setTotalUnitPrice(cartInfo.getCartLines().get(h).getTotalPrice());
+                        orderdetail1.setProductId(cartInfoTemp.getCartLines().get(h).getProduct());
+                        orderdetail1.setQuantity(cartInfoTemp.getCartLines().get(h).getQuantity());
+                        orderdetail1.setTotalUnitPrice(cartInfoTemp.getCartLines().get(h).getTotalPrice());
 
                         orderdetailRepository.save(orderdetail1);
-                        totalprice = totalprice + cartInfo.getCartLines().get(h).getTotalPrice();
-                        cartInfo.getCartLines().remove(h);
+                        totalprice = totalprice + cartInfoTemp.getCartLines().get(h).getTotalPrice();
+                        cartInfoTemp.getCartLines().remove(h);
                         h--;
                     }
                 }
@@ -88,6 +95,8 @@ public class OrderServiceImpl implements OrderService {
 
         } catch (Exception e) {
             e.getMessage();
+        } finally {
+            cartInfoTemp = null;
         }
         return false;
     }

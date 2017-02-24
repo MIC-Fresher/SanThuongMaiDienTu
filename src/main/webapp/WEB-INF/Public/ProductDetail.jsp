@@ -73,7 +73,7 @@
                                     <div class="col-sm-12">
                                         <ul class="nav nav-tabs">
                                             <li>
-                                                <a href="#details" data-toggle="tab">Thông tin SP</a>
+                                                <a href="#details" data-toggle="tab">Thông tin Sản phẩm</a>
                                             </li>
                                             <li>
                                                 <a href="#companyprofile" data-toggle="tab">Sản phẩm cùng loại</a>
@@ -83,15 +83,16 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    
+
                                     <div class="tab-content">							
                                         <div class="tab-pane fade active in" id="reviews" >
                                             <div class="col-sm-12">
-                                               
-                                                <jsp:include page="/WEB-INF/Include/User/vote/vote_form.jsp"/>
-                                                <jsp:include page="/WEB-INF/Include/User/comment/comment_form.jsp"/>
-                                                <jsp:include page="/WEB-INF/Include/User/comment/comment_items.jsp"/>
-
+                                                <div id="comment_return">
+                                                    <jsp:include page="/WEB-INF/Include/User/comment/comment_form.jsp"/>
+                                                </div>
+                                                <div id="comment_items_return">
+                                                    <jsp:include page="/WEB-INF/Include/User/comment/comment_items.jsp"/>
+                                                </div>
                                             </div>
 
 
@@ -111,7 +112,7 @@
                                             </div>
                                         </div>
                                     </div>
-                              
+
                                 </div>
                             </div>
                         </div>

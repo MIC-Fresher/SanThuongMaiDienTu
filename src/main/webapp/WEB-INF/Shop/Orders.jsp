@@ -44,10 +44,54 @@
     -->
     <body class="hold-transition skin-blue sidebar-mini">
         <c:if test="${not empty messeger}">
+            <jsp:include page="/WEB-INF/Include/Public/common/alertmodal/alertmodal.jsp"/>
             <script>
-                alert("${messeger}");
+
+                var modal = document.getElementById('Alert_Modal');
+                modal.style.display = "block";
+                var span_alert = document.getElementsByClassName("span_close_alert")[0];
+                var btn_close_alert = document.getElementsByClassName("btn_close_alert")[0];
+                //-----------
+                btn_close_alert.onclick = function () {
+                    modal.style.display = "none";
+                }
+                // When the user clicks on <span> (x), close the modal
+                span_alert.onclick = function () {
+                    modal.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function (event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+
             </script>
+
         </c:if>
+        <!--modalbox-->
+        <div id="Order_Modal" class="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Thông báo</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="body_modal">
+
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary pull-left close2" data-dismiss="modal">Close</button>
+                        <a id="delete_href" href="javascript:{}" type="button" class="btn btn-primary">Đồng ý</a>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+        </div>
         <div class="wrapper">
 
             <!-- Main Header -->
@@ -69,41 +113,32 @@
                     <jsp:include page="/WEB-INF/Include/Shop/order/order_search/search_form.jsp"></jsp:include>
                     </section>
 
-                    <!--modalbox-->
-                    <div id="Order_Modal" class="modal">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title">Default Modal</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <p id="body_modal">
 
-                                    </p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary pull-left close2" data-dismiss="modal">Close</button>
-                                    <a id="delete_href" href="javascript:{}" type="button" class="btn btn-primary">Đồng ý</a>
-                                </div>
-                            </div>
-                            <!-- /.modal-content -->
-                        </div>
-                    </div>
                     <!-- Main content -->
                     <!------------------------------------------------------------------------------------------------------->
                     <section class="content">
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="box">
-                                <jsp:include page="/WEB-INF/Include/Shop/order/add_box.jsp"></jsp:include>
+                                <jsp:include page="/WEB-INF/Include/Shop/order/box/filter_box.jsp"/>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <jsp:include page="/WEB-INF/Include/Shop/order/box/add_box.jsp"></jsp:include>
 
                                     <!-- /.box-header -->
                                     <div id="order_items" class="box-body">
 
                                     <c:if test="${not empty listOrders.content}">
                                         <jsp:include page="/WEB-INF/Include/Shop/order/order_table/order_table.jsp"></jsp:include>
+                                    </c:if>
+                                    <c:if test="${empty listOrders.content}">
+                                        không có đơn hàng nào
                                     </c:if>
                                 </div>
                                 <!-- /.box-body -->

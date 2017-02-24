@@ -16,10 +16,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class ErrorController implements Serializable {
     
-    @RequestMapping(value = "/error", method = RequestMethod.GET)
-    public String error(ModelMap mm, HttpServletRequest request) throws Exception {
+    @RequestMapping(value = "/error403", method = RequestMethod.GET)
+    public String error403(ModelMap mm, HttpServletRequest request) throws Exception {
         return "Error/403";
     }
-    
+    @RequestMapping(value = "/error", method = RequestMethod.GET)
+    public String error(ModelMap mm, HttpServletRequest request) throws Exception {
+        return "Error/400";
+    }
  
 }

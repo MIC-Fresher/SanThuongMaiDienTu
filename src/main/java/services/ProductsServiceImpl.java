@@ -6,6 +6,7 @@
 package services;
 
 import entity.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +22,7 @@ import utils.IMG.IMGUtils;
 
 @Transactional
 @Service
-public class ProductsServiceImpl implements ProductsService {
+public class ProductsServiceImpl implements ProductsService, Serializable {
 
     @Autowired
     CategoriesService categoriesService;
@@ -47,6 +48,7 @@ public class ProductsServiceImpl implements ProductsService {
         return null;
     }
 
+    @Transactional
     @Override
     public boolean addProduct(MultipartFile file, Product product, Shop shop) throws Exception {
         Producimage pi = new Producimage();
@@ -63,11 +65,11 @@ public class ProductsServiceImpl implements ProductsService {
             product.setDateCreated(new Date());
 
             product.setShopId(shop);
-            
+
             product.setStock(product.getQuantity());
-            
+
             product.setTotalVote(0);
-            
+
             product.setIsDiscounted(0);
 
             product = productsRepository.save(product);
@@ -90,6 +92,7 @@ public class ProductsServiceImpl implements ProductsService {
 
     }
 
+    @Transactional
     @Override
     public boolean updateProduct(MultipartFile file, Product product) throws Exception {
         Product p = new Product();
@@ -134,6 +137,7 @@ public class ProductsServiceImpl implements ProductsService {
         return false;
     }
 
+    @Transactional
     @Override
     public int deleteProductOfShop(int idproduct, int idshop) throws Exception {
         int kq = 0;
@@ -149,10 +153,10 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     @Override
-    public Page<Product> getProducts(Pageable pageable, String shopName, Integer shopIsactive, Integer catagoryIsactive, Integer productIsactive, String productName, List<Integer> totalvote, Integer fromPrice, Integer toPrice,String cateName) throws Exception {
+    public Page<Product> getProducts(Pageable pageable, String shopName, Integer shopIsactive, Integer catagoryIsactive, Integer productIsactive, String productName, List<Integer> totalvote, Integer fromPrice, Integer toPrice, String cateName) throws Exception {
 
         try {
-            return productsRepository.findByShopId_ShopNameContainingAndIsActiveAndShopId_UserId_EnabledAndCategoryId_IsActiveAndProductNameContainingAndTotalVoteInAndUnitPriceBetweenAndCategoryId_CategoryNameContaining(pageable, shopName, shopIsactive, catagoryIsactive, productIsactive, productName, totalvote, fromPrice, toPrice,cateName);
+            return productsRepository.findByShopId_ShopNameContainingAndIsActiveAndShopId_UserId_EnabledAndCategoryId_IsActiveAndProductNameContainingAndTotalVoteInAndUnitPriceBetweenAndCategoryId_CategoryNameContaining(pageable, shopName, shopIsactive, catagoryIsactive, productIsactive, productName, totalvote, fromPrice, toPrice, cateName);
         } catch (Exception e) {
             e.getMessage();
         }

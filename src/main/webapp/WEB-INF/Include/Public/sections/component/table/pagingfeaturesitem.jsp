@@ -44,27 +44,27 @@
 
 
 <script lang="javascript">
-            function pagingAjax(input) {
+    function pagingAjax(input) {
 
-                $.ajax({
-                    type: "GET",
-                    url: input,
-                    timeout: 100000,
-                    success: function (data) {
-                        console.log("SUCCESS: ", data);
-                        display(data);
+        $.ajax({
+            type: "GET",
+            url: input,
+            timeout: 100000,
+            success: function (data) {
+                console.log("SUCCESS: ", data);
+                display(data);
 
-                    },
-                    error: function (e) {
-                        console.log("ERROR: ", e);
-                        display(e);
-                    }
-                });
+            },
+            error: function (e) {
+                console.log("ERROR: ", e);
+                display(e);
             }
-            function display(data) {
+        });
+    }
+    function display(data) {
 
-                $('#featuresitem').html(data);
-            }
+        $('#featuresitem').html(data);
+    }
 
 
-        </script>
+</script>

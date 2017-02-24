@@ -14,10 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 import repository.CategoriesRepository;
 import repository.*;
 import entity.*;
+import java.io.Serializable;
 
 @Transactional
 @Service
-public class RoleServiceImpl implements RoleService {
+public class RoleServiceImpl implements RoleService,Serializable {
 
     @Autowired
     RoleRepository roleRepository;

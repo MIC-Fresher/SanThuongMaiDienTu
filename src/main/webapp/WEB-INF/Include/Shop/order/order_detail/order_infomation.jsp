@@ -23,8 +23,9 @@
                     <label>Ngày đặt hàng</label>
                     <form:input readonly="true"  path="orderDate" id="name" type="date" class="form-control" placeholder="Enter ..." />
                 </div>
+                
                 <div class="form-group">
-                    <label>Ngày hoàn thành đơn hàng</label>
+                    <label>Ngày cập nhật đơn hàng</label>
                     <form:input   path="updateDate" id="name" type="date" class="form-control" placeholder="Enter ..." />
                 </div>
                 <div class="form-group">

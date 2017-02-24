@@ -42,7 +42,7 @@
                                 <a href="">${cartLineInfo.product.productName}</a>
                             </h4>
                         </td>
-                        <td class="cart_price">  ${shopController.p.productId}
+                        <td class="cart_price">  
                             <p>
                                 <fmt:formatNumber type="number" value="${cartLineInfo.product.unitPrice}"/>
 

@@ -4,38 +4,82 @@
 <%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:if test="${not empty productcomments.content}">
+    <c:url var="nextUrl" value="/Public/pagingComments?page=${requestScope.productcomments.current + 1}&id=${product.productId}" />
+    <c:url var="prevUrl" value="/Public/pagingComments?page=${requestScope.productcomments.current - 1}&id=${product.productId}" />
+    <div id="comment_items" class="response-area">
+        <c:forEach var="productcomment" items="${productcomments.content}" >
+            <ul class="media-list">
+                <li class="media">
 
-<div id="comment_items" class="response-area">
-    <ul class="media-list">
-        <li class="media">
-            <div class="rating-area">
-                <ul class="ratings">
-                    <li class="rate-this">Rate this item:</li>
-                    <li>
-                        <i class="fa fa-star color"></i>
-                        <i class="fa fa-star color"></i>
-                        <i class="fa fa-star color"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                    </li>
-                    <li class="color">(6 votes)</li>
-                </ul>
-            </div><!--/rating-area-->
-            <a class="pull-left" href="#">
-                <img class="media-object" src="${pageContext.request.contextPath}/images/blog/man-two.jpg" alt="">
-            </a>
-            <div class="media-body">
-                <ul class="sinlge-post-meta">
-                    <li><i class="fa fa-user"></i>Janis Gallagher</li>
-                    <li><i class="fa fa-clock-o"></i> 1:33 pm</li>
-                    <li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
-                </ul>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    <a class="pull-left" href="#">
+                        <img class="media-object" src="${pageContext.request.contextPath}/images/blog/man-two.jpg" alt="">
+                    </a>
+                    <div class="media-body">
+                        <ul class="sinlge-post-meta">
+                            <li>
+                                <i class="fa fa-user"></i>${productcomment.userId.userName}
+                            </li>
+                            <li>
+                                <i class="fa fa-clock-o"></i>       <fmt:formatDate pattern="dd/MM/yyyy" value="${productcomment.dateCreated}"/>
 
-            </div>
+                            </li>
 
-        </li>
+                        </ul>
+                        ${productcomment.content}
+                    </div>
 
-    </ul>
-    <a href="" class="btn btn-primary pull-right">xem them</a>
-</div>
+                </li>
+
+            </ul>
+        </c:forEach>
+        <ul class="pagination">
+
+            <c:choose>
+                <c:when test="${requestScope.productcomments.current == 1}">
+
+                    <!--<li class="btn btn-primary pull-right disabled"><a href="#">Quay lại</a></li>-->
+                </c:when>
+                <c:otherwise>
+
+                    <li><a class="btn btn-primary pull-right" onclick="pagingAjax('${prevUrl}')" href="javascript:{}">Quay lại</a></li>
+                    </c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when test="${requestScope.productcomments.current == productcomments.totalPages}">
+                    <!--<li class="btn btn-primary pull-right disabled"><a href="#">Xem thêm</a></li>-->
+
+                </c:when>
+                <c:otherwise>
+                    <li><a class="btn btn-primary pull-right" onclick="pagingAjax('${nextUrl}')"  href="javascript:{}">Xem thêm</a></li>
+
+                </c:otherwise>
+            </c:choose>
+        </ul>
+    </div>
+</c:if>
+<script lang="javascript">
+    function pagingAjax(input) {
+
+        $.ajax({
+            type: "GET",
+            url: input,
+            timeout: 100000,
+            success: function (data) {
+                console.log("SUCCESS: ", data);
+                displaypaging(data);
+
+            },
+            error: function (e) {
+                console.log("ERROR: ", e);
+                //display(e);
+            }
+        });
+    }
+    function displaypaging(data) {
+
+        $('#comment_items_return').html(data);
+    }
+
+
+</script>

@@ -25,7 +25,6 @@ import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
-import model.*;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,16 +41,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import utils.CartShopping.*;
+import utils.*;
 
 @Controller
-@Scope("session")
+
 public class UserAccountController implements Serializable {
 
     @Autowired
     UserRepository userRepository;
     @Autowired
-    utils.Authencation.UtilsAuthencation utilsAuthencation;
+    utils.UtilsAuthencation utilsAuthencation;
   
     
 

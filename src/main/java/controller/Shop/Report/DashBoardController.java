@@ -5,6 +5,9 @@
  */
 package controller.Shop.Report;
 
+import model.Pages;
+import model.Chart;
+import model.DashBoardSearchForm;
 import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -24,7 +27,6 @@ import java.util.*;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
-import model.*;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -40,16 +42,20 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.multipart.MultipartFile;
 import utils.IMG.IMGUtils;
-
+import utils.UtilsChart;
+import ConstantVariable.DashBoardConstant;
 @Controller
-@Scope("session")
+
 public class DashBoardController implements Serializable {
 
     @Autowired
-    utils.Authencation.UtilsAuthencation utilsAuthencation;
+    UtilsChart utilsChart;
+    @Autowired
+    utils.UtilsAuthencation utilsAuthencation;
     @Autowired
     OrdersRepository ordersRepository;
-
+    @Autowired
+    OrderdetailRepository orderdetailRepository;
     @Autowired
     CategoriesService categoriesService;
     @Autowired
@@ -100,7 +106,7 @@ public class DashBoardController implements Serializable {
     ) {
         try {
             //
-            
+
             //
             entity.User user = utilsAuthencation.getUserInPrincipal();
             Shop s = user.getShop();
@@ -118,7 +124,7 @@ public class DashBoardController implements Serializable {
 
 //    =======================================***METHOD***=====================================================>>
     public void searchRecentOrders(ModelMap mm, int OrdersItem, Shop s, DashBoardSearchForm dashBoard) {
-        
+
         try {
 
             PageRequest pageRequest;
@@ -135,13 +141,31 @@ public class DashBoardController implements Serializable {
     }
 
     public void setupDashBoard(ModelMap mm, int OrdersItem, Shop s, DashBoardSearchForm dashBoard) {
-
+       
         try {
             searchRecentOrders(mm, OrdersItem, s, dashBoard);
+            setupChart(dashBoard, mm, s);
             mm.addAttribute("totalOrder", ordersRepository.findDistinctByOrderdetailList_ProductId_ShopId_ShopNameContainingAndOrderDateBetween(s.getShopName(), dashBoard.getFromDate(), dashBoard.getToDate()).size());
             mm.addAttribute("totalProductsActive", productsRepository.findByShopId_ShopNameContainingAndIsActiveAndStockGreaterThanAndDateCreatedBetween(s.getShopName(), 1, 0, dashBoard.getFromDate(), dashBoard.getToDate()).size());
             mm.addAttribute("totalProductsOld", productsRepository.findByShopId_ShopNameContainingAndIsActiveAndStockEqualsAndDateCreatedBetween(s.getShopName(), 1, 0, dashBoard.getFromDate(), dashBoard.getToDate()).size());
             mm.addAttribute("ShopCategories", categoriesRepository.countByShopList_ShopNameContainingAndIsActive(s.getShopName(), 1));
+            mm.addAttribute("totalProductSold", orderdetailRepository.sumAllQuantityByDateAndShop(dashBoard.getFromDate(), dashBoard.getToDate(), DashBoardConstant.statusOrderComplete, s.getShopName()));
+            
+        } catch (Exception e) {
+            e.getMessage();
+        }
+
+    }
+
+    public void setupChart(DashBoardSearchForm dashBoard, ModelMap mm, Shop shop) {
+      
+
+        try {
+            List<Chart> charts = utilsChart.getChartByDate(dashBoard, DashBoardConstant.statusOrderComplete, shop);
+            if (charts != null) {
+                mm.addAttribute("charts", charts);
+            }
+
         } catch (Exception e) {
             e.getMessage();
         }

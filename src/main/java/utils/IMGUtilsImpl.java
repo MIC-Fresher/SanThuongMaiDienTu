@@ -5,6 +5,7 @@
  */
 package utils;
 
+import utils.IMG.IMGUtils;
 import entity.Producimage;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;

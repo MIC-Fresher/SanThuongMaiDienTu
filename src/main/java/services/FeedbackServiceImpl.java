@@ -6,6 +6,8 @@
 package services;
 
 import entity.*;
+import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,7 +19,7 @@ import repository.*;
 
 @Transactional
 @Service
-public class FeedbackServiceImpl implements FeedbackService {
+public class FeedbackServiceImpl implements FeedbackService, Serializable {
 
     @Autowired
     FeedbackRepository feedbackRepository;
@@ -28,6 +30,25 @@ public class FeedbackServiceImpl implements FeedbackService {
         try {
             return feedbackRepository.findAll(pageable);
         } catch (Exception e) {
+        }
+        return null;
+    }
+
+    @Transactional
+    @Override
+    public Feedback addFeedBack(Feedback feedback, User user) throws Exception {
+
+        try {
+            Statusfeedback statusfeedback = new Statusfeedback();
+            statusfeedback.setStatusFeedbackId(2);
+            feedback.setUserId(user);
+            feedback.setCreateDate(new Date());
+            feedback.setStatusFeedbackId(statusfeedback);
+
+            return feedbackRepository.save(feedback);
+        } catch (Exception e) {
+            e.getMessage();
+
         }
         return null;
     }

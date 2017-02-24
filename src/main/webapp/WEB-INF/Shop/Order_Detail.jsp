@@ -43,10 +43,55 @@
     -->
     <body class="hold-transition skin-blue sidebar-mini">
         <c:if test="${not empty messeger}">
+            <jsp:include page="/WEB-INF/Include/Public/common/alertmodal/alertmodal.jsp"/>
             <script>
-                alert("${messeger}");
+
+                var modal = document.getElementById('Alert_Modal');
+                modal.style.display = "block";
+                var span_alert = document.getElementsByClassName("span_close_alert")[0];
+                var btn_close_alert = document.getElementsByClassName("btn_close_alert")[0];
+                //-----------
+                btn_close_alert.onclick = function () {
+                    modal.style.display = "none";
+                }
+                // When the user clicks on <span> (x), close the modal
+                span_alert.onclick = function () {
+                    modal.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function (event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+
+                //alert("");
             </script>
+
         </c:if>
+        <!--modalbox-->
+        <div id="OrderDetail_Modal" class="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Thông báo</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="body_modal">
+
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary pull-left close2" data-dismiss="modal">Close</button>
+                        <a id="delete_href" href="javascript:{}" type="button" class="btn btn-primary">Đồng ý</a>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+        </div>
         <div class="wrapper">
 
             <!-- Main Header -->
@@ -69,28 +114,7 @@
                     </section>
 
                     <!-------------------------------------------------------------------------------------------------->
-                    <!--modalbox-->
-                    <div id="OrderDetail_Modal" class="modal">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title">Default Modal</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <p id="body_modal">
-                                        
-                                    </p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary pull-left close2" data-dismiss="modal">Close</button>
-                                    <a id="delete_href" href="javascript:{}" type="button" class="btn btn-primary">Đồng ý</a>
-                                </div>
-                            </div>
-                            <!-- /.modal-content -->
-                        </div>
-                    </div>
+
                     <!-- Main content -->
                     <!------------------------------------------------------------------------------------------------------->
 
@@ -142,7 +166,7 @@
                 // Get the modal
                 var modal = document.getElementById('OrderDetail_Modal');
                 modal.style.display = "block";
-                document.getElementById("body_modal").innerHTML="Bạn  muốn xóa Đơn hàng này ?";
+                document.getElementById("body_modal").innerHTML = "Bạn  muốn xóa Đơn hàng này ?";
                 document.getElementById("delete_href").href = input;
                 // Get the <span> element that closes the modal
                 var span = document.getElementsByClassName("close")[0];

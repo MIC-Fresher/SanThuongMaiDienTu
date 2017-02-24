@@ -44,28 +44,44 @@
                 </ul>
             </li>
             <li class="treeview">
-
-
-                <a href="#"><i class="fa fa-link"></i> <span>Quản lý  phản hồi</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class="fa fa-link"></i> <span>Quản lý cửa hàng</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <s:url value="/Supplier/setupShowAllFeedbacks" var="feedbacks"/>
+                    <c:url value="/Supplier/Shops" var="shops"/>
+                    <li><a href="<c:out value="${shops}"/>">Danh sách cửa hàng</a></li>
+                    <li><a href="#">Link in level 2</a></li>
+                </ul>
+            </li>
+            
+            <li class="treeview">
+                <a href="#"><i class="fa fa-link"></i> <span>Sản phẩm</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <s:url value="/Supplier/Products" var="showallproducts"/>
+                    <li><a href="${showallproducts}">Danh sách sản phẩm</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#"><i class="fa fa-link"></i> <span>Đơn hàng</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <s:url value="/Supplier/Orders" var="showAllOrders"/>
+                    <li><a href="${showAllOrders}">Danh sách đơn hàng</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+
+
+                <a href="#"><i class="fa fa-link"></i> <span>Phản hồi</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <s:url value="/Supplier/Feedbacks" var="feedbacks"/>
                     <li><a href="${feedbacks}">Danh sách phản hồi</a></li>
                     <li><a href="#">Link in level 2</a></li>
                 </ul>
             </li>
             <li class="treeview">
-                <a href="#"><i class="fa fa-link"></i> <span>Quản lý cửa hàng</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class="fa fa-link"></i> <span>Thống kê</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <c:url value="/Supplier/searchShop" var="shops"/>
-                    <li><a href="<c:out value="${shops}"/>">Danh sách cửa hàng</a></li>
+                    <s:url value="/Supplier/DashBoard" var="DashBoard"/>
+                    <li><a href="${DashBoard}">Thống kê</a></li>
                     <li><a href="#">Link in level 2</a></li>
-                </ul>
-            </li>
-            <li class="treeview">
-                <a href="#"><i class="fa fa-link"></i> <span>Quản lý  Sản phẩm</span> <i class="fa fa-angle-left pull-right"></i></a>
-                <ul class="treeview-menu">
-                    <s:url value="/Supplier/setupShowAllProducts" var="showallproducts"/>
-                    <li><a href="${showallproducts}">Danh sách sản phẩm</a></li>
                 </ul>
             </li>
         </ul>

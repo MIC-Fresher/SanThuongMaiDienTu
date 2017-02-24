@@ -31,15 +31,39 @@
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
         <!-- AdminLTE App -->
         <script src="${pageContext.request.contextPath}/js/app.min.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     </head>
     <!--
     
     -->
     <body class="hold-transition skin-blue sidebar-mini">
-        <c:if test="${not empty messeger}">
+         <c:if test="${not empty messeger}">
+                <jsp:include page="/WEB-INF/Include/Public/common/alertmodal/alertmodal.jsp"/>
             <script>
-                alert("${messeger}");
+
+                var modal = document.getElementById('Alert_Modal');
+                modal.style.display = "block";
+                var span_alert = document.getElementsByClassName("span_close_alert")[0];
+                var btn_close_alert = document.getElementsByClassName("btn_close_alert")[0];
+                //-----------
+                btn_close_alert.onclick = function () {
+                    modal.style.display = "none";
+                }
+                // When the user clicks on <span> (x), close the modal
+                span_alert.onclick = function () {
+                    modal.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function (event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+
+                //alert("");
             </script>
+
         </c:if>
         <div class="wrapper">
 

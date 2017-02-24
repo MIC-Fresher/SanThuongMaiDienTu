@@ -5,6 +5,8 @@
  */
 package controller.Guest;
 
+import model.Pages;
+import model.ParameterUrlPulic;
 import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,7 +21,6 @@ import entity.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import model.*;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,7 +37,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 
 
 @Controller
-@Scope("session")
+
 public class LandingController implements Serializable {
 
     @Autowired

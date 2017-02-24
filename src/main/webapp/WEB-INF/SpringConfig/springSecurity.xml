@@ -64,7 +64,7 @@
     <!--http shop====================================================-->
     
     <security:http pattern="/Shop/**" auto-config="true"  use-expressions="true"  authentication-manager-ref="all">
-        <security:access-denied-handler error-page="/error"/> 
+        <security:access-denied-handler error-page="/error403"/> 
         <!--                trỏ đến trang khi gặp error-->
         <security:csrf disabled="true"/>
         
@@ -97,7 +97,7 @@
     
     <!--http user ===========================================================-->
     <security:http pattern="/User/**" auto-config="true"  use-expressions="true"  authentication-manager-ref="all">
-        <security:access-denied-handler error-page="/error"/> 
+        <security:access-denied-handler error-page="/error403"/> 
         <!--                trỏ đến trang khi gặp error-->
         <security:csrf disabled="true"/>
         <security:intercept-url pattern="/User/**" access="hasAnyRole('ROLE_USER,ROLE_SHOP')"/>
@@ -124,7 +124,7 @@
     http admin ==========================================================-->    
     
     <security:http pattern="/Supplier/*" auto-config="true" use-expressions="true"  authentication-manager-ref="all">
-        <security:access-denied-handler error-page="/error"/> 
+        <security:access-denied-handler error-page="/error403"/> 
         <security:csrf disabled="true"/>
         
         <security:intercept-url pattern="/Supplier/**" access="hasRole('ROLE_SUPPLIER')"/>

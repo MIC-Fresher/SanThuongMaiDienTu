@@ -9,14 +9,14 @@
 
         <li>
             <c:if test="${not empty parameterUrl.categoryname }">
-                <s:url value="/Public/setupSearchProducts?categoryname=&${parameterUrl.toString()}" var="deletecatagory"/>
+                <s:url value="/Public/setupSearchProducts?${parameterUrl.toStringCategory()}" var="deletecatagory"/>
                 <a href="${deletecatagory}">deletecata</a>
             </c:if>
         </li> 
 
         <li>
             <c:if test="${not empty parameterUrl.totalvote}">
-                <s:url value="/Public/setupSearchProducts?totalvote=&${parameterUrl.toString()}" var="deletevote"/>
+                <s:url value="/Public/setupSearchProducts?${parameterUrl.toStringVote()}" var="deletevote"/>
                 <a href="${deletevote}">delete vote</a>
             </c:if>
         </li>
@@ -24,7 +24,7 @@
 
 
 
-                <s:url value="/Public/setupSearchProducts?fromprice=&toprice=&${parameterUrl.toString()}" var="deleteprice"/>
+                <s:url value="/Public/setupSearchProducts?${parameterUrl.toStringPrice()}" var="deleteprice"/>
 
 
                 <a href="${deleteprice}">delete price</a>
@@ -33,7 +33,7 @@
    
         <li>
             <c:if test="${not empty parameterUrl.searchinput}">
-                <s:url value="/Public/setupSearchProducts?searchinput=&${parameterUrl.toString()}" var="deletesearchinput"/>
+                <s:url value="/Public/setupSearchProducts?${parameterUrl.toStringSearchInput()}" var="deletesearchinput"/>
                 <a href="${deletesearchinput}">searchinput</a>
             </c:if>
         </li>

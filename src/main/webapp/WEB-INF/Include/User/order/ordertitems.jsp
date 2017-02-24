@@ -15,7 +15,9 @@
                         <a href="">
                             <c:choose >
                                 <c:when test="${order.productId.productdetail.producimageList[0].url!=null}">
-                                    <img style="height: 110px ; width: 110px"  src="${pageContext.request.contextPath}/images/product-details/<c:out value="${order.productId.productdetail.producimageList.get(0).url}"/>" alt="User Image">
+                                    <s:url var="productdetail" value="/Public/setupShowDetailProduct?id=${order.productId.productId}"/>
+                                    <a href="${productdetail}">   <img style="height: 110px ; width: 110px"  src="${pageContext.request.contextPath}/images/product-details/<c:out value="${order.productId.productdetail.producimageList.get(0).url}"/>" alt="User Image">
+                                    </a>
                                 </c:when>
                                 <c:otherwise>
                                     <img style="height: 110px ; width: 110px"  src="${pageContext.request.contextPath}/images/product-details/imgnotfound.png" alt="User Image">
@@ -61,7 +63,7 @@
                     </td>
                     <td class="cart_total">
                         <fmt:formatNumber type="number" value="${order.totalUnitPrice}"/>
-                        
+
                     </td>
                     <td class="cart_total">
                         ${order.orderId.statusOrderId.status}

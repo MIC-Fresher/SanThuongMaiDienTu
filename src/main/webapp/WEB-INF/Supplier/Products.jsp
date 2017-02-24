@@ -23,6 +23,8 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
         <!-- Ionicons -->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/ionicons.min.css">
+        <!--model box-->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/modalbox.css">
         <!-- Theme style -->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/AdminLTE.min.css">
         <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
@@ -42,9 +44,32 @@
     -->
     <body class="hold-transition skin-blue sidebar-mini">
         <c:if test="${not empty messeger}">
+                <jsp:include page="/WEB-INF/Include/Public/common/alertmodal/alertmodal.jsp"/>
             <script>
-                alert("${messeger}");
+
+                var modal = document.getElementById('Alert_Modal');
+                modal.style.display = "block";
+                var span_alert = document.getElementsByClassName("span_close_alert")[0];
+                var btn_close_alert = document.getElementsByClassName("btn_close_alert")[0];
+                //-----------
+                btn_close_alert.onclick = function () {
+                    modal.style.display = "none";
+                }
+                // When the user clicks on <span> (x), close the modal
+                span_alert.onclick = function () {
+                    modal.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function (event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+
+                //alert("");
             </script>
+
         </c:if>
         <div class="wrapper">
 
@@ -64,7 +89,7 @@
                 </section>
                 <section class="content-header">
 
-                    <jsp:include page="/WEB-INF/Include/Supplier/form/searchformforproducts.jsp"></jsp:include>
+                    <jsp:include page="/WEB-INF/Include/Supplier/products/form/searchformforproducts.jsp"></jsp:include>
                     </section>
 
                     <!-- Main content -->
@@ -73,23 +98,23 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="box">
-                                <jsp:include page="/WEB-INF/Include/Supplier/sliderbar/boxheader.jsp"></jsp:include>
 
                                     <!-- /.box-header -->
                                     <div class="box-body">
-                                    <c:if test="${not empty listSearchProducts.content}">
-                                        <jsp:include page="/WEB-INF/Include/Supplier/table/TableSearchProduct.jsp"></jsp:include>
-                                        <jsp:include page="/WEB-INF/Include/Supplier/table/PagingSearchProduct.jsp"></jsp:include>
-                                    </c:if>
+                                        <div class="table-responsive">
+                                        <c:if test="${not empty listSearchProducts.content}">
+                                            <jsp:include page="/WEB-INF/Include/Supplier/products/table/TableSearchProduct.jsp"></jsp:include>
+                                            <jsp:include page="/WEB-INF/Include/Supplier/products/table/PagingSearchProduct.jsp"></jsp:include>
+                                        </c:if>
 
-                                    
+                                    </div>
 
                                 </div>
                                 <!-- /.box-body -->
                             </div>
 
                         </div>
-           
+
 
                         <!-- /.col -->
                     </div>

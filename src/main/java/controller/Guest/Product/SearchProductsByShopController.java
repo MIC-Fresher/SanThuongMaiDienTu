@@ -5,6 +5,8 @@
  */
 package controller.Guest.Product;
 
+import model.Pages;
+import model.ParameterUrlPulic;
 import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,7 +21,6 @@ import entity.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import model.*;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -37,7 +38,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@Scope("session")
+
 public class SearchProductsByShopController implements Serializable {
 
     @Autowired
@@ -120,7 +121,7 @@ public class SearchProductsByShopController implements Serializable {
         ParameterUrlPulic parameterUrl = new ParameterUrlPulic(mm);
         List<Integer> listtt = new ArrayList<>();
 
-        if (fromprice == null && toprice == null) {
+        if (fromprice == null || toprice == null) {
             fromprice = 0;
             toprice = 10000000;
         } else {

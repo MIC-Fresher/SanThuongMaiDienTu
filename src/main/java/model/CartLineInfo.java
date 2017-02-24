@@ -6,12 +6,13 @@
 package model;
 
 import entity.Product;
+import java.io.Serializable;
 
 /**
  *
  * @author Admin
  */
-public class CartLineInfo {
+public class CartLineInfo implements Serializable {
 
     private Product product;
     private int quantity;

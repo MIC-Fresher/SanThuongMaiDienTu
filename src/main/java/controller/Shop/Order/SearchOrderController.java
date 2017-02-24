@@ -5,6 +5,8 @@
  */
 package controller.Shop.Order;
 
+import model.Pages;
+import model.ParameterUrlShop;
 import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -24,7 +26,6 @@ import java.util.*;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
-import model.*;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,15 +43,13 @@ import org.springframework.web.multipart.MultipartFile;
 import utils.IMG.IMGUtils;
 
 @Controller
-@Scope("session")
-public class SearchOrderController implements Serializable {
 
-   
+public class SearchOrderController implements Serializable {
 
     @Autowired
     OrdersRepository ordersRepository;
     @Autowired
-    utils.Authencation.UtilsAuthencation utilsAuthencation;
+    utils.UtilsAuthencation utilsAuthencation;
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -75,24 +74,27 @@ public class SearchOrderController implements Serializable {
         } catch (Exception e) {
             e.getMessage();
         }
-        return "/Shop/Orders";
+        return "/Include/Shop/order/order_table/order_table";
     }
 
-    @RequestMapping(value = {"/Shop/Orders/Paging"}, method = RequestMethod.GET)
-    public String orderpaging(
+    @RequestMapping(value = {"/Shop/Orders/Filter"}, method = RequestMethod.GET)
+    public String Supplierorderfilter(
             HttpServletRequest request, HttpSession session, ModelMap mm,
-            @RequestParam(value = "searchinput", defaultValue = "", required = false) String searchinput,
             @RequestParam(value = "page", defaultValue = "1", required = false) Integer page,
-            @RequestParam(value = "itemperpage", defaultValue = "3", required = false) Integer itemperpage
+            @RequestParam(value = "itemperpage", defaultValue = "3", required = false) Integer itemperpage,
+            @RequestParam(value = "statusOrder", required = false) Integer statusOrder
     ) {
         try {
-            Shop s = utilsAuthencation.getUserInPrincipal().getShop();
-            searchOrders(mm, itemperpage, s, page, searchinput);
+            entity.User user = utilsAuthencation.getUserInPrincipal();
+            Shop s = user.getShop();
+            filterOrders(mm, itemperpage, s, page, statusOrder);
         } catch (Exception e) {
             e.getMessage();
         }
-        return "/Include/Shop/order/order_table/order_table";
+        return "/Include/Shop/order/order_table/order_table_filter";
     }
+
+
 //    ====================================***HandMaping***=======================================================>>
 
 //    =======================================***METHOD***=====================================================>>
@@ -113,8 +115,23 @@ public class SearchOrderController implements Serializable {
             e.getMessage();
         }
     }
-//    =======================================***GET/SET***=====================================================>>   
 
- 
+    public void filterOrders(ModelMap mm, int itemperpage, Shop shop, int page, int statusOrder) {
+        ParameterUrlShop parameterUrl = new ParameterUrlShop();
+        try {
+            PageRequest pageRequest;
+            pageRequest = new PageRequest(page - 1, itemperpage, Sort.Direction.DESC, "orderDate");
+            Page<Orders> pager = ordersRepository.findOrderByShopNameAndStatus(shop.getShopName(), statusOrder, pageRequest);
+            Pages pages = new Pages(pager);
+            mm.addAttribute("listOrders", pages);
+
+            parameterUrl.setItemperpage(itemperpage);
+            parameterUrl.setStatusOrder(statusOrder);
+            mm.addAttribute("parameterUrl", parameterUrl);
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
+//    =======================================***GET/SET***=====================================================>>   
 
 }

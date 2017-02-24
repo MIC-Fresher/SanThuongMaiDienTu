@@ -90,31 +90,7 @@
 
 
 
-        <script lang="javascript">
-            function searchViaAjax(input) {
-
-                $.ajax({
-                    type: "GET",
-                    url: input,
-                    timeout: 100000,
-                    success: function (data) {
-                        console.log("SUCCESS: ", data);
-                        display(data);
-
-                    },
-                    error: function (e) {
-                        console.log("ERROR: ", e);
-                        display(e);
-                    }
-                });
-            }
-            function display(data) {
-
-                $('#featuresitem').html(data);
-            }
-
-
-        </script>
+        
 
     </body>
 </html>

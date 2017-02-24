@@ -134,10 +134,13 @@
                             <img src="${pageContext.request.contextPath}/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                             <p>
+                        <sec:authentication property="principal" var="userlogin" scope="request"/>
+
                         <sec:authorize access="hasAnyRole('ROLE_SHOP')">
-                            <sec:authentication property="principal" var="userlogin" />
-                            ${userlogin.username}
+                            <c:set value="login" var="checklogin" scope="request"/>
                         </sec:authorize>
+                        ${userlogin.username}
+                        ${checklogin}
                         <small>Member since Nov. 2012</small>
                         </p>
                 </li>

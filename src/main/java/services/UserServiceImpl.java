@@ -6,6 +6,7 @@
 package services;
 
 import entity.User;
+import java.io.Serializable;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,11 +15,12 @@ import repository.UserRepository;
 
 @Transactional
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, Serializable {
 
     @Autowired
     UserRepository userRepository;
 
+    @Transactional
     @Override
     public boolean checkAccountExist(String username, String email) throws Exception {
         if (userRepository.findByUserNameOrEmail(username, email).size() > 0) {
@@ -27,6 +29,7 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    @Transactional
     @Override
     public User add(User user) throws Exception {
         return userRepository.save(user);
@@ -38,11 +41,13 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Transactional
     @Override
     public int deleteRoleOfUser(int idrole, int iduser) throws Exception {
         return userRepository.deleteRU(idrole, iduser);
     }
 
+    @Transactional
     @Override
     public int addRoleToUser(int idrole, int iduser) throws Exception {
         return userRepository.addRU(idrole, iduser);

@@ -31,8 +31,8 @@
                         </thead>
                         <tbody>
                             <c:forEach var="order" items="${listOrders.content}" varStatus="status">
-                                <tr>
-                                    <td><a href="#">${order.orderId}</a></td>
+                                <tr><s:url value="/Shop/OrderDetail?id=${order.orderId}" var="orderdetail"/>
+                                    <td><a href="${orderdetail}">${order.orderId}</a></td>
                                     <td>${order.userId.email}</td>
                                     <td>
                                         <c:choose>

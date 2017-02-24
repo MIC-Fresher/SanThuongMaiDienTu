@@ -6,6 +6,7 @@
 package services;
 
 import entity.*;
+import java.io.Serializable;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import repository.UserRepository;
 
 @Transactional
 @Service
-public class CategoriesServiceImpl implements CategoriesService {
+public class CategoriesServiceImpl implements CategoriesService, Serializable {
 
     @Autowired
     CategoriesRepository categoriesRepository;

@@ -21,7 +21,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CategoriesRepository extends CrudRepository<Category, Integer> {
 
-    public List<Category> findBycategoryName(String categoryName) throws Exception;
+    public List<Category> findBycategoryNameContainingAndIsActive(String categoryName,Integer isActive) throws Exception;
+
+
 
     public Page<Category> findAll(Pageable pageable) throws Exception;
 
@@ -35,5 +37,4 @@ public interface CategoriesRepository extends CrudRepository<Category, Integer> 
 
     public int countByShopList_ShopNameContainingAndIsActive(String shopName, Integer isActive) throws Exception;
 
-    
 }

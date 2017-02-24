@@ -5,6 +5,8 @@
  */
 package controller.Guest;
 
+import model.Pages;
+import model.ParameterUrlPulic;
 import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,7 +27,6 @@ import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
-import model.*;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -43,7 +44,7 @@ import org.springframework.web.multipart.MultipartFile;
 import utils.IMG.IMGUtils;
 
 @Controller
-@Scope("session")
+
 public class ShopLandingController implements Serializable {
 
 

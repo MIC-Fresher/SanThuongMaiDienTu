@@ -4,7 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="price-range"><!--brands_products-->
-    <h2>Shops</h2>
+    <h2>Cửa hàng</h2>
     <div class="brands-name">
         <ul class="nav nav-pills nav-stacked">
             

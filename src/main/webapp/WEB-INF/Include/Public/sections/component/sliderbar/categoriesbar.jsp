@@ -5,7 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
-<h2>Category</h2>
+<h2>Danh mục</h2>
 
 <div class="panel-group category-products" id="accordian"><!--category-productsr-->
     <c:forEach items="${listGroupcategories}" var="Groupcategories" varStatus="status">

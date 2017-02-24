@@ -17,11 +17,13 @@
         <!-- Bootstrap 3.3.6 -->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
         <!-- Font Awesome -->
-       <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
         <!-- Ionicons -->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/ionicons.min.css">
         <!-- Theme style -->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/AdminLTE.min.css">
+        <!--model box-->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/modalbox.css">
         <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
               page. However, you can choose any other skin. Make sure you
               apply the skin class to the body tag so the changes take effect.
@@ -38,12 +40,40 @@
     
     -->
     <body class="hold-transition skin-blue sidebar-mini">
+        <c:if test="${not empty messeger}">
+                <jsp:include page="/WEB-INF/Include/Public/common/alertmodal/alertmodal.jsp"/>
+            <script>
+
+                var modal = document.getElementById('Alert_Modal');
+                modal.style.display = "block";
+                var span_alert = document.getElementsByClassName("span_close_alert")[0];
+                var btn_close_alert = document.getElementsByClassName("btn_close_alert")[0];
+                //-----------
+                btn_close_alert.onclick = function () {
+                    modal.style.display = "none";
+                }
+                // When the user clicks on <span> (x), close the modal
+                span_alert.onclick = function () {
+                    modal.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function (event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+
+                //alert("");
+            </script>
+
+        </c:if>
         <div class="wrapper">
 
             <!-- Main Header -->
-             <jsp:include page="/WEB-INF/Include/Supplier/header_footer/header.jsp"/>
+            <jsp:include page="/WEB-INF/Include/Supplier/header_footer/header.jsp"/>
             <!-- Left side column. contains the logo and sidebar -->
-             <jsp:include page="/WEB-INF/Include/Supplier/sliderbar/sliderbar.jsp"/>
+            <jsp:include page="/WEB-INF/Include/Supplier/sliderbar/sliderbar.jsp"/>
 
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
@@ -70,7 +100,7 @@
             <!-- /.content-wrapper -->
 
             <!-- Main Footer -->
-                 <jsp:include page="/WEB-INF/Include/Supplier/header_footer/footer.jsp"/> 
+            <jsp:include page="/WEB-INF/Include/Supplier/header_footer/footer.jsp"/> 
 
             <!-- Control Sidebar -->
             <jsp:include page="/WEB-INF/Include/Supplier/sliderbar/controlslidebar.jsp"/>

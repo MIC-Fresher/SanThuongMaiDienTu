@@ -12,7 +12,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface ShopService {
 
-    public void addShop(Shop shop) throws Exception;
+    public Shop addShop(Shop shop) throws Exception;
 
     public void removerShop(Integer id) throws Exception;
 

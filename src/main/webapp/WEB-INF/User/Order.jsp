@@ -19,7 +19,10 @@
         <link href="${pageContext.request.contextPath}/css/main.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/css/responsive.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
+     
+        <link href="${pageContext.request.contextPath}/css/starvote/star2.css" rel="stylesheet" type="text/css">
         <!--[if lt IE 9]>
+        
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
         <![endif]-->       
@@ -35,17 +38,13 @@
         <script src="${pageContext.request.contextPath}/js/price-range.js"></script>
         <script src="${pageContext.request.contextPath}/js/jquery.prettyPhoto.js"></script>
         <script src="${pageContext.request.contextPath}/js/main.js"></script>
-
+        
     </head><!--/head-->
 
     <body>
 
         <div class="wrapper">
-            <c:if test="${not empty messeger}">
-                <script>
-                    alert("${messeger}");
-                </script>
-            </c:if>
+
             <!--header-->
             <jsp:include page="/WEB-INF/Include/Public/sections/header_footer/header.jsp"/>
             <!--slider-->
@@ -72,34 +71,6 @@
 
 
         </div>
-
-
-
-        <script lang="javascript">
-            function searchViaAjax(input) {
-
-                $.ajax({
-                    type: "GET",
-                    url: input,
-                    timeout: 100000,
-                    success: function (data) {
-                        console.log("SUCCESS: ", data);
-                        display(data);
-
-                    },
-                    error: function (e) {
-                        console.log("ERROR: ", e);
-                        display(e);
-                    }
-                });
-            }
-            function display(data) {
-
-                $('#featuresitem').html(data);
-            }
-
-
-        </script>
 
     </body>
 </html>

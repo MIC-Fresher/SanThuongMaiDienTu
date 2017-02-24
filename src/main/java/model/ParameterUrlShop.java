@@ -13,6 +13,7 @@ public class ParameterUrlShop {
 
     Integer itemperpage;
     String searchinput = "";
+    Integer statusOrder;
 
     public Integer getItemperpage() {
         return itemperpage;
@@ -39,7 +40,10 @@ public class ParameterUrlShop {
 
             url = url + "&itemperpage=" + this.itemperpage;
         }
+        if (this.statusOrder != null) {
 
+            url = url + "&statusOrder=" + this.statusOrder;
+        }
         try {
             return url;
 
@@ -48,4 +52,14 @@ public class ParameterUrlShop {
         }
         return null;
     }
+
+    public Integer getStatusOrder() {
+        return statusOrder;
+    }
+
+    public void setStatusOrder(Integer statusOrder) {
+        this.statusOrder = statusOrder;
+    }
+    
+    
 }

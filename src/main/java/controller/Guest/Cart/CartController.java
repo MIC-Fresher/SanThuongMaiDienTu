@@ -6,6 +6,7 @@
 package controller.Guest.Cart;
 
 
+import model.CartInfo;
 import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,7 +21,6 @@ import entity.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import model.*;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 
 import org.springframework.ui.ModelMap;
@@ -33,10 +33,10 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import utils.CartShopping.*;
+import utils.*;
 
 @Controller
-@Scope("session")
+
 public class CartController implements Serializable {
 
 
@@ -66,7 +66,7 @@ public class CartController implements Serializable {
             if (product != null) {
 
                 // Cart info stored in Session.
-                cartInfo = Utils.getCartInSession(request);
+                cartInfo = UtilsCarts.getCartInSession(request);
 
                 cartInfo.addProduct(product, 1);
             }
@@ -81,7 +81,7 @@ public class CartController implements Serializable {
 
     @RequestMapping(value = {"/Public/shoppingCart"}, method = RequestMethod.GET)
     public String shoppingCartHandler(HttpServletRequest request, ModelMap model) {
-        CartInfo myCart = Utils.getCartInSession(request);
+        CartInfo myCart = UtilsCarts.getCartInSession(request);
 
         model.addAttribute("cartForm", myCart);
         return "/Public/Cart";
@@ -93,7 +93,7 @@ public class CartController implements Serializable {
             ModelMap model, //
             @ModelAttribute("cartForm") CartInfo cartForm) {
 
-        CartInfo cartInfo = Utils.getCartInSession(request);
+        CartInfo cartInfo = UtilsCarts.getCartInSession(request);
         cartInfo.updateQuantity(cartForm);
 
         // Redirect to shoppingCart page.
@@ -111,7 +111,7 @@ public class CartController implements Serializable {
             if (product != null) {
 
                 // Cart Info stored in Session.
-                cartInfo = Utils.getCartInSession(request);
+                cartInfo = UtilsCarts.getCartInSession(request);
 
                 cartInfo.removeProduct(product);
 

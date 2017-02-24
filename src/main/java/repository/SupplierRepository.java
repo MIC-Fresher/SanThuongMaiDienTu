@@ -13,5 +13,5 @@ import org.springframework.data.repository.CrudRepository;
  * @author Admin
  */
 public interface SupplierRepository extends CrudRepository<Supplier, Integer>{
-    
+    public Supplier findByUserName(String username);
 }

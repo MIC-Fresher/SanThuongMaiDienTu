@@ -75,7 +75,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body" style="display: block;">
-                The body of the box
+                ${totalProductSold}
             </div>
             <!-- /.box-body -->
         </div>

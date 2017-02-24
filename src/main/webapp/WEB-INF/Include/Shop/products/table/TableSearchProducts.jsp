@@ -46,17 +46,17 @@
                 <td>
                     <c:choose>
                         <c:when test="${listProducts.isActive==1}">
-                            <font style="color: blue"> active</font>
+                            <font style="color: blue"> Hoạt động</font>
                         </c:when>
                         <c:otherwise>
-                            <font style="color: red"> deactive</font>
+                            <font style="color: red"> Bị khóa</font>
                         </c:otherwise>
                     </c:choose>
                 </td>
 
                 <td>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-info">Action</button>
+                        <button type="button" class="btn btn-info">Tác vụ</button>
                         <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
                             <span class="caret"></span>
                             <span class="sr-only">Toggle Dropdown</span>

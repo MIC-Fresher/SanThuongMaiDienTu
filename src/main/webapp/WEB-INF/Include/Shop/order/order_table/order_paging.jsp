@@ -4,10 +4,10 @@
 
 
 
-<c:url var="firstUrl" value="/Shop/Orders/Paging?page=1&${parameterUrl.toString()}"/>
-<c:url var="lastUrl" value="/Shop/Orders/Paging?page=${requestScope.listOrders.totalPages}&${parameterUrl.toString()}" />
-<c:url var="prevUrl" value="/Shop/Orders/Paging?page=${requestScope.listOrders.current - 1}&${parameterUrl.toString()}" />
-<c:url var="nextUrl" value="/Shop/Orders/Paging?page=${requestScope.listOrders.current + 1}&${parameterUrl.toString()}" />
+<c:url var="firstUrl" value="/Shop/Orders/Search?page=1&${parameterUrl.toString()}"/>
+<c:url var="lastUrl" value="/Shop/Orders/Search?page=${requestScope.listOrders.totalPages}&${parameterUrl.toString()}" />
+<c:url var="prevUrl" value="/Shop/Orders/Search?page=${requestScope.listOrders.current - 1}&${parameterUrl.toString()}" />
+<c:url var="nextUrl" value="/Shop/Orders/Search?page=${requestScope.listOrders.current + 1}&${parameterUrl.toString()}" />
 <ul class="pagination">
     <c:choose>
         <c:when test="${requestScope.listOrders.current == 1}">
@@ -20,7 +20,7 @@
             </c:otherwise>
         </c:choose>
         <c:forEach var="i" begin="${listOrders.begin}" end="${listOrders.end}">
-            <c:url var="pageUrl" value="/Shop/Orders/Paging?page=${i}&${parameterUrl.toString()}" />
+            <c:url var="pageUrl" value="/Shop/Orders/Search?page=${i}&${parameterUrl.toString()}" />
             <c:choose>
                 <c:when test="${i == requestScope.listOrders.current}">
                 <li class="active"><a onclick="pagingAjax('${pageUrl}')" href="javascript:{}"><c:out value="${i}" /></a></li>

@@ -7,6 +7,11 @@ package model;
 
 import entity.Product;
 import entity.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +19,9 @@ import java.util.List;
  *
  * @author Admin
  */
-public class CartInfo {
+public class CartInfo implements Serializable {
 
+  
     private int index;
     private User user;
     private List<CartLineInfo> cartLines = new ArrayList<CartLineInfo>();
@@ -115,8 +121,11 @@ public class CartInfo {
         }
         return total;
     }
+//--------------------------------------------------------------------
 
+    
 //--------------------------------------------------------------------    
+
     public User getUser() {
         return user;
     }
